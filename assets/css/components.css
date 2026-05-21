@@ -1,0 +1,634 @@
+/* ==========================================================================
+   COMPONENTS.CSS — Reusable building blocks
+   --------------------------------------------------------------------------
+   Every visual pattern on the site is a named, documented component here.
+   To build a new page, assemble from these classes — do NOT write new CSS
+   per page. If a page needs a genuinely new pattern, add it here once.
+
+   INDEX
+   1.  Section marker      .section-num
+   2.  Eyebrow w/ rule     .eyebrow-rule
+   3.  Hero meta strip     .meta
+   4.  Ledger (key/value)  .ledger
+   5.  Quote               .quote
+   6.  Callout             .callout
+   7.  Two-up text         .duo
+   8.  Stage comparison    .stages
+   9.  Framework diagram   .framework
+   10. Insight block       .insight
+   11. Eval chart          .eval
+   12. Terminal block      .terminal
+   13. Failure row         .failure
+   14. Principle block     .principle
+   15. Outcome list        .outcomes
+   16. Confidential note   .confidential
+   17. Footer citation     .cite
+   ========================================================================== */
+
+
+/* 1. SECTION MARKER ------------------------------------------------------- */
+/* "— 04 — Research" style label that opens each section. */
+.section-num {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.section-num::before {
+  content: "";
+  width: 20px;
+  height: 1px;
+  background: var(--color-accent);
+}
+
+
+/* 2. EYEBROW WITH RULE ---------------------------------------------------- */
+.eyebrow-rule {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: var(--space-5);
+}
+.eyebrow-rule::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--color-accent);
+}
+
+
+/* 3. HERO META STRIP ------------------------------------------------------ */
+.meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: var(--hairline);
+}
+.meta__item {
+  padding: var(--space-3) var(--space-3) 0 0;
+  border-right: var(--hairline);
+}
+.meta__item:first-child { padding-left: 0; }
+.meta__item:last-child { border-right: none; padding-right: 0; }
+.meta__item:not(:first-child) { padding-left: var(--space-3); }
+.meta__label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-1);
+}
+.meta__value {
+  font-size: var(--text-sm);
+  color: var(--color-text-strong);
+  font-weight: var(--weight-semibold);
+  line-height: 1.4;
+}
+
+
+/* 4. LEDGER (key / value rows) -------------------------------------------- */
+.ledger { margin-top: var(--space-6); border-top: var(--hairline); }
+.ledger__row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-5);
+  padding: var(--space-3) 0;
+  border-bottom: var(--hairline);
+  align-items: start;
+}
+.ledger__label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+  font-weight: var(--weight-bold);
+  padding-top: 4px;
+}
+.ledger__value { font-size: var(--text-base); color: var(--color-text-strong); line-height: var(--leading-normal); }
+
+
+/* 5. QUOTE ---------------------------------------------------------------- */
+.quote {
+  border-left: 1px solid var(--color-accent);
+  padding: 8px 0 8px 28px;
+  margin: var(--space-5) 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--weight-normal);
+  color: var(--color-text-strong);
+  font-size: var(--text-xl);
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+}
+.quote__cite {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: var(--text-xs);
+  color: var(--color-text-mute);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  font-weight: var(--weight-semibold);
+}
+
+
+/* 6. CALLOUT -------------------------------------------------------------- */
+.callout {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4) 36px;
+  margin: var(--space-5) 0;
+}
+.callout__label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--weight-bold);
+  margin-bottom: 14px;
+}
+.callout p { font-size: 15.5px; line-height: 1.65; }
+
+
+/* 7. TWO-UP TEXT ---------------------------------------------------------- */
+.duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-7);
+  margin-top: var(--space-5);
+}
+.duo h3 { margin-bottom: 10px; font-size: var(--text-md); }
+.duo p { font-size: 15.5px; line-height: 1.6; }
+
+
+/* 8. STAGE COMPARISON ----------------------------------------------------- */
+.stages {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--color-border);
+  border: var(--hairline);
+  margin-top: var(--space-5);
+}
+.stage { background: var(--color-bg); padding: 36px; }
+.stage__label {
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-3);
+}
+.stage h3 { margin-bottom: var(--space-3); font-size: var(--text-md); }
+.stage__list { font-size: var(--text-sm); }
+.stage__list li {
+  padding: 11px 0;
+  border-bottom: var(--hairline);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.stage__list li:last-child { border-bottom: none; }
+.stage__list li span {
+  color: var(--color-text-strong);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-bold);
+  font-size: 13.5px;
+}
+
+
+/* 9. FRAMEWORK DIAGRAM ---------------------------------------------------- */
+.framework {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-sm);
+  padding: var(--space-5);
+  margin: var(--space-6) 0 var(--space-4);
+}
+.framework__axis-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--weight-bold);
+  margin-bottom: 8px;
+}
+.framework__axis-title {
+  font-size: var(--text-md);
+  color: var(--color-text-strong);
+  font-weight: var(--weight-bold);
+  margin-bottom: 18px;
+}
+.framework__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--space-4); }
+.framework__tags:last-child { margin-bottom: 0; }
+.tag {
+  font-size: 13px;
+  color: var(--color-text-strong);
+  padding: 7px 14px;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-pill);
+  font-weight: var(--weight-medium);
+}
+.tag--accent { border-color: var(--color-accent); color: var(--color-accent); }
+.framework__divider { height: 1px; background: var(--color-border); margin: var(--space-4) 0; }
+
+
+/* 10. INSIGHT BLOCK ------------------------------------------------------- */
+.insight {
+  padding: 36px 0;
+  border-bottom: var(--hairline);
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+.insight:last-child { border-bottom: none; }
+.insight__num {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: var(--weight-light);
+  color: var(--color-accent);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-style: italic;
+}
+.insight__content h3 { margin-bottom: 14px; }
+.insight__content p { font-size: var(--text-base); line-height: 1.65; margin-bottom: 14px; }
+
+
+/* 11. EVAL CHART ---------------------------------------------------------- */
+.eval {
+  margin: var(--space-6) 0 var(--space-4);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-sm);
+  padding: var(--space-5);
+}
+.eval__row {
+  display: grid;
+  grid-template-columns: 130px 1fr 60px;
+  gap: var(--space-3);
+  align-items: center;
+  padding: 13px 0;
+  border-bottom: var(--hairline);
+}
+.eval__row:last-of-type { border-bottom: none; }
+.eval__model { font-size: var(--text-sm); color: var(--color-text-strong); font-weight: var(--weight-semibold); }
+.eval__track { height: 6px; background: var(--color-rule); border-radius: 3px; overflow: hidden; }
+.eval__fill { height: 100%; background: var(--color-accent); border-radius: 3px; }
+.eval__fill--low { background: var(--color-accent-deep); }
+.eval__score {
+  font-size: var(--text-sm);
+  color: var(--color-text-strong);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.eval__caption {
+  font-size: 13px;
+  color: var(--color-text-mute);
+  text-align: center;
+  margin-top: var(--space-3);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+
+/* 12. TERMINAL BLOCK ------------------------------------------------------ */
+/* For showing raw / broken model output as visual evidence. */
+.terminal {
+  background: var(--color-bg-terminal);
+  border: var(--hairline);
+  border-radius: var(--radius-sm);
+  margin: var(--space-5) 0;
+  overflow: hidden;
+}
+.terminal__head {
+  background: var(--color-bg-card);
+  padding: 12px 20px;
+  border-bottom: var(--hairline);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+  font-weight: var(--weight-bold);
+  display: flex;
+  justify-content: space-between;
+}
+.terminal__head span:last-child { color: var(--color-accent-deep); }
+.terminal__body {
+  padding: 24px 26px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: #a89888;
+  word-break: break-word;
+}
+.terminal__body .glitch { color: #7a6960; letter-spacing: 0.05em; }
+.terminal__body .ok {
+  color: var(--color-text-strong);
+  font-style: normal;
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+
+
+/* 13. FAILURE ROW --------------------------------------------------------- */
+.failure {
+  padding: var(--space-3) 0;
+  border-bottom: var(--hairline);
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+.failure:last-child { border-bottom: none; }
+.failure__tag {
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--weight-bold);
+  padding-top: 4px;
+}
+.failure__content h4 {
+  color: var(--color-text-strong);
+  font-size: 15.5px;
+  letter-spacing: 0;
+  text-transform: none;
+  margin-bottom: 8px;
+  font-weight: var(--weight-bold);
+}
+.failure__content p { font-size: var(--text-sm); line-height: 1.6; margin-bottom: 0; }
+
+
+/* 14. PRINCIPLE BLOCK ----------------------------------------------------- */
+.principle {
+  padding: var(--space-5) 0;
+  border-bottom: var(--hairline);
+}
+.principle:last-child { border-bottom: none; }
+.principle__num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--weight-light);
+  color: var(--color-accent);
+  font-size: var(--text-base);
+  letter-spacing: var(--tracking-wide);
+  margin-bottom: 14px;
+}
+.principle h3 { margin-bottom: 18px; font-size: var(--text-xl); }
+.principle p { font-size: var(--text-base); line-height: 1.65; }
+
+
+/* 15. OUTCOME LIST -------------------------------------------------------- */
+.outcomes { margin-top: var(--space-4); }
+.outcome { padding: var(--space-3) 0; border-bottom: var(--hairline); }
+.outcome:last-child { border-bottom: none; }
+.outcome strong {
+  display: block;
+  color: var(--color-text-strong);
+  font-size: var(--text-base);
+  margin-bottom: 6px;
+  font-weight: var(--weight-bold);
+}
+.outcome p { font-size: 15px; line-height: 1.6; margin-bottom: 0; }
+
+
+/* 16. CONFIDENTIAL NOTE --------------------------------------------------- */
+.confidential {
+  margin: var(--space-5) 0;
+  padding: var(--space-3) 0;
+  border-top: var(--hairline);
+  border-bottom: var(--hairline);
+}
+.confidential__label {
+  font-size: 11px;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-accent-deep);
+  font-weight: var(--weight-bold);
+  margin-bottom: 10px;
+}
+.confidential p { color: var(--color-text); font-size: 15px; line-height: 1.6; }
+
+
+/* 17. FOOTER CITATION ----------------------------------------------------- */
+.cite {
+  font-size: 12.5px;
+  color: var(--color-text-mute);
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0 auto;
+  letter-spacing: 0.02em;
+}
+.cite strong { color: var(--color-text-strong); font-weight: var(--weight-bold); }
+
+
+/* ==========================================================================
+   COMPONENT RESPONSIVE OVERRIDES
+   ========================================================================== */
+@media (max-width: 768px) {
+  .meta { grid-template-columns: 1fr 1fr; }
+  .meta__item {
+    padding: var(--space-3) 0 0 0 !important;
+    border-right: none;
+    border-bottom: var(--hairline);
+  }
+  .meta__item:nth-child(odd) { padding-right: 16px !important; }
+  .meta__item:nth-child(even) { padding-left: 16px !important; border-left: var(--hairline); }
+  .meta__item:nth-last-child(-n+2) { border-bottom: none; }
+
+  .duo, .stages { grid-template-columns: 1fr; gap: 1px; }
+  .stage { padding: 28px 24px; }
+
+  .insight, .failure { grid-template-columns: 1fr; gap: 14px; padding: 28px 0; }
+  .insight__num { font-size: 34px; }
+
+  .ledger__row { grid-template-columns: 1fr; gap: 6px; padding: 20px 0; }
+  .ledger__label { padding-top: 0; }
+
+  .framework, .eval, .callout { padding: 28px 24px; }
+  .quote { font-size: var(--text-lg); padding-left: 22px; }
+
+  .eval__row { grid-template-columns: 100px 1fr 48px; }
+}
+
+@media (max-width: 480px) {
+  .meta { grid-template-columns: 1fr; }
+  .meta__item { padding: 18px 0 !important; border-left: none !important; border-right: none; }
+}
+
+
+/* 18. SECTION RAIL (local page nav) --------------------------------------- */
+/* Vertical sticky table-of-contents for long case-study pages. This is the
+   LOCAL nav — "where am I inside this page" — visually distinct from the
+   global site nav. Sits on the left, highlights active section on scroll.
+   Hidden on narrower viewports where there's no room. */
+.layout-with-rail {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: var(--space-7);
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter) 0;
+  align-items: start;
+}
+.rail {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-5));
+  align-self: start;
+  min-width: 0;
+}
+.rail-content { min-width: 0; }
+.rail__label {
+  font-size: 10px;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: var(--hairline);
+}
+.rail__list { display: flex; flex-direction: column; gap: 2px; }
+.rail__list a {
+  font-size: 13px;
+  color: var(--color-text-soft);
+  font-weight: var(--weight-medium);
+  padding: 6px 0 6px 14px;
+  border-left: 1px solid var(--color-border);
+  transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+  line-height: 1.4;
+}
+.rail__list a:hover { color: var(--color-text-strong); }
+.rail__list a.is-active {
+  color: var(--color-accent);
+  border-left-color: var(--color-accent);
+}
+
+/* Inside the rail layout, sections drop their centering container so prose
+   left-aligns within the article column. */
+.layout-with-rail .rail-content .container {
+  padding: 0;
+  max-width: 100%;
+  margin: 0;
+}
+.layout-with-rail .rail-content .section { padding: var(--space-7) 0; }
+.layout-with-rail .rail-content .section:first-child { padding-top: 0; }
+
+
+/* ----- RAIL RESPONSIVE ----- */
+@media (max-width: 980px) {
+  /* Not enough room for the side rail — collapse to single column.
+     The rail becomes a simple horizontal strip at the top of content. */
+  .layout-with-rail {
+    grid-template-columns: 1fr;
+    gap: 0;
+    max-width: var(--container-narrow);
+    padding-top: var(--space-6);
+  }
+  .rail {
+    position: static;
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: var(--hairline);
+  }
+  .rail__list { flex-direction: row; flex-wrap: wrap; gap: 4px 0; }
+  .rail__list a {
+    border-left: none;
+    padding: 4px 16px 4px 0;
+    font-size: 12.5px;
+  }
+  .rail__list a.is-active { border-left: none; }
+}
+
+
+/* 19. WORK CARD (project listing) ----------------------------------------- */
+.work-list { margin-top: var(--space-5); border-top: var(--hairline); }
+.work-card {
+  padding: var(--space-5) 0;
+  border-bottom: var(--hairline);
+}
+.work-card__meta {
+  font-size: 11px;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--weight-bold);
+  margin-bottom: 12px;
+}
+.work-card__title {
+  font-size: var(--text-xl);
+  color: var(--color-text-strong);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: 10px;
+  line-height: var(--leading-snug);
+}
+.work-card__desc {
+  font-size: var(--text-base);
+  color: var(--color-text);
+  line-height: 1.6;
+  margin-bottom: var(--space-3);
+  max-width: 60ch;
+}
+.work-card__links { display: flex; gap: 12px; flex-wrap: wrap; }
+.work-card__link {
+  font-size: 13px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.02em;
+  padding: 8px 18px;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-strong);
+  transition: border-color var(--duration) var(--ease), color var(--duration) var(--ease);
+}
+.work-card__link:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.work-card__link--muted { color: var(--color-text-soft); }
+.work-card__status {
+  font-size: 12px;
+  color: var(--color-text-mute);
+  font-style: italic;
+  align-self: center;
+}
+
+
+/* 20. PAGE HEAD (compact header for listing/utility pages) ---------------- */
+/* A lighter alternative to the full .hero. Use on Work, Studio, CV, Contact
+   — pages that are lists or utilities, not statements. Small eyebrow + a
+   modest title + optional one-line intro. No oversized h1, no tagline. */
+.page-head {
+  padding: var(--space-6) 0 var(--space-5);
+  border-bottom: var(--hairline);
+}
+.page-head__inner {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.page-head__title {
+  font-size: clamp(26px, 3vw, 34px);
+  color: var(--color-text-strong);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+  margin: var(--space-2) 0 0;
+}
+.page-head__intro {
+  font-size: var(--text-base);
+  color: var(--color-text-soft);
+  line-height: var(--leading-normal);
+  max-width: 56ch;
+  margin-top: var(--space-2);
+}
+
+@media (max-width: 768px) {
+  .page-head { padding: var(--space-5) 0 var(--space-4); }
+  .page-head__inner { padding: 0 var(--gutter-mobile); }
+}

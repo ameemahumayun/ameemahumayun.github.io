@@ -1,0 +1,17 @@
+/* ==========================================================================
+   MAIN.CSS — Single entry point
+   --------------------------------------------------------------------------
+   This is the ONLY stylesheet a page links to. It imports the others in
+   cascade order: tokens first (variables must exist before use), then reset,
+   base, layout, and components last (most specific).
+
+   <link rel="stylesheet" href="/assets/css/main.css">
+
+   Import order matters. Do not rearrange.
+   ========================================================================== */
+
+@import url("tokens.css");      /* 1. variables — must come first */
+@import url("reset.css");       /* 2. normalize browser defaults */
+@import url("base.css");        /* 3. element typography & utilities */
+@import url("layout.css");      /* 4. page structure */
+@import url("components.css");  /* 5. reusable blocks — most specific */

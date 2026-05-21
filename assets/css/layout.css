@@ -1,0 +1,138 @@
+/* ==========================================================================
+   LAYOUT.CSS — Page structure: containers, nav, sections, footer
+   The skeleton every page hangs on. No decorative styling here.
+   ========================================================================== */
+
+/* ----- CONTAINERS -------------------------------------------------------- */
+.container {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.container-wide {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+
+/* ----- NAV --------------------------------------------------------------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+  background: rgba(24, 21, 19, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: var(--hairline);
+  padding: 18px var(--gutter-nav);
+}
+
+.nav__inner {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Brand: the NAME is the home link and behaves like "home".
+   The "/ Case Study" tag is contextual page label — NOT a link. */
+.nav__brand {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  font-weight: var(--weight-semibold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav__home {
+  color: var(--color-text-strong);
+  font-weight: var(--weight-bold);
+  transition: color var(--duration) var(--ease);
+}
+.nav__home:hover { color: var(--color-accent); }
+.nav__tag {
+  color: var(--color-text-mute);
+  font-weight: var(--weight-semibold);
+}
+.nav__tag::before { content: "/ "; }
+
+.nav__links {
+  display: flex;
+  gap: var(--space-4);
+  font-size: 12.5px;
+  letter-spacing: var(--tracking-wide);
+}
+.nav__links a {
+  color: var(--color-text-soft);
+  font-weight: var(--weight-medium);
+  transition: color var(--duration) var(--ease);
+}
+.nav__links a:hover { color: var(--color-accent); }
+/* Active page indicator */
+.nav__links a[aria-current="page"] { color: var(--color-accent); }
+
+
+/* ----- SECTIONS ---------------------------------------------------------- */
+.section {
+  padding: var(--space-9) 0;
+  scroll-margin-top: 80px;
+  border-bottom: var(--hairline);
+}
+.section:last-of-type { border-bottom: none; }
+
+
+/* ----- HERO -------------------------------------------------------------- */
+.hero {
+  padding: var(--space-7) 0 var(--space-6);
+  border-bottom: var(--hairline);
+}
+.hero__inner {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+
+/* ----- FOOTER ------------------------------------------------------------ */
+.footer {
+  padding: var(--space-8) 0 var(--space-6);
+  text-align: center;
+  border-top: var(--hairline);
+}
+
+
+/* ----- GRID HELPERS ------------------------------------------------------ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 768px) {
+  .container,
+  .container-wide,
+  .hero__inner { padding: 0 var(--gutter-mobile); }
+
+  .nav { padding: 14px var(--gutter-mobile); }
+  .nav__links { gap: 18px; }
+  .nav__links a { font-size: 11px; }
+  .nav__tag { display: none; }   /* hide contextual tag on mobile */
+
+  .hero { padding: 5rem 0 4.5rem; }
+  .section { padding: 4.5rem 0; }
+
+  .grid-2 { grid-template-columns: 1fr; gap: var(--space-4); }
+}
+
+@media (max-width: 480px) {
+  .nav__links { display: none; }
+}

@@ -1,0 +1,19 @@
+{%- comment -%}
+  GLOBAL NAV — rendered from site.nav_links in _config.yml.
+  To change links/labels: edit _config.yml, nowhere else.
+  A page marks its active link by setting `active: work` (etc.) in front-matter.
+  A case-study page shows the contextual tag by setting `nav_tag: Case Study`.
+{%- endcomment -%}
+<nav class="nav">
+  <div class="nav__inner">
+    <div class="nav__brand">
+      <a class="nav__home" href="{{ '/' | relative_url }}">Ameemah Humayun</a>
+      {%- if page.nav_tag %}<span class="nav__tag">{{ page.nav_tag }}</span>{% endif -%}
+    </div>
+    <ul class="nav__links">
+      {%- for link in site.nav_links %}
+      <li><a href="{{ link.url | relative_url }}"{% if page.active == link.key %} aria-current="page"{% endif %}>{{ link.label }}</a></li>
+      {%- endfor %}
+    </ul>
+  </div>
+</nav>

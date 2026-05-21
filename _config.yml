@@ -1,0 +1,40 @@
+# ============================================================
+# Jekyll config — GitHub Pages builds this automatically on push.
+# You do NOT need to install anything. Edit values here, push, done.
+# ============================================================
+
+title: Ameemah Humayun
+description: UX Research & Human-Centered AI
+# When testing locally you can set url/baseurl; for username.github.io leave blank.
+baseurl: ""
+url: ""
+
+# Don't process these with Jekyll
+exclude:
+  - README.md
+  - _templates/
+  - "*.zip"
+
+# Cleaner permalinks (folder/ instead of folder.html)
+permalink: pretty
+
+# Site-wide nav links — EDIT THE NAV IN ONE PLACE: here.
+# label = what shows; url = where it goes; key = used to mark active page.
+nav_links:
+  - label: Work
+    url: /work/
+    key: work
+  - label: Studio
+    url: /studio/
+    key: studio
+  - label: CV
+    url: /cv/
+    key: cv
+  - label: Contact
+    url: /contact/
+    key: contact
+
+# Footer contact details — edit once, applies everywhere.
+email: 26100175@lums.edu.pk
+linkedin: https://linkedin.com/in/ameemah-humayun
+location: Lahore, Pakistan

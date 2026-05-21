@@ -108,3 +108,19 @@ a { transition: color var(--duration) var(--ease); }
 html {
   scrollbar-gutter: stable;
 }
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 5px;
+  border: 2px solid var(--color-bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-rule); }
+
+/* Firefox */
+html {
+  scrollbar-color: var(--color-border) var(--color-bg);
+  scrollbar-width: thin;
+}

@@ -88,8 +88,7 @@
 
 /* ----- HERO -------------------------------------------------------------- */
 .hero {
-  padding: var(--space-10) 0 7rem;
-  border-bottom: var(--hairline);
+  padding: 2.5rem 0 3rem;
 }
 .hero__inner {
   max-width: var(--container-narrow);

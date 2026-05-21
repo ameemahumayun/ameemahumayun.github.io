@@ -94,7 +94,7 @@
 
 /* ----- HERO -------------------------------------------------------------- */
 .hero {
-  padding: var(--space-7) 0 var(--space-6);
+  padding: var(--space-6) 0 var(--space-4);
   border-bottom: var(--hairline);
 }
 .hero__inner {

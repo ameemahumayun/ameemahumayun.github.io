@@ -21,16 +21,16 @@ permalink: pretty
 # Site-wide nav links — EDIT THE NAV IN ONE PLACE: here.
 # label = what shows; url = where it goes; key = used to mark active page.
 nav_links:
-  - label: Work
+  - label: work stuff
     url: /work/
     key: work
-  - label: Studio
+  - label: fun stuff
     url: /studio/
     key: studio
-  - label: CV
+  - label: cv
     url: /cv/
     key: cv
-  - label: Contact
+  - label: contact me! (please)
     url: /contact/
     key: contact
 

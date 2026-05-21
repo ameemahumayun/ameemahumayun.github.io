@@ -58,7 +58,7 @@
   content: "";
   width: 24px;
   height: 1px;
-  background: var(--color-accent-deep);
+  background: var(--color-accent);
 }
 
 
@@ -828,4 +828,43 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 
 @media (max-width: 768px) {
   .subaccordion__meta { display: none; }
+}
+
+
+/* 25. TIMELINE (recent updates / news) ------------------------------------ */
+/* Simple vertical timeline. Pure HTML/CSS, no JS. A thin line runs down the
+   left; each entry has a dot, a date, and a line of text. */
+.timeline {
+  margin-top: var(--space-5);
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--color-border);
+}
+.timeline__item {
+  position: relative;
+  padding-bottom: var(--space-4);
+}
+.timeline__item:last-child { padding-bottom: 0; }
+/* dot on the line */
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-4) - 4px);
+  top: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+.timeline__date {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: var(--weight-bold);
+  margin-bottom: 4px;
+}
+.timeline__text {
+  font-size: var(--text-base);
+  color: var(--color-text-strong);
+  line-height: 1.5;
 }

@@ -93,7 +93,7 @@
    already provides space; the section's full top padding stacks on top). */
 .hero + .section,
 .page-head + .section {
-  padding-top: var(--space-5);
+  padding-top: var(--space-1);
 }
 .section:last-of-type { border-bottom: none; }
 
@@ -146,5 +146,9 @@
 }
 
 @media (max-width: 480px) {
-  .nav__links { display: none; }
+  /* Keep the four short links visible on phones; let them wrap/shrink
+     rather than hiding them. Stack name + links if needed. */
+  .nav__inner { flex-wrap: wrap; gap: 4px 14px; }
+  .nav__links { gap: 14px; flex-wrap: wrap; }
+  .nav__links a { font-size: 11px; letter-spacing: 0.06em; }
 }

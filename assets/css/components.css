@@ -58,7 +58,7 @@
   content: "";
   width: 24px;
   height: 1px;
-  background: var(--color-accent);
+  background: var(--color-accent--deep);
 }
 
 

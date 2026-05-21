@@ -32,10 +32,8 @@
   --color-border-soft:  #2a2624;  /* faint dividers */
   --color-rule:         #3a3431;  /* tag borders, tracks */
 
-  --color-accent:       #c9a574;  /* aged brass — the only accent */
-  --color-accent-deep:  #a67358;  /* terracotta — used very sparingly */
-  /* --color-accent:       #c96f7f;  /* dusky baby pink */
-  /*--color-accent-deep:  #b07f88;  /* deeper rose, for the rare --deep uses */ */
+  --color-accent:       #7fa3a0;
+--color-accent-deep:  #5f807d;
 
   --color-selection-bg: var(--color-accent);
   --color-selection-fg: var(--color-bg);

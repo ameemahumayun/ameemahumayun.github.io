@@ -79,7 +79,7 @@
 
 /* ----- SECTIONS ---------------------------------------------------------- */
 .section {
-  padding: var(--space-6) 0;
+  padding: var(--space-7) 0;
   scroll-margin-top: 80px;
   border-bottom: var(--hairline);
 }

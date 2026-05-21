@@ -34,6 +34,8 @@
 
   --color-accent:       #c9a574;  /* aged brass — the only accent */
   --color-accent-deep:  #a67358;  /* terracotta — used very sparingly */
+  --color-accent:       #d4a5ad;  /* dusky baby pink */
+  --color-accent-deep:  #b07f88;  /* deeper rose, for the rare --deep uses */
 
   --color-selection-bg: var(--color-accent);
   --color-selection-fg: var(--color-bg);

@@ -688,7 +688,7 @@
 
 /* 23. ACCORDION (collapsible CV sections) --------------------------------- */
 /* Built on native <details>/<summary> — no JS needed. */
-.accordion { margin-top: var(--space-6); border-top: var(--hairline); }
+.accordion { margin-top: var(--space-3); }
 .accordion__item { border-bottom: var(--hairline); }
 .accordion__head {
   list-style: none;

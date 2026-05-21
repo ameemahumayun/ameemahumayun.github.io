@@ -28,6 +28,7 @@ h1 {
   font-weight: var(--weight-bold);
   color: var(--color-text-strong);
   letter-spacing: var(--tracking-tight);
+  margin-bottom: 1.1rem;
 }
 
 h2 {

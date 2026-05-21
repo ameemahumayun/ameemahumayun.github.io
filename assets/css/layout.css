@@ -76,9 +76,11 @@
 .nav__links a {
   color: var(--color-text-soft);
   font-weight: var(--weight-medium);
-  transition: color var(--duration) var(--ease);
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
 }
-.nav__links a:hover { color: var(--color-accent); }
+.nav__links a:hover { color: var(--color-accent); border-bottom-color: var(--color-accent); }
 /* Active page indicator */
 .nav__links a[aria-current="page"] { color: var(--color-accent); }
 
@@ -93,7 +95,7 @@
    already provides space; the section's full top padding stacks on top). */
 .hero + .section,
 .page-head + .section {
-  padding-top: var(--space-1);
+  padding-top: var(--space-0);
 }
 .section:last-of-type { border-bottom: none; }
 

@@ -676,3 +676,105 @@
   /* Image first, then text on mobile */
   .hero__avatar { order: -1; width: 130px; height: 130px; }
 }
+ 
+ 
+/* 22. CV DOWNLOAD ROW ----------------------------------------------------- */
+.cv-downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: var(--space-3);
+}
+ 
+/* 23. ACCORDION (collapsible CV sections) --------------------------------- */
+/* Built on native <details>/<summary> — no JS needed. */
+.accordion { margin-top: var(--space-6); border-top: var(--hairline); }
+.accordion__item { border-bottom: var(--hairline); }
+.accordion__head {
+  list-style: none;
+  cursor: pointer;
+  padding: var(--space-3) 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.accordion__head::-webkit-details-marker { display: none; }
+.accordion__title {
+  font-size: var(--text-lg);
+  color: var(--color-text-strong);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+}
+.accordion__hint {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+  font-weight: var(--weight-bold);
+  flex-shrink: 0;
+}
+/* Plus/minus indicator */
+.accordion__icon {
+  position: relative;
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  align-self: center;
+}
+.accordion__icon::before,
+.accordion__icon::after {
+  content: "";
+  position: absolute;
+  background: var(--color-accent);
+  transition: opacity var(--duration) var(--ease);
+}
+.accordion__icon::before { top: 7px; left: 0; width: 16px; height: 2px; }      /* horizontal */
+.accordion__icon::after  { left: 7px; top: 0; width: 2px; height: 16px; }      /* vertical */
+details[open] .accordion__icon::after { opacity: 0; }                          /* becomes minus */
+ 
+.accordion__body { padding: 0 0 var(--space-4); }
+.accordion__body > *:first-child { margin-top: 0; }
+ 
+/* CV entry: role/title + meta + bullets */
+.cv-entry { padding: var(--space-2) 0; }
+.cv-entry:not(:last-child) { border-bottom: 1px solid var(--color-border-soft); margin-bottom: var(--space-2); }
+.cv-entry__role {
+  font-size: var(--text-base);
+  color: var(--color-text-strong);
+  font-weight: var(--weight-bold);
+}
+.cv-entry__meta {
+  font-size: var(--text-sm);
+  color: var(--color-text-soft);
+  margin: 2px 0 10px;
+}
+.cv-entry__meta .accent { color: var(--color-accent); }
+.cv-list { padding-left: 1.1em; }
+.cv-list li {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  list-style: disc;
+  color: var(--color-text);
+}
+.cv-list li::marker { color: var(--color-text-mute); }
+.cv-pubs li {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: var(--space-2);
+  color: var(--color-text);
+  padding-left: 1.1em;
+  list-style: none;
+  position: relative;
+}
+.cv-pubs li::before { content: "—"; position: absolute; left: 0; color: var(--color-accent); }
+.cv-skills__row { padding: 10px 0; border-bottom: 1px solid var(--color-border-soft); display: grid; grid-template-columns: 180px 1fr; gap: var(--space-3); }
+.cv-skills__row:last-child { border-bottom: none; }
+.cv-skills__label { font-size: var(--text-sm); color: var(--color-accent); font-weight: var(--weight-bold); }
+.cv-skills__val { font-size: 15px; color: var(--color-text); }
+ 
+@media (max-width: 768px) {
+  .cv-skills__row { grid-template-columns: 1fr; gap: 4px; }
+  .accordion__hint { display: none; }
+}
+ 

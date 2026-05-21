@@ -23,8 +23,8 @@ active: cv
  
     <div class="accordion">
  
-      <!-- EDUCATION -->
-      <details class="accordion__item" open>
+      <!-- EDUCATION (closed on load) -->
+      <details class="accordion__item">
         <summary class="accordion__head">
           <span class="accordion__title">Education</span>
           <span class="accordion__icon"></span>
@@ -58,47 +58,82 @@ active: cv
         </div>
       </details>
  
-      <!-- RESEARCH / UX EXPERIENCE -->
+      <!-- UX & RESEARCH EXPERIENCE (nested: lab > project) -->
       <details class="accordion__item">
         <summary class="accordion__head">
           <span class="accordion__title">UX &amp; Research Experience</span>
           <span class="accordion__icon"></span>
         </summary>
         <div class="accordion__body">
-          <div class="cv-entry">
+ 
+          <!-- LAB 1: Interactive Media Lab (two projects nested inside) -->
+          <div class="cv-group">
             <div class="cv-entry__role">Research Lead — Interactive Media Lab, LUMS</div>
             <div class="cv-entry__meta">May 2025 – Present · Advisor: Dr. Maryam Mustafa · Lahore, Pakistan</div>
-            <ul class="cv-list">
-              <li>Led mixed-methods user research on AI-mediated health communication in conservative, low-resource contexts; accepted to CHI 2026 (CORE A*), presented in person in Barcelona, supported by the Gates Foundation and Patrick J. McGovern Foundation.</li>
-              <li>Conducted 22 user interviews, 5 focus groups, and 40 contextual observations of clinician-patient interactions; led thematic analysis and produced the Domain-Approach framework for mapping how users actually talk about sensitive health topics, used to inform interface and prompt design.</li>
-              <li>Evaluated 5 conversational AI systems (Claude Sonnet 4, GPT-4o, GPT-OSS, Gemma 3, LLaMA 3.2) against 71 real user utterances with dual-rater scoring; documented user-facing failure modes (polysemy collapse, semantic drift, script degradation, persona inconsistency) and their interaction-design consequences.</li>
-              <li>Translated findings into concrete design recommendations — synchronous terminology management, miscommunication-as-default interaction patterns, multimodal gestural input under privacy constraints — and drafted the full manuscript.</li>
-            </ul>
+ 
+            <div class="subaccordion">
+              <details class="subaccordion__item">
+                <summary class="subaccordion__head">
+                  <span class="subaccordion__chev"></span>
+                  <span class="subaccordion__title">SRH communication &amp; LLM safety</span>
+                  <span class="subaccordion__meta">CHI 2026</span>
+                </summary>
+                <div class="subaccordion__body">
+                  <ul class="cv-list">
+                    <li>Led mixed-methods user research on AI-mediated health communication in conservative, low-resource contexts; accepted to CHI 2026 (CORE A*), presented in person in Barcelona, supported by the Gates Foundation and Patrick J. McGovern Foundation.</li>
+                    <li>Conducted 22 user interviews, 5 focus groups, and 40 contextual observations of clinician-patient interactions; led thematic analysis and produced the Domain-Approach framework for mapping how users actually talk about sensitive health topics, used to inform interface and prompt design.</li>
+                    <li>Evaluated 5 conversational AI systems (Claude Sonnet 4, GPT-4o, GPT-OSS, Gemma 3, LLaMA 3.2) against 71 real user utterances with dual-rater scoring; documented user-facing failure modes (polysemy collapse, semantic drift, script degradation, persona inconsistency) and their interaction-design consequences.</li>
+                    <li>Translated findings into concrete design recommendations — synchronous terminology management, miscommunication-as-default interaction patterns, multimodal gestural input under privacy constraints — and drafted the full manuscript.</li>
+                  </ul>
+                </div>
+              </details>
+ 
+              <details class="subaccordion__item">
+                <summary class="subaccordion__head">
+                  <span class="subaccordion__chev"></span>
+                  <span class="subaccordion__title">Conversational AI safety in prenatal care</span>
+                  <span class="subaccordion__meta">Nature Health · in progress</span>
+                </summary>
+                <div class="subaccordion__body">
+                  <ul class="cv-list">
+                    <li>Co-first author on a mixed-methods study of conversational AI safety in patient-facing healthcare contexts; targeting Nature Health (in progress).</li>
+                    <li>Co-designed and conducted 13 expert interviews with OB/GYNs and radiologists; led thematic analysis and produced a four-pathway harm model showing how AI disclosure decisions cascade into real-world user harm (care withdrawal, unsafe medical pathways, family-composition risk, provider liability).</li>
+                    <li>Co-designed a 3-condition conversational evaluation (single-turn, 6-turn naturalistic, 18-turn adversarial) of GPT-4.1, Claude Sonnet 4, and Gemini 1.5 Pro across 40 images; revealed UX failure modes invisible to single-turn benchmarks (100% hallucinated disclosure from Gemini on non-inferable images vs. complete refusal from Claude) — directly informing procurement and product safety decisions.</li>
+                    <li>Drafted Introduction, Discussion, and qualitative findings; framed implications for AI product evaluation and locally grounded multi-turn user testing.</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
           </div>
-          <div class="cv-entry">
-            <div class="cv-entry__role">Research Lead — Interactive Media Lab, LUMS</div>
-            <div class="cv-entry__meta">May 2025 – Present · Advisor: Dr. Maryam Mustafa · Lahore, Pakistan</div>
-            <ul class="cv-list">
-              <li>Co-first author on a mixed-methods study of conversational AI safety in patient-facing healthcare contexts; targeting Nature Health (in progress).</li>
-              <li>Co-designed and conducted 13 expert interviews with OB/GYNs and radiologists; led thematic analysis and produced a four-pathway harm model showing how AI disclosure decisions cascade into real-world user harm (care withdrawal, unsafe medical pathways, family-composition risk, provider liability).</li>
-              <li>Co-designed a 3-condition conversational evaluation (single-turn, 6-turn naturalistic, 18-turn adversarial) of GPT-4.1, Claude Sonnet 4, and Gemini 1.5 Pro across 40 images; revealed UX failure modes invisible to single-turn benchmarks (100% hallucinated disclosure from Gemini on non-inferable images vs. complete refusal from Claude) — directly informing procurement and product safety decisions.</li>
-              <li>Drafted Introduction, Discussion, and qualitative findings; framed implications for AI product evaluation and locally grounded multi-turn user testing.</li>
-            </ul>
-          </div>
-          <div class="cv-entry">
+ 
+          <!-- LAB 2: Safe Interactions Lab -->
+          <div class="cv-group">
             <div class="cv-entry__role">Research Assistant — Safe Interactions Lab, University of Waterloo</div>
             <div class="cv-entry__meta">November 2025 – Present · Advisors: Dr. Leah Zhang-Kennedy, Dr. Urs Hengartner · Remote</div>
-            <ul class="cv-list">
-              <li>Co-led qualitative UX research on shared-device user experiences in collectivist immigrant households in Canada; accepted to SOUPS 2026 (CORE A*), co-located with USENIX Security.</li>
-              <li>Analyzed 41 user interviews across 18 families using reflexive thematic analysis in Atlas.ti; developed and iterated the codebook across multiple coding rounds.</li>
-              <li>Translated findings into interaction-design recommendations for multi-user authentication, identity-aware access patterns, and culturally configurable privacy controls.</li>
-              <li>Drafted manuscript sections and led rebuttal response through acceptance.</li>
-            </ul>
+ 
+            <div class="subaccordion">
+              <details class="subaccordion__item">
+                <summary class="subaccordion__head">
+                  <span class="subaccordion__chev"></span>
+                  <span class="subaccordion__title">Shared-device practices in collectivist households</span>
+                  <span class="subaccordion__meta">SOUPS 2026</span>
+                </summary>
+                <div class="subaccordion__body">
+                  <ul class="cv-list">
+                    <li>Co-led qualitative UX research on shared-device user experiences in collectivist immigrant households in Canada; accepted to SOUPS 2026 (CORE A*), co-located with USENIX Security.</li>
+                    <li>Analyzed 41 user interviews across 18 families using reflexive thematic analysis in Atlas.ti; developed and iterated the codebook across multiple coding rounds.</li>
+                    <li>Translated findings into interaction-design recommendations for multi-user authentication, identity-aware access patterns, and culturally configurable privacy controls.</li>
+                    <li>Drafted manuscript sections and led rebuttal response through acceptance.</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
           </div>
+ 
         </div>
       </details>
  
-      <!-- WORK / TEACHING -->
+      <!-- TEACHING -->
       <details class="accordion__item">
         <summary class="accordion__head">
           <span class="accordion__title">Teaching Experience</span>
@@ -153,7 +188,6 @@ active: cv
       <details class="accordion__item">
         <summary class="accordion__head">
           <span class="accordion__title">Skills &amp; Interests</span>
-          <span class="accordion__hint"></span>
           <span class="accordion__icon"></span>
         </summary>
         <div class="accordion__body">

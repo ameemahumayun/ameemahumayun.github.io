@@ -87,7 +87,7 @@
    already provides space; the section's full top padding stacks on top). */
 .hero + .section,
 .page-head + .section {
-  padding-top: var(--space-1.5);
+  padding-top: var(--space-1);
 }
 .section:last-of-type { border-bottom: none; }
 

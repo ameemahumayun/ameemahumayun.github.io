@@ -104,3 +104,7 @@ a { transition: color var(--duration) var(--ease); }
   color: var(--color-accent);
   font-weight: var(--weight-bold);
 }
+
+html {
+  scrollbar-gutter: stable;
+}

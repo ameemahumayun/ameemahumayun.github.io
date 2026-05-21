@@ -79,16 +79,22 @@
 
 /* ----- SECTIONS ---------------------------------------------------------- */
 .section {
-  padding: var(--space-7) 0;
+  padding: var(--space-9) 0;
   scroll-margin-top: 80px;
   border-bottom: var(--hairline);
+}
+/* Tighten the gap directly under the hero / page-head (their bottom padding
+   already provides space; the section's full top padding stacks on top). */
+.hero + .section,
+.page-head + .section {
+  padding-top: var(--space-5);
 }
 .section:last-of-type { border-bottom: none; }
 
 
 /* ----- HERO -------------------------------------------------------------- */
 .hero {
-  padding: 2.5rem 0 3rem;
+  padding: var(--space-7) 0 var(--space-6);
   border-bottom: var(--hairline);
 }
 .hero__inner {

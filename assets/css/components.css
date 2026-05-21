@@ -550,7 +550,7 @@
 
 
 /* 19. WORK CARD (project listing) ----------------------------------------- */
-.work-list { margin-top: var(--space-5); border-top: var(--hairline); }
+.work-list { margin-top: var(--space-3); }
 .work-card {
   padding: var(--space-5) 0;
   border-bottom: var(--hairline);

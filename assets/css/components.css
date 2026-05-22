@@ -604,6 +604,20 @@
 }
 
 
+/* QUIET INLINE LINK ------------------------------------------------------- */
+/* A muted inline text link that animates to the nav-hover treatment (color ->
+   accent, transparent bottom border -> accent underline). Use for understated
+   inline links like the home-page publications row, where the link should sit
+   quietly in the text until hovered. Mirrors .nav__links a deliberately. */
+.link-quiet {
+  color: var(--color-text-mute);
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.link-quiet:hover { color: var(--color-accent); border-bottom-color: var(--color-accent); }
+
+
 /* 20. PAGE HEAD (compact header for listing/utility pages) ---------------- */
 /* A lighter alternative to the full .hero. Use on Work, Studio, CV, Contact
    — pages that are lists or utilities, not statements. Small eyebrow + a

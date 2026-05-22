@@ -4,6 +4,8 @@ Personal portfolio. Built with **Jekyll**, which GitHub Pages runs automatically
 on every push — nothing to install. Shared chrome (nav, footer, head) lives in
 ONE place each, so a change propagates to every page.
 
+https://ameemahumayun.github.io/
+
 ---
 
 ## Where to edit what

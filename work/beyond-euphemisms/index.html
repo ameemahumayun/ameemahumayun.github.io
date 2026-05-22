@@ -3,7 +3,7 @@ layout: case-study
 title: Beyond Euphemisms
 description: CHI 2026 research-to-design case study on building LLM-based maternal-health tools for conservative, low-resource contexts.
 og_type: article
-nav_tag: Case Study
+nav_tag: test
 active: work
 ---
 
@@ -11,7 +11,7 @@ active: work
   <div class="hero__inner">
     <div class="eyebrow eyebrow-rule">CHI 2026 · Research</div>
     <h1>Designing AI for <span class="serif">indirect language</span> in maternal health.</h1>
-    <p class="lead" style="max-width:620px;margin-bottom:4rem;">A field study and five-model LLM evaluation in a Lahore OB/GYN ward, testing whether current language models can interpret the euphemistic, coded language patients use in sexual and reproductive health care, and what that means for any system built to serve them.</p>
+    <p class="lead" style="max-width:620px;margin-bottom:4rem;">A field study and five-model LLM evaluation in a Lahore OB/GYN ward, examining whether current language models can interpret the euphemistic, coded language patients actually use in sexual and reproductive health care — and what that means for systems built to serve them.</p>
 
     <div class="meta">
       <div class="meta__item">
@@ -56,13 +56,13 @@ active: work
 <section class="section" id="overview">
   <div class="container">
     <div class="section-num">01 — Summary</div>
-    <h2>Can the model understand <span class="serif">what patients say?</span></h2>
+    <h2>A product question, <span class="serif">not a research question.</span></h2>
 
-    <p class="lead">For an LLM screening tool to be useful to women in Pakistan, it has to interpret how patients describe their bodies and symptoms in clinic. We tested whether five current models could do that, and found they couldn't do it reliably. Their accuracy scores looked reasonable while concealing where and how they failed.</p>
+    <p class="lead">Before you can build an LLM screening tool for women in Pakistan, you have to answer something more basic: can the model understand what patients actually say? We found that current models can't do this reliably — and that aggregate accuracy scores hide exactly how and where they fail.</p>
 
-    <p>Most healthcare AI is trained on standardized clinical English. In conservative, low-resource contexts, patients describe SRH concerns through euphemism, metaphor, gesture, and folk vocabulary, and clinicians adopt the same language to be understood. When a patient says <span class="urdu">"shohar sey miltay waqt"</span> (when meeting the husband) to mean sexual intercourse, a model that misreads it returns a confident, wrong answer rather than flagging uncertainty.</p>
+    <p>Most healthcare AI is trained on standardized clinical English. In conservative, low-resource contexts, patients communicate through euphemism, metaphor, gesture, and folk vocabulary, and clinicians follow them there to be understood. A model that misreads <span class="urdu">"shohar sey miltay waqt"</span> (when meeting the husband) doesn't fail loudly — it maps the wrong phrase to the wrong diagnosis and returns a confident answer.</p>
 
-    <p>The work paired ethnographic fieldwork in a Lahore OB/GYN ward with a structured evaluation of five LLMs against the language documented there. It produced a categorization framework for indirect SRH communication, a failure taxonomy for current models, and a Roman Urdu glossary that fed into Awaaz-e-Sehat, a Gates-funded maternal-health AI effort at LUMS.</p>
+    <p>The work paired ethnographic fieldwork in a Lahore OB/GYN ward with a structured evaluation of five LLMs against the language documented there. It produced three things a team can build on: a categorization framework for indirect SRH communication, a failure taxonomy for current models, and a Roman Urdu glossary that fed into Awaaz-e-Sehat, a Gates-funded maternal-health AI effort at LUMS.</p>
 
     <div class="ledger">
       <div class="ledger__row">
@@ -71,7 +71,7 @@ active: work
       </div>
       <div class="ledger__row">
         <div class="ledger__label">Finding</div>
-        <div class="ledger__value">No. Aggregate accuracy obscured the failures that mattered most. Because those failures are systematic and patterned, they can be designed against.</div>
+        <div class="ledger__value">No — and aggregate accuracy obscures the failures that matter most. The failure modes are systematic and patterned, which means they can be designed against.</div>
       </div>
       <div class="ledger__row">
         <div class="ledger__label">Contribution</div>
@@ -89,13 +89,13 @@ active: work
 <section class="section" id="problem">
   <div class="container">
     <div class="section-num">02 — Problem framing</div>
-    <h2>The vocabulary a system <span class="serif">has to interpret.</span></h2>
+    <h2>Every assumption in healthcare AI <span class="serif">breaks in this context.</span></h2>
 
-    <p>In our fieldwork, one patient described white vaginal discharge as <span class="urdu">charbi</span> — fat. Not blubber, but the thin, stringy pieces of fat you see when cleaning meat, named for that specific texture and appearance. Another asked whether her child would be <span class="urdu">"normal,"</span> meaning whether the delivery would be vaginal rather than a C-section, not whether the baby was healthy. This is the vocabulary an SRH system in Pakistan has to interpret: vivid, idiosyncratic, and often the opposite of what the words appear to say.</p>
+    <p>Pakistan accounts for roughly 4% of global maternal deaths each year — about 27 preventable deaths a day. Each OB/GYN serves around 1,300 patients against the WHO-recommended 1,000, so consultations are short and histories are incomplete. An LLM screening layer could realistically reduce that load, which is why the question is worth taking seriously.</p>
 
-    <p>The stakes are high enough to justify the attempt. Pakistan accounts for roughly 4% of global maternal deaths each year, about 27 preventable deaths a day. Each OB/GYN serves around 1,300 patients against the WHO-recommended 1,000, so consultations are short and histories incomplete. Timely identification of risk factors prevents many of these deaths, and an LLM screening layer could plausibly help with that.</p>
+    <p>But current healthcare models assume major-language fluency, direct biomedical phrasing, and a single correct vocabulary. None of those hold in a Lahore clinic, where patients move between Urdu, Punjabi, and English; where stigma and low health literacy push communication toward indirection; and where three separate vocabularies coexist for the same anatomical concept, none of them interchangeable.</p>
 
-    <p>Current healthcare models assume major-language fluency, direct biomedical phrasing, and a single correct vocabulary. None of those hold in a Lahore clinic, where patients move between Urdu, Punjabi, and English; where stigma and low health literacy push toward indirection; and where three separate vocabularies coexist for the same anatomical concept, none interchangeable. The project started by documenting what this language looks like in practice and identifying where current models break, since every later design choice depends on knowing both.</p>
+    <p>So the first design decision wasn't about features. It was about establishing ground truth: <strong>what does this language actually look like in practice, and where exactly do current models break?</strong> Without that, every downstream choice is a guess dressed as a decision.</p>
   </div>
 </section>
 
@@ -205,7 +205,7 @@ active: work
       <div class="insight__content">
         <h3>Semantic drift inside the local lexicon</h3>
         <p>Words drift in meaning inside a single language, not just across languages. <span class="urdu">"Chota operation"</span> ("small operation") means episiotomy in OB/GYN settings but generic minor surgery elsewhere. Borrowed English drifts too: a patient asking <span class="urdu">"is the child normal?"</span> is asking about delivery mode, not the baby's health.</p>
-        <p>This is invisible to general-purpose models and clinically consequential. Patients routinely list episiotomies as "operations" in pre-op history, inflating surgical records and complicating anesthetic planning.</p>
+        <p>This is invisible to general-purpose models and clinically consequential — patients routinely list episiotomies as "operations" in pre-op history, inflating surgical records and complicating anesthetic planning.</p>
       </div>
     </div>
 
@@ -229,8 +229,8 @@ active: work
     <div class="insight">
       <div class="insight__num">04</div>
       <div class="insight__content">
-        <h3>Gesture is a primary way patients communicate</h3>
-        <p>Even when prompted for words, patients returned to pointing. One explained that doctors "are experienced and have been walking along with us," so gesture suffices. Every observed symptom-localization relied on it. Text- and voice-only interfaces structurally exclude this channel. A tool built purely on typed or spoken input discards data the patient is actively trying to provide.</p>
+        <h3>Gesture is a primary modality, not a fallback</h3>
+        <p>Even when prompted for words, patients returned to pointing. One explained that doctors "are experienced and have been walking along with us," so gesture suffices. Every observed symptom-localization relied on it. Text- and voice-only interfaces structurally exclude this channel — a tool built purely on typed or spoken input discards data the patient is actively trying to provide.</p>
       </div>
     </div>
   </div>
@@ -270,14 +270,14 @@ active: work
         <div class="eval__track"><div class="eval__fill eval__fill--low" style="width:16%"></div></div>
         <div class="eval__score">0.16</div>
       </div>
-      <div class="eval__caption">Researcher-rated correctness · 71 patient-derived prompts.<br>Proprietary models led open-source, but the aggregate scores obscured the failures below.</div>
+      <div class="eval__caption">Researcher-rated correctness · 71 patient-derived prompts.<br>Proprietary models led open-source — but the aggregate hides the real picture.</div>
     </div>
 
     <h3 style="margin-top:3.5rem;">The headline numbers overstate readiness</h3>
-    <p>A model scores "correct" by mapping a polysemous term to one of its valid meanings, without ever signaling that other meanings exist. In screening, each unflagged alternative is a missed clinical pathway. So a 0.82 tells you very little about whether a model is safe to deploy here; it can be confidently wrong in precisely the cases that carry the most risk.</p>
+    <p>A model scores "correct" by mapping a polysemous term to one of its valid meanings — without ever signaling that other meanings exist. In screening, each unflagged alternative is a missed clinical pathway. So a 0.82 tells you very little about whether a model is safe to deploy here; it can be confidently wrong in precisely the cases that carry the most risk.</p>
 
     <h3 style="margin-top:2.5rem;">When output broke down entirely</h3>
-    <p>Lower-performing models didn't just answer wrongly; they produced text that wasn't usable as text. Despite explicit Roman Urdu instructions, outputs slipped into Hinglish, Hindi script, and in some cases Telugu, Russian, or garbled Unicode. Around 73% of Pakistani users write digitally in Roman Urdu. Script switching makes even accurate content unreadable to the people it's meant for.</p>
+    <p>Lower-performing models didn't just answer wrongly; they produced text that wasn't usable as text. Despite explicit Roman Urdu instructions, outputs slipped into Hinglish, Hindi script, and in some cases Telugu, Russian, or garbled Unicode. Around 73% of Pakistani users write digitally in Roman Urdu — script switching makes even accurate content unreadable to the people it's meant for.</p>
 
     <div class="terminal">
       <div class="terminal__head">
@@ -326,7 +326,7 @@ active: work
       <div class="failure__tag">Register mismatch</div>
       <div class="failure__content">
         <h4>Clinically correct, cognitively inaccessible</h4>
-        <p>Models often produced medically accurate explanations unusable for low-literacy patients, such as describing sterilization as "so that eggs and male sperm cannot meet." Correct, and useless.</p>
+        <p>Models often produced medically accurate explanations unusable for low-literacy patients — describing sterilization as "so that eggs and male sperm cannot meet." Correct, and useless.</p>
       </div>
     </div>
 
@@ -347,20 +347,20 @@ active: work
 
     <div class="principle">
       <div class="principle__num">Recommendation 01</div>
-      <h3>Treat miscommunication as the default state.</h3>
-      <p>Most healthcare AI assumes successful communication with error-handling added on top. The evidence here points the other way: a system should assume the patient's surface words may diverge from their clinical intent, and build verification into the conversation itself. When a patient reports an "operation," the system clarifies which procedure, framed as gathering detail rather than questioning the patient. In this model, clarifying questions are routine behavior, used on most exchanges rather than reserved for errors.</p>
+      <h3>Treat miscommunication as the default, not the exception.</h3>
+      <p>Most healthcare AI assumes successful communication with error-handling bolted on. The evidence suggests the inverse: assume the patient's surface words diverge from clinical intent, and build verification into the natural flow of conversation. When a patient reports an "operation," the system should clarify which one — framed as gathering information, not doubting the patient. Clarifying questions become a core behavior rather than a fallback.</p>
     </div>
 
     <div class="principle">
       <div class="principle__num">Recommendation 02</div>
       <h3>Keep terminology layers parallel, not hierarchical.</h3>
-      <p>The textbook, packaging, and clinical vocabularies serve different functions and can't be collapsed into one "correct" form. A system needs participant-aware selection, function-based mapping, and the ability to move across layers as context shifts. This is more demanding than retrieval with a dictionary. It is a terminology framework a team would extend over time.</p>
+      <p>The textbook, packaging, and clinical vocabularies serve different functions and can't be collapsed into one "correct" form. A system needs participant-aware selection, function-based mapping, and the ability to move across layers as context shifts. This is more demanding than retrieval-with-a-dictionary — it's a terminology framework a team would extend over time.</p>
     </div>
 
     <div class="principle">
       <div class="principle__num">Recommendation 03</div>
       <h3>Design for gesture under privacy constraints.</h3>
-      <p>If gesture is primary, text- and voice-only interfaces are structurally inadequate. Video collides with well-founded fears about visual data in SRH settings. A more viable path is structured body-diagram input: a visual patients can mark, preserving the deictic intent of pointing without the privacy cost. The exact fidelity is a question for prototyping with real users.</p>
+      <p>If gesture is primary, text- and voice-only interfaces are structurally inadequate — but video collides with well-founded fears about visual data in SRH settings. A more viable path is structured body-diagram input: a visual patients can mark, preserving the deictic intent of pointing without the privacy cost. The exact fidelity is a question for prototyping with real users.</p>
     </div>
 
     <p style="margin-top:3rem;"><strong>An open ethical question I chose to surface, not resolve.</strong> Clinicians adapt language to perceived literacy, sometimes withholding the correct word (<span class="urdu">rasoli</span>, "tumour") because patients hear "cancer." It can improve outcomes, but it's paternalistic, and "low literacy" is routinely conflated with "low health literacy" in ways that bias care. Whether an AI system should replicate this is a genuine design tension, and I think naming it honestly is more useful than pretending there's a clean answer.</p>
@@ -390,11 +390,11 @@ active: work
       </div>
       <div class="outcome">
         <strong>A glossary in real use</strong>
-        <p>The terminology work feeds into an active maternal-health AI effort, so the documented language is being used to build a system rather than sitting only in a paper.</p>
+        <p>The terminology work feeds into an active maternal-health AI effort — the clearest signal that the documented language is treated as infrastructure, not just a research artifact.</p>
       </div>
     </div>
 
-    <p style="margin-top:2.5rem;">The framework, the failure taxonomy, and the glossary are the parts of this work that transfer to other projects and other teams.</p>
+    <p style="margin-top:2.5rem;">No product screens are shown here because the design recommendations are exactly that — recommendations grounded in the evidence, not a shipped interface. The framework, taxonomy, and glossary are the contribution, and they're the parts that travel beyond this one project.</p>
   </div>
 </section>
 
@@ -410,7 +410,7 @@ active: work
 
     <p><strong>What I'd change.</strong> Earlier multi-site sampling across provinces would have surfaced linguistic plurality more cleanly than relying on clinicians' second-hand accounts. I'd also push the gesture-input idea into a low-fidelity prototype inside the same study — a body-diagram interface tested in clinic would have closed the loop from finding to design probe.</p>
 
-    <p><strong>The frame worth keeping.</strong> The common instinct in healthcare AI is to standardize patient language toward what the model can handle. This work points the other way: the language is a fixed constraint, and the system has to be designed around it. That principle applies anywhere a product meets users on culturally specific ground, well beyond SRH or Pakistan.</p>
+    <p><strong>The frame worth keeping.</strong> The instinct in healthcare AI is to standardize patient language toward what the model can handle. This work argues the opposite: the language is the constraint to design around. Systems that adapt to communities, not communities forced to adapt to systems — a principle that holds anywhere a product meets users on culturally specific ground.</p>
   </div>
 </section>
 

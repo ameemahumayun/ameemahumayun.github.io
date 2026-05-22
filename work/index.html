@@ -30,7 +30,11 @@ active: work
         <div class="work-card__links">
           {%- if project.links %}
             {%- for link in project.links %}
+              {%- if link.pending %}
+          <span class="work-card__link work-card__link--disabled">{{ link.label }}{% if link.suffix %} <span style="opacity:.6">{{ link.suffix }}</span>{% endif %}</span>
+              {%- else %}
           <a class="work-card__link{% if link.muted %} work-card__link--muted{% endif %}" href="{% if link.url contains '://' or link.url == '#' %}{{ link.url }}{% else %}{{ link.url | relative_url }}{% endif %}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}{% if link.suffix %} <span style="opacity:.6">{{ link.suffix }}</span>{% endif %}</a>
+              {%- endif %}
             {%- endfor %}
           {%- elsif project.status %}
           <span class="work-card__status">{{ project.status }}</span>

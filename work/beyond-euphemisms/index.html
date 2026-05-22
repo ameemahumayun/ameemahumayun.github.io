@@ -1,34 +1,34 @@
 ---
 layout: case-study
 title: Beyond Euphemisms
-description: CHI 2026 research-to-product case study on designing LLM-based health systems for conservative, low-resource contexts.
+description: CHI 2026 research-to-design case study on building LLM-based maternal-health tools for conservative, low-resource contexts.
 og_type: article
-nav_tag: Case Study
+nav_tag: test
 active: work
 ---
 
 <header class="hero">
   <div class="hero__inner">
-    <div class="eyebrow eyebrow-rule">CHI 2026 · Research-to-Product</div>
-    <h1>Designing AI for <span class="serif">the way people actually speak.</span></h1>
-    <p class="lead" style="max-width:600px;margin-bottom:4rem;">A field study and LLM evaluation that reshaped the product direction of a maternal-health AI system in Pakistan — by treating ambiguity, taboo, and indirect speech as the primary input, not the edge case.</p>
+    <div class="eyebrow eyebrow-rule">CHI 2026 · Research</div>
+    <h1>Designing AI for <span class="serif">indirect language</span> in maternal health.</h1>
+    <p class="lead" style="max-width:620px;margin-bottom:4rem;">A field study and five-model LLM evaluation in a Lahore OB/GYN ward, examining whether current language models can interpret the euphemistic, coded language patients actually use in sexual and reproductive health care — and what that means for systems built to serve them.</p>
 
     <div class="meta">
       <div class="meta__item">
         <div class="meta__label">Role</div>
-        <div class="meta__value">Co-lead<br>Research &amp; Design</div>
-      </div>
-      <div class="meta__item">
-        <div class="meta__label">Surfaces</div>
-        <div class="meta__value">Conversational<br>AI · Mobile</div>
+        <div class="meta__value">Co-lead<br>Research &amp; analysis</div>
       </div>
       <div class="meta__item">
         <div class="meta__label">Methods</div>
         <div class="meta__value">Field research<br>Model evaluation</div>
       </div>
       <div class="meta__item">
-        <div class="meta__label">Outcome</div>
-        <div class="meta__value">Informed product<br>direction</div>
+        <div class="meta__label">Output</div>
+        <div class="meta__value">Framework · failure<br>taxonomy · glossary</div>
+      </div>
+      <div class="meta__item">
+        <div class="meta__label">Status</div>
+        <div class="meta__value">CHI 2026<br>Barcelona</div>
       </div>
     </div>
   </div>
@@ -38,48 +38,48 @@ active: work
       <aside class="rail">
         <div class="rail__label">Contents</div>
         <nav class="rail__list">
-        <a href="#overview">Overview</a>
+        <a href="#overview">Summary</a>
         <a href="#problem">Problem</a>
         <a href="#role">Role</a>
         <a href="#research">Research</a>
         <a href="#insights">Insights</a>
         <a href="#evaluation">Evaluation</a>
-        <a href="#design">Design</a>
-        <a href="#product">Product</a>
+        <a href="#design">Recommendations</a>
+        <a href="#impact">Impact</a>
         <a href="#reflection">Reflection</a>
         </nav>
       </aside>
   <div class="rail-content">
 
 
-<!-- 01 OVERVIEW -->
+<!-- 01 SUMMARY -->
 <section class="section" id="overview">
   <div class="container">
-    <div class="section-num">01 — The Project</div>
-    <h2>A product question <span class="serif">disguised as a research question.</span></h2>
+    <div class="section-num">01 — Summary</div>
+    <h2>A product question, <span class="serif">not a research question.</span></h2>
 
-    <p class="lead">If you're building an LLM-based screening tool for women in Pakistan — where one in 289 births still ends in a maternal death — the first product decision isn't about features. It's about whether the system can interpret what patients actually say in clinic.</p>
+    <p class="lead">Before you can build an LLM screening tool for women in Pakistan, you have to answer something more basic: can the model understand what patients actually say? We found that current models can't do this reliably — and that aggregate accuracy scores hide exactly how and where they fail.</p>
 
-    <p>Most healthcare AI is trained on standardized clinical English. In conservative, low-resource contexts, patients communicate through euphemism, metaphor, gesture, and folk vocabulary — and clinicians who want to be understood follow them there. A model that can't parse <span class="urdu">"shohar sey miltay waqt"</span> (when meeting the husband) doesn't fail gracefully; it fails silently, mapping the wrong word to the wrong diagnosis.</p>
+    <p>Most healthcare AI is trained on standardized clinical English. In conservative, low-resource contexts, patients communicate through euphemism, metaphor, gesture, and folk vocabulary, and clinicians follow them there to be understood. A model that misreads <span class="urdu">"shohar sey miltay waqt"</span> (when meeting the husband) doesn't fail loudly — it maps the wrong phrase to the wrong diagnosis and returns a confident answer.</p>
 
-    <p>This project paired ethnographic fieldwork in a Lahore OB/GYN ward with a structured evaluation of five LLMs against the language we documented there. The output: a categorization framework for indirect SRH communication, a failure taxonomy for current models, and a set of design principles that became input to a real product roadmap.</p>
+    <p>The work paired ethnographic fieldwork in a Lahore OB/GYN ward with a structured evaluation of five LLMs against the language documented there. It produced three things a team can build on: a categorization framework for indirect SRH communication, a failure taxonomy for current models, and a Roman Urdu glossary that fed into Awaaz-e-Sehat, a Gates-funded maternal-health AI effort at LUMS.</p>
 
     <div class="ledger">
       <div class="ledger__row">
-        <div class="ledger__label">The Question</div>
-        <div class="ledger__value">Can current LLMs reliably interpret the indirect, culturally-coded language patients use in sexual and reproductive health consultations?</div>
+        <div class="ledger__label">Question</div>
+        <div class="ledger__value">Can current LLMs reliably interpret the indirect, culturally coded language used in sexual and reproductive health consultations in Pakistan?</div>
       </div>
       <div class="ledger__row">
-        <div class="ledger__label">The Answer</div>
-        <div class="ledger__value">Not reliably — and aggregate accuracy hides the worst of it. The failure modes are systematic and patterned, which means they can be designed against.</div>
+        <div class="ledger__label">Finding</div>
+        <div class="ledger__value">No — and aggregate accuracy obscures the failures that matter most. The failure modes are systematic and patterned, which means they can be designed against.</div>
       </div>
       <div class="ledger__row">
-        <div class="ledger__label">The Contribution</div>
-        <div class="ledger__value">A two-axis framework for the input space, an evaluation methodology that surfaces hidden fragility, and three architectural principles for healthcare AI in culturally complex contexts.</div>
+        <div class="ledger__label">Contribution</div>
+        <div class="ledger__value">A two-axis framework for the input space, an evaluation method that surfaces hidden fragility, and a documented glossary of patient language.</div>
       </div>
       <div class="ledger__row">
-        <div class="ledger__label">Where It Landed</div>
-        <div class="ledger__value">Findings informed the design direction of a maternal-health AI initiative for Pakistan. The product implementation remains under NDA.</div>
+        <div class="ledger__label">Where it went</div>
+        <div class="ledger__value">Published at CHI 2026. The glossary fed into Awaaz-e-Sehat, now associated with Pakistan's first national AI Hub for maternal health.</div>
       </div>
     </div>
   </div>
@@ -88,79 +88,70 @@ active: work
 <!-- 02 PROBLEM -->
 <section class="section" id="problem">
   <div class="container">
-    <div class="section-num">02 — Problem Framing</div>
-    <h2>Health language <span class="serif">is taboo language.</span></h2>
+    <div class="section-num">02 — Problem framing</div>
+    <h2>Every assumption in healthcare AI <span class="serif">breaks in this context.</span></h2>
 
-    <p>Pakistan accounts for roughly 4% of global maternal deaths each year — about 27 preventable deaths per day. The clinical workforce is overstretched: each OB/GYN in Pakistan serves around 1,300 patients against the WHO-recommended 1:1,000. Short consultation times produce incomplete histories and missed warning signs. An LLM-based screening layer could meaningfully reduce that load.</p>
+    <p>Pakistan accounts for roughly 4% of global maternal deaths each year — about 27 preventable deaths a day. Each OB/GYN serves around 1,300 patients against the WHO-recommended 1,000, so consultations are short and histories are incomplete. An LLM screening layer could realistically reduce that load, which is why the question is worth taking seriously.</p>
 
-    <p>But every assumption baked into current healthcare LLMs cuts against this context. They assume English or major-language fluency. They assume direct, biomedical phrasing. They assume one "correct" vocabulary. None of those hold in a Lahore clinic, where patients move between Urdu, Punjabi, and English; where stigma and low health literacy push communication toward indirection; and where three different vocabularies coexist for the same anatomical concept without any being interchangeable.</p>
+    <p>But current healthcare models assume major-language fluency, direct biomedical phrasing, and a single correct vocabulary. None of those hold in a Lahore clinic, where patients move between Urdu, Punjabi, and English; where stigma and low health literacy push communication toward indirection; and where three separate vocabularies coexist for the same anatomical concept, none of them interchangeable.</p>
 
-    <blockquote class="quote">
-      Phrases like "missed my date" or "bring a visitor" are widespread in SRH discourse but hard for AI to parse. SRH communication depends on exactly the forms AI struggles to interpret.
-      <span class="quote__cite">— from the paper</span>
-    </blockquote>
-
-    <p>Before any feature could be designed, we needed a grounded answer to a more basic product question: <strong>what does this language actually look like in practice, and where do current models break?</strong> Without that, every downstream design choice is a guess.</p>
+    <p>So the first design decision wasn't about features. It was about establishing ground truth: <strong>what does this language actually look like in practice, and where exactly do current models break?</strong> Without that, every downstream choice is a guess dressed as a decision.</p>
   </div>
 </section>
 
 <!-- 03 ROLE -->
 <section class="section" id="role">
   <div class="container">
-    <div class="section-num">03 — My Role</div>
-    <h2>Co-lead across the full research-to-product arc.</h2>
+    <div class="section-num">03 — My role</div>
+    <h2>Co-lead across research, analysis, and evaluation.</h2>
 
-    <p>I worked across the project lifecycle — from research design through synthesis, evaluation, and translation into product direction. The work moved between four modes:</p>
+    <p>I worked across the full arc — research design, fieldwork, synthesis, and model evaluation — as one of two lead researchers, alongside a faculty advisor and a practicing gynecologist who validated clinical interpretation. The work moved through four modes:</p>
 
     <div class="duo">
       <div>
         <h3>Field researcher</h3>
-        <p>Designed the interview protocol, ran patient and clinician interviews and focus groups in Urdu, conducted in-clinic observation sessions, and maintained ongoing clinician contact for clarification and new cases.</p>
+        <p>Designed the interview protocol, ran patient and clinician interviews and focus groups in Urdu, conducted in-clinic observation, and maintained clinician contact for clarification and new cases.</p>
       </div>
       <div>
         <h3>Analyst &amp; framework author</h3>
-        <p>Led bottom-up coding of communication patterns, developed the Domain–Approach categorization framework, and built the Roman Urdu corpus that anchored the LLM evaluation.</p>
+        <p>Led bottom-up coding of communication patterns, built the Domain–Approach categorization framework, and assembled the Roman Urdu corpus that anchored the evaluation.</p>
       </div>
       <div>
-        <h3>AI evaluator</h3>
-        <p>Designed the prompt structure and persona, evaluated five models, structured the dual-rater protocol, and synthesized qualitative failure modes from model outputs.</p>
+        <h3>Model evaluator</h3>
+        <p>Designed the prompt structure and clinical persona, ran five models against the corpus, set up the dual-rater protocol, and coded the qualitative failure modes.</p>
       </div>
       <div>
-        <h3>Strategist &amp; translator</h3>
-        <p>Connected linguistic findings to architectural principles, defined what the system actually needs to do before deployment, and shaped how those requirements fed into product strategy.</p>
+        <h3>Synthesizer</h3>
+        <p>Connected the linguistic findings to a set of design requirements — what such a system would need to do before it could be deployed responsibly.</p>
       </div>
     </div>
-
-    <p style="margin-top:3rem;"><strong>Cross-functional collaboration.</strong> The project sat between clinical practice, NLP/ML, and product. I worked closely with practicing OB/GYNs on interview design and validation, partnered on model selection and evaluation infrastructure, and translated findings into language a product team could act on — same evidence base, different framings for different audiences.</p>
   </div>
 </section>
 
 <!-- 04 RESEARCH -->
 <section class="section" id="research">
   <div class="container">
-    <div class="section-num">04 — Research Process</div>
-    <h2>Two stages, designed <span class="serif">to talk to each other.</span></h2>
+    <div class="section-num">04 — Research process</div>
+    <h2>Two stages, designed <span class="serif">to feed each other.</span></h2>
 
-    <p>The study paired qualitative fieldwork with structured AI evaluation. Stage 1 surfaced what indirect SRH communication actually sounds like; Stage 2 tested whether LLMs could interpret it. The outputs of each stage were designed to become the inputs of the other.</p>
+    <p>Stage 1 documented what indirect SRH communication actually sounds like. Stage 2 tested whether LLMs could interpret it. The output of each was built to become the input of the other — the field corpus became the evaluation prompts, and the model failures pointed back at the patterns that mattered.</p>
 
     <div class="stages">
       <div class="stage">
-        <div class="stage__label">Stage 1 · Field Study</div>
+        <div class="stage__label">Stage 1 · Field study</div>
         <h3>Lahore charitable hospital · OB/GYN</h3>
         <ul class="stage__list">
           <li>Clinician–patient observations <span>40</span></li>
           <li>Semi-structured interviews <span>22</span></li>
           <li>Focus group sessions <span>5</span></li>
-          <li>Total participants <span>36</span></li>
           <li>Languages used <span>Urdu · Punjabi · English</span></li>
         </ul>
       </div>
       <div class="stage">
-        <div class="stage__label">Stage 2 · Model Evaluation</div>
+        <div class="stage__label">Stage 2 · Model evaluation</div>
         <h3>Five LLMs · patient-derived prompts</h3>
         <ul class="stage__list">
           <li>Patient-derived prompts <span>71</span></li>
-          <li>Models evaluated <span>5</span></li>
           <li>Open-source <span>LLaMA · Gemma · GPT-OSS</span></li>
           <li>Proprietary <span>GPT-4o · Claude</span></li>
           <li>Rating protocol <span>Dual-rater</span></li>
@@ -169,25 +160,25 @@ active: work
     </div>
 
     <div class="callout">
-      <div class="callout__label">Methodological pivot</div>
-      <p>My initial protocol tested three elicitation strategies — implicit narration, direct questioning, and hypothetical scenarios. All three underperformed. The scenario-based approach failed almost immediately: when asked to imagine giving health advice to a friend, one participant explained that her in-laws don't allow her to make friends. Social isolation was so structural that the hypothetical collapsed. I pivoted to extended observation of natural clinician–patient interactions and longer expert interviews. The protocol's failure was itself a finding about the conditions women navigate — and a reminder that the research scaffold has to bend around the population, not the other way around.</p>
+      <div class="callout__label">A pivot that became a finding</div>
+      <p>My initial protocol tested three ways of eliciting indirect language: implicit narration, direct questioning, and hypothetical scenarios. All three underperformed, and the scenario approach failed almost immediately. Asked to imagine giving health advice to a friend, one participant explained that her in-laws don't allow her to make friends — the hypothetical collapsed because the social premise didn't exist. I shifted to extended observation of natural clinician–patient interactions and longer expert interviews. The protocol's failure was itself evidence about the conditions these women navigate, and a reminder that the research design has to bend around the population, not the reverse.</p>
     </div>
 
-    <p>All interviews were conducted in Urdu by two female researchers in a setting where participants already felt comfortable discussing health matters. Consent, anonymization, and the right to withdraw were handled with extra care; one focus group requested no recording at all, and we adapted accordingly. This kind of judgment work — when to push, when to pull back, when to abandon a tool entirely — is where research credibility actually comes from.</p>
+    <p>All interviews were conducted in Urdu by two female researchers, in a setting where participants already felt comfortable discussing health. Consent, anonymization, and the right to withdraw were handled carefully; one focus group asked not to be recorded at all, and we adapted. Deciding when to push, when to pull back, and when to abandon a method is where research credibility actually comes from.</p>
   </div>
 </section>
 
 <!-- 05 INSIGHTS -->
 <section class="section" id="insights">
   <div class="container">
-    <div class="section-num">05 — Key Insights</div>
+    <div class="section-num">05 — Key insights</div>
     <h2>The input space, mapped.</h2>
 
-    <p>Bottom-up coding produced a framework with two axes. <strong>Referential domain</strong> describes what is being talked about. <strong>Communicative approach</strong> describes how. Together they define the full input space a system in this context has to handle.</p>
+    <p>Bottom-up coding produced a two-axis framework. <strong>Referential domain</strong> captures what is being discussed; <strong>communicative approach</strong> captures how. Together they describe the full range of input a system in this context has to handle — not as edge cases, but as the normal distribution.</p>
 
     <div class="framework">
       <div class="framework__axis-label">Axis 1</div>
-      <div class="framework__axis-title">Referential Domain — what is being discussed</div>
+      <div class="framework__axis-title">Referential domain — what is being discussed</div>
       <div class="framework__tags">
         <span class="tag">Symptom</span>
         <span class="tag">Procedure</span>
@@ -197,7 +188,7 @@ active: work
       </div>
       <div class="framework__divider"></div>
       <div class="framework__axis-label">Axis 2</div>
-      <div class="framework__axis-title">Communicative Approach — how it's expressed</div>
+      <div class="framework__axis-title">Communicative approach — how it's expressed</div>
       <div class="framework__tags">
         <span class="tag tag--accent">Colloquialisms</span>
         <span class="tag tag--accent">Euphemisms</span>
@@ -207,31 +198,31 @@ active: work
       </div>
     </div>
 
-    <p>Inside that framework, four patterns mattered most for product design:</p>
+    <p>Four patterns inside that framework mattered most for anything built on top of it:</p>
 
     <div class="insight">
       <div class="insight__num">01</div>
       <div class="insight__content">
         <h3>Semantic drift inside the local lexicon</h3>
-        <p>Words don't just translate poorly across languages — they drift inside a language. <span class="urdu">"Chota operation"</span> ("small operation") means episiotomy in OB/GYN contexts but is a generic term for minor surgery elsewhere. Borrowed English words drift too: when a patient asks <span class="urdu">"is the child normal?"</span>, she's asking whether the delivery will be vaginal, not whether the baby is healthy.</p>
-        <p>This is invisible to general-purpose LLMs and clinically consequential. Patients routinely list episiotomies as "operations" during preoperative history-taking, inflating reported surgical history and complicating anesthetic planning.</p>
+        <p>Words drift in meaning inside a single language, not just across languages. <span class="urdu">"Chota operation"</span> ("small operation") means episiotomy in OB/GYN settings but generic minor surgery elsewhere. Borrowed English drifts too: a patient asking <span class="urdu">"is the child normal?"</span> is asking about delivery mode, not the baby's health.</p>
+        <p>This is invisible to general-purpose models and clinically consequential — patients routinely list episiotomies as "operations" in pre-op history, inflating surgical records and complicating anesthetic planning.</p>
       </div>
     </div>
 
     <div class="insight">
       <div class="insight__num">02</div>
       <div class="insight__content">
-        <h3>Polysemy comes in two flavors</h3>
-        <p><strong>Valid polysemy:</strong> one general descriptor legitimately covers several related concepts. <span class="urdu">"Taanka"</span> (stitch) is used for IUD insertion, surgical sutures, and tubal ligation.</p>
-        <p><strong>Folk polysemy:</strong> patients incorrectly group medically distinct phenomena under one term. <span class="urdu">"Rasoli"</span> (tumour) is applied indiscriminately to fibroids, cysts, ectopic pregnancies, and polyps. The same word can mean four different diagnoses, and patients don't know they're different. For a screening system, this is the most dangerous failure mode — a single response can mask three other possibilities.</p>
+        <h3>Two kinds of polysemy, with different stakes</h3>
+        <p><strong>Valid polysemy:</strong> one descriptor legitimately covers related concepts. <span class="urdu">"Taanka"</span> (stitch) refers to IUD insertion, sutures, and tubal ligation alike.</p>
+        <p><strong>Folk polysemy:</strong> patients group medically distinct conditions under one word without knowing they differ. <span class="urdu">"Rasoli"</span> (tumour) gets applied to fibroids, cysts, ectopic pregnancies, and polyps. One word, four diagnoses — and for a screening system, the most dangerous case, because a single confident answer can bury three other possibilities.</p>
       </div>
     </div>
 
     <div class="insight">
       <div class="insight__num">03</div>
       <div class="insight__content">
-        <h3>Three terminology layers coexist simultaneously</h3>
-        <p>Three vocabularies operate in parallel in the same ecosystem: formal medical Urdu in textbooks (<span class="urdu">mahbul</span>), formal euphemisms on medical packaging (<span class="urdu">andaam nehaani</span>, "hidden part"), and the everyday clinical term (<span class="urdu">mahwari key raastay</span>, "menstrual pathway"). When we asked fifteen OB/GYN doctors about the first two, none recognized them. The textbook word and the everyday word are functionally unrelated.</p>
+        <h3>Three terminology layers run in parallel</h3>
+        <p>Three vocabularies operate at once in the same ecosystem: formal medical Urdu from textbooks (<span class="urdu">mahbul</span>), formal euphemisms from medicine packaging (<span class="urdu">andaam nehaani</span>, "hidden part"), and the everyday clinical term (<span class="urdu">mahwari key raastay</span>, "menstrual pathway"). We asked fifteen OB/GYN doctors about the first two; none recognized them. The textbook word and the working word are functionally unrelated.</p>
       </div>
     </div>
 
@@ -239,7 +230,7 @@ active: work
       <div class="insight__num">04</div>
       <div class="insight__content">
         <h3>Gesture is a primary modality, not a fallback</h3>
-        <p>Even when explicitly prompted for verbal alternatives, patients consistently returned to pointing. One participant explained that doctors "are experienced and have been walking along with us," so gesture is enough. Every observed symptom-localization interaction relied on it. Text- and voice-only interfaces structurally exclude this mode, which means any screening tool depending purely on typed or spoken input loses data the patient is actively trying to give.</p>
+        <p>Even when prompted for words, patients returned to pointing. One explained that doctors "are experienced and have been walking along with us," so gesture suffices. Every observed symptom-localization relied on it. Text- and voice-only interfaces structurally exclude this channel — a tool built purely on typed or spoken input discards data the patient is actively trying to provide.</p>
       </div>
     </div>
   </div>
@@ -248,10 +239,10 @@ active: work
 <!-- 06 EVALUATION -->
 <section class="section" id="evaluation">
   <div class="container">
-    <div class="section-num">06 — Model Evaluation</div>
-    <h2>The numbers <span class="serif">are not the finding.</span></h2>
+    <div class="section-num">06 — Model evaluation</div>
+    <h2>Why the accuracy scores <span class="serif">mislead.</span></h2>
 
-    <p>We tested 71 patient-derived Roman Urdu prompts across five models, each given the persona of a culturally sensitive female gynecologist in a low-resource Pakistani hospital. Two raters scored outputs: the field researcher (strict to documented patient intent) and a practicing gynecologist (open to plausible clinical alternatives).</p>
+    <p>We ran 71 patient-derived Roman Urdu prompts across five models, each given the persona of a culturally sensitive female gynecologist in a low-resource hospital. Two raters scored the outputs: the field researcher, strict to documented patient intent, and a practicing gynecologist, open to plausible clinical alternatives.</p>
 
     <div class="eval">
       <div class="eval__row">
@@ -279,136 +270,131 @@ active: work
         <div class="eval__track"><div class="eval__fill eval__fill--low" style="width:16%"></div></div>
         <div class="eval__score">0.16</div>
       </div>
-      <div class="eval__caption">Researcher-rated correctness · 71 patient-derived prompts.<br>Proprietary models outperformed open-source — but aggregate accuracy obscured the real picture.</div>
+      <div class="eval__caption">Researcher-rated correctness · 71 patient-derived prompts.<br>Proprietary models led open-source — but the aggregate hides the real picture.</div>
     </div>
 
-    <h3 style="margin-top:3.5rem;">Why the headline numbers overstate performance</h3>
-    <p>Even high-scoring models were fragile in specific, predictable ways. A model can score "correct" by mapping a polysemous term to one of its valid meanings — and never signal that other meanings exist. In a screening context, each unflagged alternative is a missed clinical pathway. The headline number tells you almost nothing about deployment readiness.</p>
+    <h3 style="margin-top:3.5rem;">The headline numbers overstate readiness</h3>
+    <p>A model scores "correct" by mapping a polysemous term to one of its valid meanings — without ever signaling that other meanings exist. In screening, each unflagged alternative is a missed clinical pathway. So a 0.82 tells you very little about whether a model is safe to deploy here; it can be confidently wrong in precisely the cases that carry the most risk.</p>
 
-    <h3 style="margin-top:2.5rem;">When the output broke down entirely</h3>
-    <p>Lower-performing models didn't just produce wrong answers; they produced text that wasn't usable as text. Despite explicit Roman Urdu instructions, outputs dropped into Hinglish, Hindi script, and in some cases Telugu, Russian, or garbled Unicode. Roman Urdu is how 73% of Pakistani users write digitally — script switching makes otherwise accurate output unreadable to the population it's meant to serve.</p>
+    <h3 style="margin-top:2.5rem;">When output broke down entirely</h3>
+    <p>Lower-performing models didn't just answer wrongly; they produced text that wasn't usable as text. Despite explicit Roman Urdu instructions, outputs slipped into Hinglish, Hindi script, and in some cases Telugu, Russian, or garbled Unicode. Around 73% of Pakistani users write digitally in Roman Urdu — script switching makes even accurate content unreadable to the people it's meant for.</p>
 
     <div class="terminal">
       <div class="terminal__head">
-        <span>Sample · Model Output</span>
+        <span>Sample · model output</span>
         <span>Expected: Roman Urdu</span>
       </div>
       <div class="terminal__body">
         <span class="glitch">అమ్మా, ఆలోచన వద్దు.</span> <span class="glitch">డీనివల కలంరోహియమ్యు</span><br>
         <span class="glitch">కానిమ్మిన్, వాస్యవమైనది.</span><br>
         <span class="glitch">\u06a9\u06cc \u0628\u0627\u062a \u062a\u0648\u067e</span><br><br>
-        <span class="ok">&rarr; Model produced Telugu and escaped Unicode despite explicit Roman Urdu instruction.</span>
+        <span class="ok">&rarr; Telugu and escaped Unicode, despite an explicit Roman Urdu instruction.</span>
       </div>
     </div>
 
     <h4 style="margin-top:3rem;">Failure taxonomy</h4>
 
     <div class="failure">
-      <div class="failure__tag">Polysemy Collapse</div>
+      <div class="failure__tag">Polysemy collapse</div>
       <div class="failure__content">
         <h4><span class="urdu">"mujhy pishab wali jaga dard hoti hai"</span></h4>
-        <p>All three top models read this as urinary infection. In our field data, "urine area" is a common euphemism for the vagina — a vaginal infection was equally likely. None of the models asked.</p>
+        <p>All three top models read this as a urinary infection. In our field data, "urine area" is a common euphemism for the vagina — a vaginal infection was equally likely, and none of the models asked.</p>
       </div>
     </div>
     <div class="failure">
-      <div class="failure__tag">Semantic Drift</div>
+      <div class="failure__tag">Semantic drift</div>
       <div class="failure__content">
         <h4><span class="urdu">"bacha normal hai?"</span></h4>
-        <p>Patients use this to ask about delivery mode (vaginal vs. C-section), not fetal health. No model interpreted it correctly. The surface form contradicts the communicative intent.</p>
+        <p>Patients use this to ask about delivery mode, not fetal health. No model read it correctly — the surface form contradicts the intent.</p>
       </div>
     </div>
     <div class="failure">
-      <div class="failure__tag">Folk Belief</div>
+      <div class="failure__tag">Folk belief</div>
       <div class="failure__content">
         <h4><span class="urdu">athra</span></h4>
-        <p>No model recognized this as a folk explanation of recurrent miscarriage. Without that frame, a clinician using the model would miss the cultural context driving the visit.</p>
+        <p>No model recognized this as a folk explanation of recurrent miscarriage. Without that frame, a clinician relying on the model would miss the cultural context driving the visit.</p>
       </div>
     </div>
     <div class="failure">
-      <div class="failure__tag">Persona Slippage</div>
+      <div class="failure__tag">Persona slippage</div>
       <div class="failure__content">
-        <h4>Masculine verb forms in female-persona output</h4>
-        <p>All top models occasionally used masculine forms (<span class="urdu">karunga</span>) despite an explicit female-gynecologist persona. In SRH contexts where provider gender carries weight, this isn't cosmetic.</p>
+        <h4>Masculine verb forms in a female persona</h4>
+        <p>Top models occasionally used masculine forms (<span class="urdu">karunga</span>) despite an explicit female-gynecologist persona. In SRH contexts where provider gender carries weight, this isn't cosmetic.</p>
       </div>
     </div>
     <div class="failure">
-      <div class="failure__tag">Register Mismatch</div>
+      <div class="failure__tag">Register mismatch</div>
       <div class="failure__content">
         <h4>Clinically correct, cognitively inaccessible</h4>
-        <p>Models frequently produced explanations that were medically accurate but unusable for low-literacy patients — describing sterilization as "so that eggs and male sperm cannot meet." Correct, unusable.</p>
+        <p>Models often produced medically accurate explanations unusable for low-literacy patients — describing sterilization as "so that eggs and male sperm cannot meet." Correct, and useless.</p>
       </div>
     </div>
 
     <div class="callout">
-      <div class="callout__label">Why dual-rater evaluation matters</div>
-      <p>The disparity between researcher and expert scoring became a finding of its own. The gynecologist sometimes scored a response correct when the researcher did not — not because the model was right, but because she could imagine multiple clinical pathways the phrase could have meant. A real clinician disambiguates by asking. The models did not. Single-rater aggregate accuracy is the wrong metric for this domain; it credits confident misreadings. The evaluation framework itself is part of what this project contributes.</p>
+      <div class="callout__label">The metric was part of the finding</div>
+      <p>The gap between the two raters became its own result. The gynecologist sometimes scored a response correct where the researcher didn't — not because the model was right, but because she could imagine several clinical pathways the phrase might mean. A real clinician resolves that by asking. The models didn't. Single-rater aggregate accuracy is the wrong measure for this domain, because it rewards confident misreadings. Designing the evaluation to expose that is part of what the work contributes.</p>
     </div>
   </div>
 </section>
 
-<!-- 07 DESIGN -->
+<!-- 07 RECOMMENDATIONS -->
 <section class="section" id="design">
   <div class="container">
-    <div class="section-num">07 — Design Implications</div>
-    <h2>What this context demands <span class="serif">of an AI product.</span></h2>
+    <div class="section-num">07 — Design recommendations</div>
+    <h2>What this context <span class="serif">would demand</span> of a system.</h2>
 
-    <p>The qualitative findings and the evaluation together produced three architectural principles. None are about polish — they're about what the system has to be able to do before it can be deployed responsibly.</p>
+    <p>The fieldwork and the evaluation together point to three design requirements. These are my recommendations drawn from the evidence — not features that were shipped, but the conditions I'd argue any system has to meet before it can be deployed responsibly here.</p>
 
     <div class="principle">
-      <div class="principle__num">Principle 01</div>
-      <h3>Treat miscommunication as the default state, not the exception.</h3>
-      <p>Most healthcare AI assumes successful communication with error-handling on top. Our findings suggest the inverse: the system should assume the patient's surface words diverge from their clinical intent, and embed verification into the natural flow of conversation. When a patient lists an "operation," the system clarifies which procedure — without making the patient feel doubted. Verification becomes information gathering rather than error correction. In product terms: clarifying questions are a feature, not a fallback.</p>
+      <div class="principle__num">Recommendation 01</div>
+      <h3>Treat miscommunication as the default, not the exception.</h3>
+      <p>Most healthcare AI assumes successful communication with error-handling bolted on. The evidence suggests the inverse: assume the patient's surface words diverge from clinical intent, and build verification into the natural flow of conversation. When a patient reports an "operation," the system should clarify which one — framed as gathering information, not doubting the patient. Clarifying questions become a core behavior rather than a fallback.</p>
     </div>
 
     <div class="principle">
-      <div class="principle__num">Principle 02</div>
-      <h3>Maintain terminology layers in parallel, not in hierarchy.</h3>
-      <p>The three coexisting vocabularies — textbook, packaging, clinical — serve different communicative functions and can't be collapsed into one "correct" form. Systems need participant-aware selection, function-based mapping, and bidirectional translation that can move across layers as conversation context shifts. This is more demanding than retrieval-with-a-dictionary; it's a strategic terminology framework the product team can extend over time.</p>
+      <div class="principle__num">Recommendation 02</div>
+      <h3>Keep terminology layers parallel, not hierarchical.</h3>
+      <p>The textbook, packaging, and clinical vocabularies serve different functions and can't be collapsed into one "correct" form. A system needs participant-aware selection, function-based mapping, and the ability to move across layers as context shifts. This is more demanding than retrieval-with-a-dictionary — it's a terminology framework a team would extend over time.</p>
     </div>
 
     <div class="principle">
-      <div class="principle__num">Principle 03</div>
+      <div class="principle__num">Recommendation 03</div>
       <h3>Design for gesture under privacy constraints.</h3>
-      <p>If gesture is a primary modality, text- and voice-only interfaces are structurally inadequate. The obvious solution — video — collides with strong, well-founded concerns about visual data collection in SRH contexts. A more viable path is structured body-diagram input: visual representations patients can mark, preserving the deictic intent of pointing without the privacy cost of video. This raises further design questions that should be resolved through prototyping with real users.</p>
+      <p>If gesture is primary, text- and voice-only interfaces are structurally inadequate — but video collides with well-founded fears about visual data in SRH settings. A more viable path is structured body-diagram input: a visual patients can mark, preserving the deictic intent of pointing without the privacy cost. The exact fidelity is a question for prototyping with real users.</p>
     </div>
 
-    <p style="margin-top:3rem;"><strong>An open ethical design question.</strong> Clinicians adapt their communication based on perceived patient literacy, sometimes withholding the technically correct word (<span class="urdu">rasoli</span> meaning "tumour") because patients hear it as "cancer." This produces better outcomes — but it's also paternalistic, and "low literacy" is routinely conflated with "low health literacy" in ways that bias care. Whether and how an AI system should replicate this is a design question the team will keep returning to. We surfaced it deliberately rather than resolving it prematurely.</p>
+    <p style="margin-top:3rem;"><strong>An open ethical question I chose to surface, not resolve.</strong> Clinicians adapt language to perceived literacy, sometimes withholding the correct word (<span class="urdu">rasoli</span>, "tumour") because patients hear "cancer." It can improve outcomes, but it's paternalistic, and "low literacy" is routinely conflated with "low health literacy" in ways that bias care. Whether an AI system should replicate this is a genuine design tension, and I think naming it honestly is more useful than pretending there's a clean answer.</p>
   </div>
 </section>
 
-<!-- 08 PRODUCT -->
-<section class="section" id="product">
+<!-- 08 IMPACT -->
+<section class="section" id="impact">
   <div class="container">
-    <div class="section-num">08 — Translation to Product</div>
-    <h2>From research framework <span class="serif">to product direction.</span></h2>
+    <div class="section-num">08 — Impact</div>
+    <h2>What the work produced.</h2>
 
-    <p>This research predates and shaped the design direction of a maternal-health AI initiative for Pakistan — particularly around how the system handles patient input, how clinical risk-flagging is structured, and which disambiguation behaviors are required before any output reaches a clinician.</p>
-
-    <p>The specific contributions to the product roadmap:</p>
+    <p>The research was published at CHI 2026 (Barcelona). Its most concrete real-world thread is the glossary: the documented Roman Urdu corpus and Domain–Approach terminology fed into Awaaz-e-Sehat, a Gates-funded, voice-first maternal-health AI effort at LUMS now associated with Pakistan's first national AI Hub for maternal, newborn, and child health.</p>
 
     <div class="outcomes">
       <div class="outcome">
-        <strong>A ground-truth input distribution</strong>
-        <p>The Roman Urdu corpus and Domain–Approach categorization defined what indirect inputs actually look like — not as edge cases, but as the primary input distribution the system has to handle on day one.</p>
+        <strong>A documented input distribution</strong>
+        <p>The corpus and Domain–Approach framework define what indirect patient input actually looks like — usable as ground truth for designing or evaluating any system in this space, rather than guessing at the edge cases.</p>
       </div>
       <div class="outcome">
-        <strong>A failure taxonomy informing guardrails</strong>
-        <p>Polysemy collapse, semantic drift, persona slippage, and script instability became specific behaviors the product team could build guardrails against, rather than discovering in deployment.</p>
+        <strong>A reusable failure taxonomy</strong>
+        <p>Polysemy collapse, semantic drift, persona slippage, and script instability are now named, reproducible failure modes — a checklist to test against rather than discover in deployment.</p>
       </div>
       <div class="outcome">
-        <strong>An evaluation methodology that holds up</strong>
-        <p>The dual-rater protocol — strict to field data, open to plausible clinical alternatives — exposes hidden fragility. This now shapes how new model versions and prompt strategies are validated before integration.</p>
+        <strong>An evaluation method that holds up</strong>
+        <p>The dual-rater protocol — strict to field data, open to plausible clinical alternatives — exposes fragility that single-rater accuracy hides. It transfers to validating new models or prompt strategies before integration.</p>
       </div>
       <div class="outcome">
-        <strong>Design constraints, not just findings</strong>
-        <p>The three architectural principles became working constraints for the conversational and multimodal design — particularly around verification flows, terminology handling, and the gesture-input problem.</p>
+        <strong>A glossary in real use</strong>
+        <p>The terminology work feeds into an active maternal-health AI effort — the clearest signal that the documented language is treated as infrastructure, not just a research artifact.</p>
       </div>
     </div>
 
-    <div class="confidential">
-      <div class="confidential__label">Confidential · NDA</div>
-      <p>Product designs, prototypes, and screens are not shown here. The research framework and findings above are the public-facing contribution; implementation remains under NDA. Available to discuss in interview.</p>
-    </div>
+    <p style="margin-top:2.5rem;">No product screens are shown here because the design recommendations are exactly that — recommendations grounded in the evidence, not a shipped interface. The framework, taxonomy, and glossary are the contribution, and they're the parts that travel beyond this one project.</p>
   </div>
 </section>
 
@@ -418,13 +404,13 @@ active: work
     <div class="section-num">09 — Reflection</div>
     <h2>Tradeoffs and limits.</h2>
 
-    <p><strong>Sample reach.</strong> Patients were recruited through convenience sampling within a single charitable hospital in Lahore. We supplemented with expert interviews — clinicians in Pakistan each serve roughly 1,300 patients, giving them broad experiential range — but the demographic skew is real. Pakistan's linguistic plurality, particularly Pashto-speaking and rural-Punjabi-speaking populations, is underrepresented in our direct patient data.</p>
+    <p><strong>Sample reach.</strong> Patients were recruited by convenience sampling within a single Lahore hospital. Expert interviews extended the range — each clinician draws on roughly 1,300 patients — but the demographic skew is real, and Pakistan's linguistic plurality, particularly Pashto- and rural-Punjabi-speaking populations, is underrepresented in the direct patient data.</p>
 
-    <p><strong>Positionality.</strong> All three researchers are women based in Lahore, fluent in Urdu and Punjabi, with lived experience of local taboos around SRH. This enabled interpretive nuance the work depended on. It also means our privileged socioeconomic and educational backgrounds don't fully reflect the experiences of lower-income participants, particularly around health literacy. Naming this matters more than papering over it.</p>
+    <p><strong>Positionality.</strong> All three researchers are women based in Lahore, fluent in Urdu and Punjabi, with lived experience of local SRH taboos. That enabled interpretive nuance the work depended on. It also means our socioeconomic and educational backgrounds don't fully reflect lower-income participants', especially around health literacy — worth naming rather than smoothing over.</p>
 
-    <p><strong>What I'd do differently.</strong> Earlier multi-site sampling across provinces would have surfaced linguistic plurality more cleanly than relying on clinicians' second-hand accounts. And I'd push the gestural-input design question into a low-fidelity prototype within the same study — a body-diagram interface tested in clinic could have closed the loop from research finding to formative design probe.</p>
+    <p><strong>What I'd change.</strong> Earlier multi-site sampling across provinces would have surfaced linguistic plurality more cleanly than relying on clinicians' second-hand accounts. I'd also push the gesture-input idea into a low-fidelity prototype inside the same study — a body-diagram interface tested in clinic would have closed the loop from finding to design probe.</p>
 
-    <p><strong>The frame I want to keep.</strong> The instinct in healthcare AI is to standardize patient language toward something the model can handle. This work argues the inverse: the language is the constraint the system has to be designed around. AI that adapts to communities, not communities that adapt to AI. That principle is portable beyond this domain — it applies anywhere a product meets users on culturally specific terrain.</p>
+    <p><strong>The frame worth keeping.</strong> The instinct in healthcare AI is to standardize patient language toward what the model can handle. This work argues the opposite: the language is the constraint to design around. Systems that adapt to communities, not communities forced to adapt to systems — a principle that holds anywhere a product meets users on culturally specific ground.</p>
   </div>
 </section>
 

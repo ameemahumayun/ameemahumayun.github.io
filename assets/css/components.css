@@ -591,6 +591,11 @@
 }
 .work-card__link:hover { border-color: var(--color-accent); color: var(--color-accent); }
 .work-card__link--muted { color: var(--color-text-soft); }
+/* Inert "soon" button: pill look of a link, but non-navigating. Rendered as a
+   <span>, not an <a>, so it carries no href. No hover color shift; no pointer
+   cursor — it should not look or behave clickable. */
+.work-card__link--disabled { color: var(--color-text-soft); cursor: default; }
+.work-card__link--disabled:hover { border-color: var(--color-rule); color: var(--color-text-soft); }
 .work-card__status {
   font-size: 12px;
   color: var(--color-text-mute);

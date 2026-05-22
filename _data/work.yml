@@ -45,8 +45,10 @@
       pending: true
       suffix: "· soon"
     - label: "Paper"
-      url: "#"
-      external: true
+      pending: true
+      suffix: "· soon"
+      # url: "#"
+      # external: true
 
 - meta: "In submission · Nature Health · Clinical AI Audit"
   title: "Fetal Sex Disclosure &amp; AI Harm Cascades"
@@ -55,6 +57,11 @@
     - label: "Case Study"
       pending: true
       suffix: "· soon"
+    - label: "Paper"
+      pending: true
+      suffix: "· soon"
+      # url: "#"
+      # external: true
 
 - meta: "2024 · Accessibility · UX Design"
   title: "Rehnuma"

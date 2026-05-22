@@ -52,7 +52,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-1);
 }
 .eyebrow-rule::before {
   content: "";

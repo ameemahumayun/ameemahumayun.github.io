@@ -151,8 +151,10 @@ in `tokens.css`. Test legibility of small uppercase labels against the dark bg.
 GitHub builds the site for you; this is only for previewing before pushing.
 Requires Ruby:
 
-### bundle install
-### bundle exec jekyll serve   # → http://localhost:4000
+```bash
+bundle install
+bundle exec jekyll serve   # → http://localhost:4000
+```
 
 Don't want Ruby? Just push and check the live site (~1 min rebuild).
 

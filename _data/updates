@@ -1,0 +1,35 @@
+# ============================================================
+# RECENT UPDATES — data source for the home page timeline.
+# Each entry renders one .timeline__item, in the order listed here
+# (newest first — this file is NOT auto-sorted; keep it ordered by hand).
+# To add an update: add an entry at the TOP. Edit THIS file, not index.html.
+#
+# Fields:
+#   date  (required) the date label exactly as it should display,
+#                    e.g. "19 May 2026" or "11–17 Apr 2026"
+#   text  (required) the update text. Inline HTML is allowed and rendered
+#                    as-is — e.g. <em>Beyond Euphemisms</em>. Because of that,
+#                    if your text contains a literal ' you may wrap the value
+#                    in double quotes (as below) to keep YAML happy.
+# ============================================================
+
+- date: "19 May 2026"
+  text: "Paper accepted to SOUPS 2026"
+
+- date: "16 Apr 2026"
+  text: "Presented <em>Beyond Euphemisms</em> at CHI 2026 in Barcelona"
+
+- date: "11–17 Apr 2026"
+  text: "Attended the CHI 2026 Conference"
+
+- date: "3 Mar 2026"
+  text: "Awarded the Gary Marsden Travel Award to attend CHI 2026 in Barcelona"
+
+- date: "2 Mar 2026"
+  text: "<em>Beyond Euphemisms</em> received final acceptance to CHI 2026"
+
+- date: "26 Jan 2026"
+  text: "Selected as a Student Volunteer for CHI 2026"
+
+- date: "16 Jan 2026"
+  text: "<em>Beyond Euphemisms</em> received conditional acceptance to CHI 2026"

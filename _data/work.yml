@@ -1,0 +1,57 @@
+# ============================================================
+# WORK PROJECTS — data source for /work/
+# Each entry renders one .work-card on the Work page, in order.
+# To add/reorder/edit a project: edit THIS file, not work/index.html.
+#
+# Fields per entry:
+#   meta        (required) the small label line above the title
+#   title       (required) project name
+#   desc        (required) one-paragraph description
+#
+#   Then EITHER a list of links OR a status string (not both):
+#
+#   links:      list of buttons. Each link has:
+#               - label   (required) text shown
+#                 url     (required) destination. Use a site path like
+#                         "/work/beyond-euphemisms/" or "/work/" for internal
+#                         pages (it gets passed through relative_url), or a
+#                         full https:// URL for external.
+#                 external  (optional) true -> opens in new tab w/ rel=noopener
+#                 muted     (optional) true -> adds work-card__link--muted
+#                 suffix    (optional) faint appended text, e.g. "· soon"
+#
+#   status:     a plain string -> renders one .work-card__status span instead
+#               of any link buttons. Use for projects with nothing to link yet.
+# ============================================================
+
+- meta: "CHI 2026 · Health AI · LLM Evaluation"
+  title: "Beyond Euphemisms"
+  desc: "A case study on culturally situated SRH communication and LLM failure modes — a field study and model evaluation that reshaped the product direction of a maternal-health AI system in Pakistan."
+  links:
+    - label: "Case Study"
+      url: "/work/beyond-euphemisms/"
+    - label: "Paper"
+      url: "https://doi.org/10.1145/3772318.3791315"
+      external: true
+
+- meta: "SOUPS 2026 · Privacy &amp; Security · Qualitative UX"
+  title: "Sharing Digital Devices Is Normal and Cultural"
+  desc: "Privacy and security challenges in collectivist immigrant households — a reflexive thematic analysis across 18 families that exposed a structural mismatch between single-user device assumptions and shared-device realities."
+  links:
+    - label: "Case Study"
+      url: "/work/"
+      muted: true
+      suffix: "· soon"
+    - label: "Paper"
+      url: "#"
+      external: true
+
+- meta: "In submission · Nature Health · Clinical AI Audit"
+  title: "Fetal Sex Disclosure &amp; AI Harm Cascades"
+  desc: "A mixed-methods study of conversational AI safety in prenatal care under conservative norms — characterizing a four-pathway harm cascade and a multi-turn audit revealing failures invisible to single-turn benchmarks."
+  status: "Case study &amp; paper in progress"
+
+- meta: "2024 · Accessibility · UX Design"
+  title: "Rehnuma"
+  desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
+  status: "Design project · case study soon"

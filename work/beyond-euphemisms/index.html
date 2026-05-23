@@ -56,12 +56,17 @@ active: work
 <section class="section" id="overview">
   <div class="container">
     <div class="section-num">01 — Summary</div>
-    <h2>A product question, <span class="serif">not a research question.</span></h2>
+    <h2>The Language Gap: Redesigning LLMs for <span class="serif">Sexual and Reproductive Health</span> in Conservative Settings</h2>
 
     <p class="lead">Before you can build an LLM screening tool for women in Pakistan, you have to answer something more basic: can the model understand what patients actually say? We found that current models can't do this reliably — and that aggregate accuracy scores hide exactly how and where they fail.</p>
 
-    <p>Most healthcare AI is trained on standardized clinical English. In conservative, low-resource contexts, patients communicate through euphemism, metaphor, gesture, and folk vocabulary, and clinicians follow them there to be understood. A model that misreads <span class="urdu">"shohar sey miltay waqt"</span> (when meeting the husband) doesn't fail loudly — it maps the wrong phrase to the wrong diagnosis and returns a confident answer.</p>
+<p>LLMs show real promise for automating health communication and risk assessment at scale. But there's a fundamental obstacle. In conservative and low-resource settings, SRH communication runs almost entirely on indirect and allusive language — a product of social taboo, limited health literacy, or both. To illustrate: women won't say they had sexual intercourse, even to a female clinician. They won't use even the adjacent, innocuous words — pregnancy, miscarriage, abortion. Instead, the vocabulary goes oblique: <span class="urdu">"main apnay shohar sey mili"</span> (I met my husband) for sex, <span class="urdu">"baccha gir gaya"</span> (my child fell) for miscarriage, <span class="urdu">"mujhe khushi hai"</span> (I have happiness) for pregnancy, <span class="urdu">"mujhe safai karwani hai"</span> (I have to get cleaned) for abortion.</p>
 
+<p>Patient language clusters at two extremes. On one end, the vague and allusive phrasing above. On the other, hyperbolic metaphor — vivid, singular, and often confined to a single speaker or a small local cluster. One of the most striking we found was <span class="urdu">charbi</span> for white vaginal discharge. It literally means "fat," but not fat in general — specifically the thin, stringy pieces pulled away while cleaning meat, invoked for their resemblance to the texture and appearance of the discharge. The mapping is precise, embodied, and almost impossible to guess cold.</p>
+
+<p>Even an apparently plain word can carry a buried meaning. Pregnant women routinely ask whether their child will be "normal." They are not asking about fetal health or anomalies — they are asking about the mode of delivery, where vaginal birth is "normal" and a C-section is the exception.</p>
+
+<p>This is the trap for a model trained on standardized clinical English. When a patient says <span class="urdu">"kya ye bacha normal hai?"</span>, the failure is silent: the model maps a euphemism it doesn't recognize onto the nearest literal reading, then answers with full confidence. Nothing in the output signals that the question was misunderstood. So the real question becomes: in a setting where patient vocabulary is this singular, can these terms be anticipated and organized at all — and within which of those categories do LLMs fail the most?</p>
     <p>The work paired ethnographic fieldwork in a Lahore OB/GYN ward with a structured evaluation of five LLMs against the language documented there. It produced three things a team can build on: a categorization framework for indirect SRH communication, a failure taxonomy for current models, and a Roman Urdu glossary that fed into Awaaz-e-Sehat, a Gates-funded maternal-health AI effort at LUMS.</p>
 
     <div class="ledger">

@@ -655,17 +655,21 @@
 
 /* 21. HERO WITH AVATAR ---------------------------------------------------- */
 /* Homepage hero variant: a circular portrait sits beside the name/intro.
-   Drop your image at /assets/images/me.jpg — until then a placeholder shows. */
+   Drop your image at /assets/images/me.jpg — until then a placeholder shows.
+   Uses the wide container (not the prose-narrow default) so the extra
+   avatar column has room without squeezing the eyebrow onto two lines. */
 .hero--profile .hero__inner {
+  max-width: var(--container-wide);
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: var(--space-7);
+  gap: var(--space-6);
   align-items: center;
 }
 .hero__text { min-width: 0; }
+.hero--profile .eyebrow-rule { white-space: nowrap; }
 .hero__avatar {
-  width: 180px;
-  height: 180px;
+  width: 224px;
+  height: 224px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid var(--color-border);
@@ -693,7 +697,8 @@
     gap: var(--space-4);
   }
   /* Image first, then text on mobile */
-  .hero__avatar { order: -1; width: 130px; height: 130px; }
+  .hero__avatar { order: -1; width: 150px; height: 150px; }
+  .hero--profile .eyebrow-rule { white-space: normal; }
 }
 
 

@@ -658,20 +658,27 @@
    rounded rectangle matching the source photo's proportions (not a circle).
    Drop your image at /assets/images/me.jpg — until then a placeholder shows.
    Uses the wide container (not the prose-narrow default) so the extra
-   avatar column has room without squeezing the eyebrow onto two lines. */
+   avatar column has room without squeezing the eyebrow onto two lines.
+   Flex (not grid) so align-items: stretch lets the avatar's height track
+   the intro text block's height — the portrait grows/shrinks with copy
+   length instead of sitting at a fixed size. */
 .hero--profile .hero__inner {
   max-width: var(--container-wide);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--space-6);
-  align-items: center;
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-4);
 }
-.hero__text { min-width: 0; }
-.hero--profile .eyebrow-rule { white-space: nowrap; }
+.hero__text { flex: 1 1 auto; min-width: 0; }
+.hero--profile .eyebrow-rule {
+  white-space: nowrap;
+  font-size: 10px;
+  letter-spacing: var(--tracking-wider);
+}
 .hero__avatar {
-  width: 210px;
-  aspect-ratio: 600 / 733;
+  width: auto;
   height: auto;
+  max-width: 320px;
+  aspect-ratio: 600 / 802;
   border-radius: 14px;
   object-fit: cover;
   border: 1px solid var(--color-border);
@@ -695,12 +702,17 @@
 
 @media (max-width: 768px) {
   .hero--profile .hero__inner {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: flex-start;
     gap: var(--space-4);
   }
   /* Image first, then text on mobile */
-  .hero__avatar { order: -1; width: 150px; height: auto; }
-  .hero--profile .eyebrow-rule { white-space: normal; }
+  .hero__avatar { order: -1; width: 190px; height: auto; max-width: none; }
+  .hero--profile .eyebrow-rule {
+    white-space: normal;
+    font-size: 11.5px;
+    letter-spacing: var(--tracking-widest);
+  }
 }
 
 

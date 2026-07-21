@@ -913,14 +913,18 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 /* 25. CONTACT FORM --------------------------------------------------------- */
 /* Posts straight to FormSubmit (formsubmit.co) — a static site has no
    backend of its own to receive this. FormSubmit emails the submission
-   to the address in the form's action URL. */
-.contact-form { max-width: 560px; margin-top: var(--space-3); }
+   to the address in the form's action URL.
+   .hero--wide widens the Contact page's hero (intro + form share it, see
+   contact/index.html) so the form has real room to breathe instead of
+   sitting in the site's narrow prose column. */
+.hero--wide .hero__inner { max-width: var(--container-wide); }
+.contact-form { margin-top: var(--space-4); }
 .contact-form__row {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 .contact-form__row .contact-form__field { flex: 1; min-width: 0; }
-.contact-form__field { margin-bottom: var(--space-3); }
+.contact-form__field { margin-bottom: var(--space-4); }
 .contact-form__field label {
   display: block;
   font-size: 11px;
@@ -936,7 +940,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   background: var(--color-bg-lift);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  padding: 12px 14px;
+  padding: 14px 16px;
   font-size: var(--text-sm);
   color: var(--color-text-strong);
   transition: border-color var(--duration) var(--ease);
@@ -946,7 +950,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   outline: none;
   border-color: var(--color-accent);
 }
-.contact-form__field textarea { resize: vertical; min-height: 140px; }
+.contact-form__field textarea { resize: vertical; min-height: 160px; }
 .contact-form__submit {
   padding: 10px 30px;
   border: 1px solid var(--color-accent);

@@ -5,7 +5,7 @@ description: Get in touch.
 active: contact
 ---
 
-<header class="hero">
+<header class="hero hero--wide">
   <div class="hero__inner">
     <div class="eyebrow eyebrow-rule">contact me</div>
   <h1 class="page-head__title" style="margin-bottom: 14px;">
@@ -13,17 +13,11 @@ active: contact
 </h1>
 
 <p class="lead" style="max-width:600px;">
-  Email me at <a href="mailto:{{ site.email }}" style="color:var(--color-accent);">{{ site.email }}</a>
+  Email me directly at <a href="mailto:ameemah.humayun@gmail.com" style="color:var(--color-accent);">ameemah.humayun@gmail.com</a>
   or find me on
   <a href="{{ site.linkedin }}" target="_blank" rel="noopener" style="color:var(--color-accent);">LinkedIn</a>.
 </p>
-  </div>
-</header>
-
-<section class="section">
-  <div class="container">
-    <div class="eyebrow eyebrow-rule">leave feedback</div>
-    <h2 style="margin-top:10px;">Send a message</h2>
+<p class="lead" style="max-width:600px;">or just drop me a message here!</p>
 
     <form class="contact-form" id="contact-form" action="https://formsubmit.co/ameemah.humayun@gmail.com" method="POST">
       <input type="hidden" name="_subject" value="New message from ameemahumayun.github.io">
@@ -48,10 +42,10 @@ active: contact
         </div>
         <button type="submit" class="contact-form__submit">Send</button>
       </div>
-      <p class="contact-form__thanks">Thanks — I&rsquo;ll get back to you soon!</p>
+      <p class="contact-form__thanks">thanks — i&rsquo;ll get back to you as soon as i can.</p>
     </form>
   </div>
-</section>
+</header>
 
 <script>
   (function () {

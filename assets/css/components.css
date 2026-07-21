@@ -917,12 +917,21 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
    narrow container (no arbitrary max-width) like everything else on
    the page — a smaller cap left dead space and read as off-center. */
 .contact-form { margin-top: var(--space-3); }
-.contact-form__row {
-  display: flex;
+/* Name + Email stacked in a narrower left column; Message fills a taller
+   right column beside them (grid items stretch to the row height by
+   default, so the textarea can fill: 1 down to match). Send spans full
+   width below, centered. */
+.contact-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
   gap: var(--space-4);
 }
-.contact-form__row .contact-form__field { flex: 1; min-width: 0; }
-.contact-form__field { margin-bottom: var(--space-3); }
+.contact-form__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.contact-form__field { display: flex; flex-direction: column; }
 .contact-form__field label {
   display: block;
   font-size: 11px;
@@ -949,9 +958,10 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   border-color: var(--color-accent);
 }
 /* resize: none — a visitor dragging the textarea to some arbitrary size
-   isn't a feature here. */
-.contact-form__field textarea { resize: none; min-height: 110px; }
-.contact-form__submit-row { text-align: center; margin-top: var(--space-2); }
+   isn't a feature here. flex: 1 lets it fill the stretched grid cell so
+   it matches the height of the stacked Name/Email column beside it. */
+.contact-form__field--message textarea { resize: none; flex: 1; min-height: 140px; }
+.contact-form__submit-row { text-align: center; margin-top: var(--space-4); }
 .contact-form__submit {
   padding: 10px 30px;
   border: 1px solid var(--color-accent);
@@ -974,5 +984,6 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 .contact-form--sent .contact-form__thanks { display: block; }
 
 @media (max-width: 600px) {
-  .contact-form__row { flex-direction: column; gap: 0; }
+  .contact-form__grid { grid-template-columns: 1fr; }
+  .contact-form__field--message textarea { flex: none; }
 }

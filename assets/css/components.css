@@ -913,9 +913,11 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 /* 25. CONTACT FORM --------------------------------------------------------- */
 /* Posts straight to FormSubmit (formsubmit.co) — a static site has no
    backend of its own to receive this. FormSubmit emails the submission
-   to the address in the form's action URL. Fills the site's standard
-   narrow container (no arbitrary max-width) like everything else on
-   the page — a smaller cap left dead space and read as off-center. */
+   to the address in the form's action URL. The section sits in
+   .container-wide (see contact/index.html) rather than the page's
+   narrow reading column, so the fields have real horizontal room —
+   the header above stays on the narrow column intentionally, to match
+   Work/CV/Studio's page-head dimensions. */
 .contact-form { margin-top: var(--space-3); }
 /* Name + Email stacked in a narrower left column; Message fills a taller
    right column beside them (grid items stretch to the row height by
@@ -961,24 +963,35 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
    isn't a feature here. flex: 1 lets it fill the stretched grid cell so
    it matches the height of the stacked Name/Email column beside it. */
 .contact-form__field--message textarea { resize: none; flex: 1; min-height: 140px; }
-.contact-form__submit-row { text-align: center; margin-top: var(--space-4); }
+.contact-form__submit-row { margin-top: var(--space-4); }
 .contact-form__submit {
-  padding: 10px 30px;
+  display: block;
+  width: 100%;
+  padding: 14px 30px;
   border: 1px solid var(--color-accent);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-md);
   background: var(--color-accent);
   color: var(--color-bg);
   font-size: 13px;
   font-weight: var(--weight-bold);
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  text-align: center;
   transition: background var(--duration) var(--ease), border-color var(--duration) var(--ease);
 }
 .contact-form__submit:hover { background: var(--color-accent-deep); border-color: var(--color-accent-deep); }
+/* Shown in place of the fields after a successful submit — sized and
+   bordered like a real confirmation banner, not a stray line of text. */
 .contact-form__thanks {
   display: none;
   color: var(--color-accent);
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  text-align: center;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
 }
 .contact-form--sent .contact-form__fields { display: none; }
 .contact-form--sent .contact-form__thanks { display: block; }

@@ -13,9 +13,55 @@ active: contact
 </h1>
 
 <p class="lead" style="max-width:600px;">
-  Email me at <a href="mailto:{{ site.email }}" style="color:var(--color-accent);">{{ site.email }}</a> 
-  or find me on 
+  Email me at <a href="mailto:{{ site.email }}" style="color:var(--color-accent);">{{ site.email }}</a>
+  or find me on
   <a href="{{ site.linkedin }}" target="_blank" rel="noopener" style="color:var(--color-accent);">LinkedIn</a>.
 </p>
   </div>
 </header>
+
+<section class="section">
+  <div class="container">
+    <div class="eyebrow eyebrow-rule">leave feedback</div>
+    <h2 style="margin-top:10px;">Send a message</h2>
+
+    <form class="contact-form" id="contact-form" action="https://formsubmit.co/ameemah.humayun@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="New message from ameemahumayun.github.io">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://ameemahumayun.github.io/contact/?sent=true">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+      <div class="contact-form__fields">
+        <div class="contact-form__row">
+          <div class="contact-form__field">
+            <label for="cf-name">Name</label>
+            <input type="text" id="cf-name" name="name" required>
+          </div>
+          <div class="contact-form__field">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" required>
+          </div>
+        </div>
+        <div class="contact-form__field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="contact-form__submit">Send</button>
+      </div>
+      <p class="contact-form__thanks">Thanks — I&rsquo;ll get back to you soon!</p>
+    </form>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('sent') === 'true') {
+      var form = document.getElementById('contact-form');
+      if (form) form.classList.add('contact-form--sent');
+      if (window.history.replaceState) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+  })();
+</script>

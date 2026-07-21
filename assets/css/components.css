@@ -657,15 +657,17 @@
 /* Homepage hero variant: a portrait sits beside the name/intro, in a
    rounded rectangle matching the source photo's proportions (not a circle).
    Drop your image at /assets/images/me.jpg — until then a placeholder shows.
-   Uses the wide container (not the prose-narrow default) so the extra
-   avatar column has room without squeezing the eyebrow onto two lines.
-   Flex (not grid) so align-items: stretch lets the avatar's height track
-   the intro text block's height — the portrait grows/shrinks with copy
-   length instead of sitting at a fixed size. */
+   Shares .hero__inner's default max-width (container-narrow) so the hero
+   lines up with the rest of the page's content (e.g. the Recent Updates
+   section below it) instead of drifting to its own wider margin.
+   The avatar's width is viewport-relative (clamp), not derived from the
+   text block's height — a height-tracking flex-stretch was tried but
+   caused a feedback loop (taller text -> taller/wider avatar -> less
+   room for text -> more wrapping -> ...) that overflowed the viewport
+   at in-between widths. */
 .hero--profile .hero__inner {
-  max-width: var(--container-wide);
   display: flex;
-  align-items: stretch;
+  align-items: center;
   gap: var(--space-4);
 }
 .hero__text { flex: 1 1 auto; min-width: 0; }
@@ -675,9 +677,8 @@
   letter-spacing: var(--tracking-wider);
 }
 .hero__avatar {
-  width: auto;
+  width: clamp(160px, 26vw, 260px);
   height: auto;
-  max-width: 320px;
   aspect-ratio: 600 / 802;
   border-radius: 14px;
   object-fit: cover;

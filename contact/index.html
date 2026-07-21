@@ -5,19 +5,22 @@ description: Get in touch.
 active: contact
 ---
 
-<header class="hero hero--wide">
+<header class="hero">
   <div class="hero__inner">
     <div class="eyebrow eyebrow-rule">contact me</div>
   <h1 class="page-head__title" style="margin-bottom: 14px;">
   <span class="serif" style="color:var(--color-text-strong);">Say Hello :)</span>
 </h1>
 
-<p class="lead" style="max-width:600px;">
-  Email me directly at <a href="mailto:ameemah.humayun@gmail.com" style="color:var(--color-accent);">ameemah.humayun@gmail.com</a>
-  or find me on
-  <a href="{{ site.linkedin }}" target="_blank" rel="noopener" style="color:var(--color-accent);">LinkedIn</a>.
+<p class="lead">
+  Email me directly at <a href="mailto:ameemah.humayun@gmail.com" style="color:var(--color-accent);">ameemah.humayun@gmail.com</a> or find me on <a href="{{ site.linkedin }}" target="_blank" rel="noopener" style="color:var(--color-accent);">LinkedIn</a>.
 </p>
-<p class="lead" style="max-width:600px;">or just drop me a message here!</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <h3>or just drop me a message here!</h3>
 
     <form class="contact-form" id="contact-form" action="https://formsubmit.co/ameemah.humayun@gmail.com" method="POST">
       <input type="hidden" name="_subject" value="New message from ameemahumayun.github.io">
@@ -40,12 +43,14 @@ active: contact
           <label for="cf-message">Message</label>
           <textarea id="cf-message" name="message" required></textarea>
         </div>
-        <button type="submit" class="contact-form__submit">Send</button>
+        <div class="contact-form__submit-row">
+          <button type="submit" class="contact-form__submit">Send</button>
+        </div>
       </div>
       <p class="contact-form__thanks">thanks — i&rsquo;ll get back to you as soon as i can.</p>
     </form>
   </div>
-</header>
+</section>
 
 <script>
   (function () {

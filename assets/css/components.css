@@ -913,18 +913,15 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 /* 25. CONTACT FORM --------------------------------------------------------- */
 /* Posts straight to FormSubmit (formsubmit.co) — a static site has no
    backend of its own to receive this. FormSubmit emails the submission
-   to the address in the form's action URL.
-   .hero--wide widens the Contact page's hero (intro + form share it, see
-   contact/index.html) so the form has real room to breathe instead of
-   sitting in the site's narrow prose column. */
-.hero--wide .hero__inner { max-width: var(--container-wide); }
-.contact-form { margin-top: var(--space-4); }
+   to the address in the form's action URL. Sits in the site's standard
+   narrow container like every other section — not a special wide one. */
+.contact-form { max-width: 600px; margin-top: var(--space-3); }
 .contact-form__row {
   display: flex;
-  gap: var(--space-5);
+  gap: var(--space-4);
 }
 .contact-form__row .contact-form__field { flex: 1; min-width: 0; }
-.contact-form__field { margin-bottom: var(--space-4); }
+.contact-form__field { margin-bottom: var(--space-3); }
 .contact-form__field label {
   display: block;
   font-size: 11px;
@@ -940,7 +937,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   background: var(--color-bg-lift);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  padding: 14px 16px;
+  padding: 8px 12px;
   font-size: var(--text-sm);
   color: var(--color-text-strong);
   transition: border-color var(--duration) var(--ease);
@@ -950,7 +947,10 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   outline: none;
   border-color: var(--color-accent);
 }
-.contact-form__field textarea { resize: vertical; min-height: 160px; }
+/* resize: none — a visitor dragging the textarea to some arbitrary size
+   isn't a feature here. */
+.contact-form__field textarea { resize: none; min-height: 110px; }
+.contact-form__submit-row { text-align: center; margin-top: var(--space-2); }
 .contact-form__submit {
   padding: 10px 30px;
   border: 1px solid var(--color-accent);

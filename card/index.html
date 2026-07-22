@@ -10,6 +10,18 @@ description: Mixed-methods UX researcher working on human-centered AI for health
 <header class="hero hero--card">
   <div class="hero__inner">
 
+    <div class="hero__updates">
+      <h3>Recent Updates</h3>
+      <div class="timeline">
+        {%- for update in site.data.updates %}
+        <div class="timeline__item">
+          <div class="timeline__date">{{ update.date }}</div>
+          <div class="timeline__text">{{ update.text }}</div>
+        </div>
+        {%- endfor %}
+      </div>
+    </div>
+
     <div class="biz-card-wrap">
       <div class="biz-card-float">
         <button type="button" class="biz-card" id="biz-card" aria-pressed="false" aria-label="Flip business card">
@@ -33,7 +45,7 @@ description: Mixed-methods UX researcher working on human-centered AI for health
             <div class="biz-card__face biz-card__face--back">
               <img class="biz-card__photo2" src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Portrait of Ameemah Humayun" width="600" height="802">
               <div class="biz-card__about">
-                <p>hi! welcome to my space :) i'm a mixed-methods UX researcher working at the intersection of human-centered AI and healthcare, focused on culturally situated design in sensitive, high-stakes contexts. i graduated with a BSc in CS from LUMS in june 2026.</p>
+                <p>hi! i'm a mixed-methods UX researcher working at the intersection of human-centered AI and healthcare, focused on culturally situated design in high-stakes contexts.</p>
                 <div class="biz-card__current">
                   <span class="biz-card__current-label">Currently at</span>
                   Awaaz-e-Sehat &middot; The National AI Hub
@@ -44,7 +56,7 @@ description: Mixed-methods UX researcher working on human-centered AI for health
                       <rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.6"/>
                       <path d="M4 7l8 6 8-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    ameemah.humayun@gmail.com
+                    <span>ameemah.humayun@gmail.com</span>
                   </a>
                   <a href="{{ site.linkedin }}" target="_blank" rel="noopener">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -53,7 +65,7 @@ description: Mixed-methods UX researcher working on human-centered AI for health
                       <path d="M8 11v6" stroke-width="1.6" stroke-linecap="round"/>
                       <path d="M12 17v-3.2c0-1.5 1-2.3 2.2-2.3S16 12.3 16 13.8V17" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    LinkedIn
+                    <span>LinkedIn</span>
                   </a>
                 </div>
               </div>
@@ -66,21 +78,6 @@ description: Mixed-methods UX researcher working on human-centered AI for health
 
   </div>
 </header>
-
-<!-- RECENT UPDATES -->
-<section class="section" id="recent-updates" style="padding-top:var(--space-6);">
-  <div class="container-wide">
-    <h3>Recent Updates</h3>
-    <div class="timeline">
-      {%- for update in site.data.updates %}
-      <div class="timeline__item">
-        <div class="timeline__date">{{ update.date }}</div>
-        <div class="timeline__text">{{ update.text }}</div>
-      </div>
-      {%- endfor %}
-    </div>
-  </div>
-</section>
 
 <script>
   (function () {

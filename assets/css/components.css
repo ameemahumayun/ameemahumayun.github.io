@@ -717,12 +717,20 @@
   }
 }
 
-/* Card-only hero variant (see card/index.html): the flip card replaces
-   the entire about/intro block, so it's just centered on its own. */
+/* Card hero variant (see card/index.html): Recent Updates sits on the
+   left, the flip card on the right, both starting at the same top edge —
+   so the card no longer pushes the timeline below the fold. */
 .hero--card .hero__inner {
   max-width: var(--container-wide);
   display: flex;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+.hero__updates { flex: 1 1 auto; min-width: 0; }
+
+@media (max-width: 900px) {
+  .hero--card .hero__inner { flex-direction: column; }
 }
 
 
@@ -1019,7 +1027,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
    backdrop-filter blur) — with a thin rounded teal border, not a thick
    frame, per feedback that the frame read too heavy. */
 .biz-card-wrap {
-  width: clamp(400px, 52vw, 720px);
+  width: clamp(240px, 24vw, 320px);
   flex-shrink: 0;
 }
 .biz-card-stage,
@@ -1042,7 +1050,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   cursor: pointer;
   display: block;
   width: 100%;
-  aspect-ratio: 1.5 / 1;
+  aspect-ratio: 1.05 / 1;
   -webkit-tap-highlight-color: transparent;
 }
 .biz-card:focus-visible .biz-card__inner {
@@ -1061,14 +1069,14 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
-  border-radius: 26px;
+  border-radius: 18px;
   border: 1.5px solid var(--color-accent-deep);
   background: rgba(37, 33, 32, 0.72);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   box-sizing: border-box;
-  padding: var(--space-6);
+  padding: var(--space-4);
   overflow: hidden;
 }
 .biz-card__face--back { transform: rotateY(180deg); }
@@ -1086,38 +1094,44 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 .biz-card__face--front {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   gap: var(--space-2);
   text-align: center;
 }
 /* Logo file lives at assets/images/logo.svg (not in this repo yet — drop
-   it in and it'll pick up this sizing automatically). Width is what
-   controls its size; height is auto off the file's own aspect ratio. */
-.biz-card__logo { width: clamp(46px, 6vw, 66px); height: auto; }
+   it in and it'll pick up this sizing automatically). A fixed height
+   (not just width) keeps the box small even while the file is missing —
+   otherwise the broken-image alt text wraps and inflates this section. */
+.biz-card__logo {
+  align-self: center;
+  width: clamp(28px, 3.2vw, 38px);
+  height: clamp(28px, 3.2vw, 38px);
+  object-fit: contain;
+}
 .biz-card__name-fancy {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(24px, 3.6vw, 38px);
+  font-size: clamp(15px, 1.8vw, 19px);
   color: var(--color-accent);
   line-height: 1.1;
 }
 .biz-card__keywords {
-  font-size: clamp(11px, 1.4vw, 13.5px);
-  letter-spacing: 0.04em;
+  font-size: clamp(9px, 0.9vw, 10px);
+  letter-spacing: 0.03em;
   color: var(--color-text-mute);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 .biz-card__keywords-line:first-child {
   color: var(--color-text-strong);
   font-weight: var(--weight-semibold);
 }
 .biz-card__pubs {
-  margin-top: var(--space-2);
-  padding-top: var(--space-3);
+  margin-top: var(--space-1);
+  padding-top: var(--space-2);
   border-top: 1px solid var(--color-border-soft);
-  font-size: clamp(10px, 1.2vw, 11.5px);
-  letter-spacing: 0.03em;
+  font-size: clamp(8px, 0.8vw, 9px);
+  letter-spacing: 0.02em;
   color: var(--color-text-mute);
 }
 .biz-card__pubs-label {
@@ -1130,15 +1144,17 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 .biz-card__pubs a { color: var(--color-accent); }
 .biz-card__pubs a:hover { color: var(--color-text-strong); }
 
-/* Back: photo (margined by the face's own padding) beside the about text. */
-.biz-card__face--back { display: flex; align-items: center; gap: var(--space-5); }
+/* Back: photo (margined by the face's own padding) beside the about text.
+   align-items: flex-start (not center) so if content ever runs long, it
+   clips at the bottom only instead of symmetrically eating the top too. */
+.biz-card__face--back { display: flex; align-items: flex-start; gap: var(--space-3); }
 .biz-card__photo2 {
   height: 100%;
   width: auto;
   max-width: 38%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: 10px;
   flex-shrink: 0;
 }
 .biz-card__about {
@@ -1146,16 +1162,16 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 .biz-card__about p {
-  font-size: clamp(11.5px, 1.5vw, 13.5px);
-  line-height: 1.55;
+  font-size: clamp(9px, 1vw, 10.5px);
+  line-height: 1.45;
   color: var(--color-text);
   margin: 0;
 }
 .biz-card__current {
-  font-size: clamp(10px, 1.2vw, 11.5px);
+  font-size: clamp(8px, 0.85vw, 9px);
   color: var(--color-text-mute);
 }
 .biz-card__current-label {
@@ -1168,28 +1184,29 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 .biz-card__contact {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding-top: var(--space-2);
+  gap: 4px;
+  padding-top: var(--space-1);
   border-top: 1px solid var(--color-border-soft);
 }
 .biz-card__contact a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: clamp(10.5px, 1.3vw, 12px);
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: clamp(8px, 0.9vw, 9.5px);
   color: var(--color-accent);
+  min-width: 0;
 }
+.biz-card__contact a span { min-width: 0; overflow-wrap: anywhere; }
 .biz-card__contact a:hover { color: var(--color-text-strong); }
-.biz-card__contact svg { width: 14px; height: 14px; flex-shrink: 0; stroke: currentColor; }
+.biz-card__contact svg { width: 11px; height: 11px; flex-shrink: 0; stroke: currentColor; }
 
-@media (max-width: 768px) {
-  .biz-card-wrap { width: min(480px, 100%); order: -1; }
+@media (max-width: 900px) {
+  .biz-card-wrap { width: min(340px, 100%); order: -1; margin: 0 auto; }
 }
 @media (max-width: 480px) {
-  .biz-card { aspect-ratio: 0.8 / 1; }
-  .biz-card__face { padding: var(--space-4); border-radius: 20px; }
+  .biz-card { aspect-ratio: 0.95 / 1; }
   .biz-card__face--back { flex-direction: column; text-align: center; }
   .biz-card__contact a { align-self: center; }
-  .biz-card__photo2 { height: auto; width: 68px; max-width: none; aspect-ratio: 1 / 1; border-radius: 50%; }
+  .biz-card__photo2 { height: auto; width: 60px; max-width: none; aspect-ratio: 1 / 1; border-radius: 50%; }
   .biz-card__pubs { display: none; }
 }

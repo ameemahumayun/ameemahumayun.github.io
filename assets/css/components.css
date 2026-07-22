@@ -893,8 +893,8 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   padding-left: var(--space-4);
   border-left: 1px solid var(--color-border);
 }
-/* Tighter heading-to-list gap — used on /card/ only (see card/index.html)
-   so the real homepage's Recent Updates spacing is untouched. */
+/* Tighter heading-to-list gap — opt in per page via this modifier
+   (used on both the homepage and /card/). */
 .timeline--tight { margin-top: var(--space-2); }
 .timeline__item {
   position: relative;

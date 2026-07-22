@@ -1091,10 +1091,10 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   gap: var(--space-2);
   text-align: center;
 }
+/* Logo file lives at assets/images/logo.svg (not in this repo yet — drop
+   it in and it'll pick up this sizing automatically). Width is what
+   controls its size; height is auto off the file's own aspect ratio. */
 .biz-card__logo { width: clamp(46px, 6vw, 66px); height: auto; }
-.biz-card__logo .biz-card__logo-blob { fill: var(--color-accent); opacity: 0.32; }
-.biz-card__logo .biz-card__logo-ribbon { stroke: var(--color-accent); }
-.biz-card__logo .biz-card__logo-mark { stroke: var(--color-text-strong); }
 .biz-card__name-fancy {
   font-family: var(--font-display);
   font-style: italic;

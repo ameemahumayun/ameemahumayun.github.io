@@ -10,6 +10,18 @@ description: Mixed-methods UX researcher working on human-centered AI for health
 <header class="hero hero--card">
   <div class="hero__inner">
 
+    <div class="hero__updates">
+      <h3>Recent Updates</h3>
+      <div class="timeline timeline--tight timeline--compact">
+        {%- for update in site.data.updates %}
+        <div class="timeline__item">
+          <div class="timeline__date">{{ update.date }}</div>
+          <div class="timeline__text">{{ update.text }}</div>
+        </div>
+        {%- endfor %}
+      </div>
+    </div>
+
     <div class="biz-card-wrap">
       <div class="biz-card-float">
         <button type="button" class="biz-card" id="biz-card" aria-pressed="false" aria-label="Flip business card">
@@ -26,7 +38,11 @@ description: Mixed-methods UX researcher working on human-centered AI for health
               </div>
               <div class="biz-card__pubs">
                 <span class="biz-card__pubs-label">Publications</span>
-                <a href="https://doi.org/10.1145/3772318.3791315" target="_blank" rel="noopener" class="link-quiet">CHI 2026</a> &middot; SOUPS 2026 &middot; Nature Health
+                <ul class="biz-card__pubs-list">
+                  <li><a href="https://doi.org/10.1145/3772318.3791315" target="_blank" rel="noopener" class="link-quiet">CHI 2026</a></li>
+                  <li>SOUPS 2026</li>
+                  <li>Nature Health</li>
+                </ul>
               </div>
             </div>
 
@@ -66,21 +82,6 @@ description: Mixed-methods UX researcher working on human-centered AI for health
 
   </div>
 </header>
-
-<!-- RECENT UPDATES -->
-<section class="section" id="recent-updates" style="padding-top:var(--space-6);">
-  <div class="container-wide">
-    <h3>Recent Updates</h3>
-    <div class="timeline timeline--tight">
-      {%- for update in site.data.updates %}
-      <div class="timeline__item">
-        <div class="timeline__date">{{ update.date }}</div>
-        <div class="timeline__text">{{ update.text }}</div>
-      </div>
-      {%- endfor %}
-    </div>
-  </div>
-</section>
 
 <script>
   (function () {

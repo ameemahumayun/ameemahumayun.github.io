@@ -722,13 +722,30 @@
   }
 }
 
-/* Card-only hero variant (see card/index.html): the flip card replaces
-   the entire about/intro block, so it's just centered on its own —
-   Recent Updates is back to its own section below. */
+/* Card hero variant (see card/index.html): Recent Updates comes first
+   and fills the remaining width; the flip card sits fixed-size beside
+   it. .hero__updates' height is computed with the same formula as the
+   card's own height (card width / aspect-ratio) so the two line up —
+   overflow-y: auto on the updates column means only IT scrolls if its
+   list runs long; the card never grows or moves. */
 .hero--card .hero__inner {
   max-width: var(--container-wide);
   display: flex;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+.hero__updates {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: clamp(248px, 30.3vw, 386px);
+  overflow-y: auto;
+  padding-right: var(--space-2);
+}
+
+@media (max-width: 900px) {
+  .hero--card .hero__inner { flex-direction: column; }
+  .hero__updates { height: auto; overflow-y: visible; padding-right: 0; }
 }
 
 
@@ -925,6 +942,11 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   color: var(--color-text-strong);
   line-height: 1.5;
 }
+/* Denser entries for the card page's constrained-height column — smaller
+   type and less padding per item so more fit before scrolling kicks in. */
+.timeline--compact .timeline__item { padding-bottom: var(--space-2); }
+.timeline--compact .timeline__date { font-size: 10.5px; margin-bottom: 2px; }
+.timeline--compact .timeline__text { font-size: 13px; line-height: 1.4; }
 
 
 /* 25. CONTACT FORM --------------------------------------------------------- */
@@ -1051,7 +1073,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   cursor: pointer;
   display: block;
   width: 100%;
-  aspect-ratio: 1.6 / 1;
+  aspect-ratio: 1.45 / 1;
   -webkit-tap-highlight-color: transparent;
 }
 .biz-card:focus-visible .biz-card__inner {
@@ -1071,8 +1093,13 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   inset: 0;
   backface-visibility: hidden;
   border-radius: 18px;
-  border: 1.5px solid var(--color-accent-deep);
-  background: rgba(37, 33, 32, 0.72);
+  /* Muted teal-gray — blended halfway between the accent and a plain
+     border gray, rather than the fuller teal of --color-accent-deep. */
+  border: 1.5px solid color-mix(in srgb, var(--color-accent-deep) 55%, var(--color-border) 45%);
+  /* Darker, closer to the page background (--color-bg-lift's rgb) at
+     higher opacity — the previous tint read noticeably lighter than
+     the page, an odd amount of contrast for a "glass" panel. */
+  background: rgba(33, 29, 26, 0.85);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
@@ -1082,12 +1109,13 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 }
 .biz-card__face--back { transform: rotateY(180deg); }
 /* Glossy corner highlight — sells the "mirror" glass feel beyond just blur,
-   which barely reads over the hero's flat background otherwise. */
+   which barely reads over the hero's flat background otherwise. Kept
+   subtle so it doesn't wash the darker background back out. */
 .biz-card__face::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 45%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 45%);
   pointer-events: none;
 }
 /* Nested inner rectangle, inset a small margin from the card's own edge —
@@ -1126,6 +1154,9 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   font-size: clamp(20px, 2.8vw, 28px);
   color: var(--color-accent);
   line-height: 1.1;
+  /* Extra room below the name specifically — the shared flex gap alone
+     read too tight between the name and the role/keywords beneath it. */
+  margin-bottom: var(--space-2);
 }
 .biz-card__keywords {
   font-size: clamp(10.5px, 1.2vw, 12.5px);
@@ -1143,11 +1174,23 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   color: var(--color-text-mute);
 }
 .biz-card__pubs-label {
+  display: block;
   text-transform: uppercase;
   letter-spacing: var(--tracking-wider);
   font-weight: var(--weight-bold);
   color: var(--color-text-soft);
-  margin-right: 6px;
+  margin-bottom: 6px;
+}
+/* One publication per line, with real vertical gaps — was a single
+   inline row (CHI 2026 · SOUPS 2026 · Nature Health) that read as one
+   cramped clump. */
+.biz-card__pubs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 /* Publication links use the site's standard .link-quiet treatment
    (see components.css section 19) — faded into the surrounding muted
@@ -1158,7 +1201,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 .biz-card__photo2 {
   height: 100%;
   width: auto;
-  max-width: 48%;
+  max-width: 50%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   border-radius: 10px;

@@ -717,6 +717,14 @@
   }
 }
 
+/* Card-only hero variant (see card/index.html): the flip card replaces
+   the entire about/intro block, so it's just centered on its own. */
+.hero--card .hero__inner {
+  max-width: var(--container-wide);
+  display: flex;
+  justify-content: center;
+}
+
 
 /* 22. CV DOWNLOAD ROW ----------------------------------------------------- */
 .cv-downloads {
@@ -1003,16 +1011,18 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 
 
 /* 26. FLIP BUSINESS CARD --------------------------------------------------- */
-/* Preview-only component, used on /card/ in place of the static avatar —
-   see card/index.html. Landscape (business-card proportions), floats
-   gently at idle, flips on click/tap/Enter via the .is-flipped class
-   toggled in JS (a real <button>, so keyboard activation is free). */
+/* Preview-only component, used on /card/ in place of the whole about/intro
+   block — see card/index.html. Landscape (business-card proportions),
+   floats gently at idle, flips on click/tap/Enter via the .is-flipped
+   class toggled in JS (a real <button>, so keyboard activation is free).
+   Each face gets a thick "picture frame" border in the dull teal accent,
+   with generous inner padding standing in for the mat. */
 .biz-card-wrap {
-  width: clamp(300px, 34vw, 420px);
+  width: clamp(360px, 46vw, 640px);
   flex-shrink: 0;
 }
 .biz-card-stage,
-.biz-card-wrap { perspective: 1600px; }
+.biz-card-wrap { perspective: 1800px; }
 .biz-card-float {
   animation: biz-card-float 5s ease-in-out infinite;
 }
@@ -1031,7 +1041,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   cursor: pointer;
   display: block;
   width: 100%;
-  aspect-ratio: 1.75 / 1;
+  aspect-ratio: 1.5 / 1;
   -webkit-tap-highlight-color: transparent;
 }
 .biz-card:focus-visible .biz-card__inner {
@@ -1050,93 +1060,99 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
-  border-radius: 14px;
-  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  border: clamp(6px, 1.4vw, 10px) solid var(--color-accent-deep);
   background: var(--color-bg-card);
+  box-sizing: border-box;
+  padding: var(--space-4);
   overflow: hidden;
 }
 .biz-card__face--back { transform: rotateY(180deg); }
 
-/* Front: monogram, name, tagline, url — centered, like a title slide. */
+/* Front: logo mark, fancy-serif name, two-line keywords, publications. */
 .biz-card__face--front {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  text-align: center;
-  padding: var(--space-4) var(--space-3);
-}
-.biz-card__mark {
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--color-accent);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+.biz-card__logo { width: clamp(36px, 5vw, 52px); height: auto; }
+.biz-card__logo .biz-card__logo-ribbon { stroke: var(--color-accent); }
+.biz-card__logo .biz-card__logo-mark { stroke: var(--color-text-strong); }
+.biz-card__name-fancy {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 13px;
-  color: var(--color-accent);
-}
-.biz-card__name {
-  font-size: clamp(14px, 1.9vw, 18px);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
+  font-size: clamp(22px, 3.4vw, 34px);
   color: var(--color-text-strong);
-  margin-top: var(--space-2);
+  line-height: 1.1;
 }
-.biz-card__tagline {
-  font-size: 11px;
-  letter-spacing: 0.03em;
+.biz-card__keywords {
+  font-size: clamp(11px, 1.4vw, 13px);
+  letter-spacing: 0.04em;
   color: var(--color-text-mute);
-  margin-top: 6px;
-  max-width: 30ch;
+  line-height: 1.6;
 }
-.biz-card__url {
-  font-size: 10px;
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  color: var(--color-text-mute);
+.biz-card__keywords-line:first-child {
+  color: var(--color-accent);
+  font-weight: var(--weight-semibold);
+}
+.biz-card__pubs {
+  margin-top: var(--space-1);
   padding-top: var(--space-2);
   border-top: 1px solid var(--color-border-soft);
-  width: 100%;
+  font-size: clamp(10px, 1.2vw, 11.5px);
+  letter-spacing: 0.03em;
+  color: var(--color-text-mute);
+}
+.biz-card__pubs-label {
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-soft);
+  margin-right: 6px;
 }
 
-/* Back: photo left, contact details right. */
-.biz-card__face--back { display: flex; }
-.biz-card__photo {
-  width: 38%;
+/* Back: photo (margined by the face's own padding) beside the about text. */
+.biz-card__face--back { display: flex; align-items: center; gap: var(--space-4); }
+.biz-card__photo2 {
   height: 100%;
+  width: auto;
+  max-width: 40%;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
+  border-radius: 6px;
   flex-shrink: 0;
 }
-.biz-card__info {
+.biz-card__about {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 6px;
-  padding: var(--space-3);
+  gap: var(--space-2);
 }
-.biz-card__info-name {
-  font-size: 13px;
-  font-weight: var(--weight-bold);
-  color: var(--color-text-strong);
+.biz-card__about p {
+  font-size: clamp(11.5px, 1.5vw, 13.5px);
+  line-height: 1.55;
+  color: var(--color-text);
+  margin: 0;
 }
-.biz-card__info-role {
-  font-size: 10.5px;
+.biz-card__contact {
+  font-size: clamp(10.5px, 1.3vw, 12px);
   color: var(--color-text-mute);
-  margin-bottom: 4px;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border-soft);
 }
-.biz-card__info-row { font-size: 11.5px; color: var(--color-text); }
-.biz-card__info-row a { color: var(--color-accent); }
+.biz-card__contact a { color: var(--color-accent); }
 
 @media (max-width: 768px) {
-  .biz-card-wrap { width: min(360px, 100%); order: -1; }
+  .biz-card-wrap { width: min(440px, 100%); order: -1; }
 }
-@media (max-width: 380px) {
-  .biz-card__tagline { display: none; }
+@media (max-width: 480px) {
+  .biz-card { aspect-ratio: 0.82 / 1; }
+  .biz-card__face { padding: var(--space-3); }
+  .biz-card__face--back { flex-direction: column; text-align: center; }
+  .biz-card__photo2 { height: auto; width: 68px; max-width: none; aspect-ratio: 1 / 1; border-radius: 50%; }
+  .biz-card__pubs { display: none; }
 }

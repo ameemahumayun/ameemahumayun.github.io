@@ -5,49 +5,39 @@ active: home
 description: Mixed-methods UX researcher working on human-centered AI for healthcare and privacy in culturally complex contexts.
 ---
 
-<!-- HERO -->
-<header class="hero hero--profile">
+<!-- HERO — the flip card replaces the entire about/intro block on this
+     preview page. See index.html for the real, untouched homepage. -->
+<header class="hero hero--card">
   <div class="hero__inner">
-    <div class="hero__text">
-<div class="eyebrow eyebrow-rule" style="color:var(--color-text-mute);">UX Researcher · Human-Centered AI · Culturally Situated Design</div>
-      <h1 style="margin-top:0.5rem;margin-bottom:1.5rem;"><span class="serif">Ameemah Humayun</span></h1>
-      <p class="lead" style="max-width:600px;font-size:var(--text-base);">hi! welcome to my space :) i'm a mixed-methods UX researcher working at the intersection of human-centered AI and healthcare. my work focuses on culturally situated technology design, particularly in sensitive and high-stakes contexts. i graduated with a BSc in CS from LUMS in june 2026 and am currently working at Awaaz-e-Sehat and The National AI Hub.</p>
-      <p class="lead" style="max-width:600px;font-size:var(--text-base);">always happy to connect about research or work opportunities!</p>
-<p class="eyebrow" style="margin-top:1.5rem;color:var(--color-text-mute);font-weight:600;letter-spacing:0.1em;">
-        Publications&nbsp;:&nbsp;
-        <a href="https://doi.org/10.1145/3772318.3791315" target="_blank" rel="noopener" class="link-quiet">CHI 2026</a> &nbsp;·&nbsp;
-        <span>SOUPS 2026</span> &nbsp;·&nbsp;
-        <span>Nature Health</span>
-      </p>
-      <p style="margin-top:1.5rem;">
-        <a href="{{ '/work/' | relative_url }}" class="serif" style="font-size:1.125rem;">See all work &rarr;</a>
-      </p>
-    </div>
 
-    <!-- FLIP BUSINESS CARD — replaces the static avatar on this preview page.
-         Click/tap or press Enter/Space to flip; floats gently while idle. -->
     <div class="biz-card-wrap">
       <div class="biz-card-float">
         <button type="button" class="biz-card" id="biz-card" aria-pressed="false" aria-label="Flip business card">
           <div class="biz-card__inner">
 
             <div class="biz-card__face biz-card__face--front">
-              <div class="biz-card__mark">AH</div>
-              <div>
-                <div class="biz-card__name">Ameemah Humayun</div>
-                <div class="biz-card__tagline">UX Researcher · Human-Centered AI · Culturally Situated Design</div>
+              <svg class="biz-card__logo" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path class="biz-card__logo-ribbon" d="M18 105 C 34 82, 46 60, 44 28" stroke-width="9" stroke-linecap="round"/>
+                <path class="biz-card__logo-mark" d="M62 14 C 78 20, 80 42, 63 50 C 48 57, 38 49, 45 39 C 52 30, 66 33, 63 46 C 61 57, 45 66, 36 80 C 30 89, 32 99, 42 96" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="biz-card__name-fancy">Ameemah Humayun</div>
+              <div class="biz-card__keywords">
+                <div class="biz-card__keywords-line">UX Researcher</div>
+                <div class="biz-card__keywords-line">Human-Centered AI &middot; Culturally Situated Design</div>
               </div>
-              <div class="biz-card__url">ameemahumayun.github.io</div>
+              <div class="biz-card__pubs">
+                <span class="biz-card__pubs-label">Publications</span>
+                CHI 2026 &middot; SOUPS 2026 &middot; Nature Health
+              </div>
             </div>
 
             <div class="biz-card__face biz-card__face--back">
-              <img class="biz-card__photo" src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Portrait of Ameemah Humayun" width="600" height="802">
-              <div class="biz-card__info">
-                <div class="biz-card__info-name">Ameemah Humayun</div>
-                <div class="biz-card__info-role">UX Researcher · Human-Centered AI</div>
-                <div class="biz-card__info-row">ameemah.humayun@gmail.com</div>
-                <div class="biz-card__info-row"><a href="{{ site.linkedin }}" target="_blank" rel="noopener">LinkedIn</a></div>
-                <div class="biz-card__info-row">{{ site.location }}</div>
+              <img class="biz-card__photo2" src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Portrait of Ameemah Humayun" width="600" height="802">
+              <div class="biz-card__about">
+                <p>hi! welcome to my space :) i'm a mixed-methods UX researcher working at the intersection of human-centered AI and healthcare, focused on culturally situated design in sensitive, high-stakes contexts. i graduated with a BSc in CS from LUMS in june 2026 and am currently working at Awaaz-e-Sehat and The National AI Hub.</p>
+                <div class="biz-card__contact">
+                  ameemah.humayun@gmail.com &middot; <a href="{{ site.linkedin }}" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
               </div>
             </div>
 
@@ -62,10 +52,7 @@ description: Mixed-methods UX researcher working on human-centered AI for health
 <!-- RECENT UPDATES -->
 <section class="section" id="recent-updates" style="padding-top:var(--space-6);">
   <div class="container-wide">
-    <!-- <div class="section-num">Recent Updates</div> -->
     <h3>Recent Updates</h3>
-    <!-- Items are generated from _data/updates.yml (newest first).
-         To add an update, add an entry at the top of that file — not here. -->
     <div class="timeline">
       {%- for update in site.data.updates %}
       <div class="timeline__item">

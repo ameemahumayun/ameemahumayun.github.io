@@ -665,6 +665,11 @@
    caused a feedback loop (taller text -> taller/wider avatar -> less
    room for text -> more wrapping -> ...) that overflowed the viewport
    at in-between widths. */
+/* Trimmed padding (not the shared .hero base) so this page alone gets
+   more compact — enough that Recent Updates' first entry clears the
+   fold on typical laptop heights, without affecting Contact/Card
+   which also use .hero. */
+.hero--profile { padding: var(--space-6) 0 var(--space-5); }
 .hero--profile .hero__inner {
   max-width: var(--container-wide);
   display: flex;
@@ -678,7 +683,7 @@
   letter-spacing: var(--tracking-wider);
 }
 .hero__avatar {
-  width: clamp(180px, 28vw, 320px);
+  width: clamp(160px, 24vw, 270px);
   height: auto;
   aspect-ratio: 600 / 802;
   border-radius: 14px;
@@ -888,6 +893,9 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   padding-left: var(--space-4);
   border-left: 1px solid var(--color-border);
 }
+/* Tighter heading-to-list gap — used on /card/ only (see card/index.html)
+   so the real homepage's Recent Updates spacing is untouched. */
+.timeline--tight { margin-top: var(--space-2); }
 .timeline__item {
   position: relative;
   padding-bottom: var(--space-4);
@@ -1020,7 +1028,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
    backdrop-filter blur) — with a thin rounded teal border, not a thick
    frame, per feedback that the frame read too heavy. */
 .biz-card-wrap {
-  width: clamp(320px, 38vw, 480px);
+  width: clamp(360px, 44vw, 560px);
   flex-shrink: 0;
 }
 .biz-card-stage,
@@ -1043,7 +1051,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   cursor: pointer;
   display: block;
   width: 100%;
-  aspect-ratio: 1.4 / 1;
+  aspect-ratio: 1.6 / 1;
   -webkit-tap-highlight-color: transparent;
 }
 .biz-card:focus-visible .biz-card__inner {
@@ -1098,8 +1106,8 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
    otherwise the broken-image alt text wraps and inflates this section. */
 .biz-card__logo {
   align-self: center;
-  width: clamp(36px, 4.6vw, 52px);
-  height: clamp(36px, 4.6vw, 52px);
+  width: clamp(46px, 5.8vw, 66px);
+  height: clamp(46px, 5.8vw, 66px);
   object-fit: contain;
 }
 .biz-card__name-fancy {
@@ -1134,13 +1142,12 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   color: var(--color-text-soft);
   margin-right: 6px;
 }
-.biz-card__pubs a { color: var(--color-accent); }
-.biz-card__pubs a:hover { color: var(--color-text-strong); }
+/* Publication links use the site's standard .link-quiet treatment
+   (see components.css section 19) — faded into the surrounding muted
+   text until hovered, same as the CHI 2026 link on the real homepage. */
 
-/* Back: photo (margined by the face's own padding) beside the about text.
-   align-items: flex-start (not center) so if content ever runs long, it
-   clips at the bottom only instead of symmetrically eating the top too. */
-.biz-card__face--back { display: flex; align-items: flex-start; gap: var(--space-3); }
+/* Back: photo beside the about text, vertically centered together. */
+.biz-card__face--back { display: flex; align-items: center; gap: var(--space-3); }
 .biz-card__photo2 {
   height: 100%;
   width: auto;

@@ -1000,3 +1000,143 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   .contact-form__grid { grid-template-columns: 1fr; }
   .contact-form__field--message textarea { flex: none; }
 }
+
+
+/* 26. FLIP BUSINESS CARD --------------------------------------------------- */
+/* Preview-only component, used on /card/ in place of the static avatar —
+   see card/index.html. Landscape (business-card proportions), floats
+   gently at idle, flips on click/tap/Enter via the .is-flipped class
+   toggled in JS (a real <button>, so keyboard activation is free). */
+.biz-card-wrap {
+  width: clamp(300px, 34vw, 420px);
+  flex-shrink: 0;
+}
+.biz-card-stage,
+.biz-card-wrap { perspective: 1600px; }
+.biz-card-float {
+  animation: biz-card-float 5s ease-in-out infinite;
+}
+@keyframes biz-card-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.biz-card {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.75 / 1;
+  -webkit-tap-highlight-color: transparent;
+}
+.biz-card:focus-visible .biz-card__inner {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+.biz-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s var(--ease);
+  transform-style: preserve-3d;
+}
+.biz-card.is-flipped .biz-card__inner { transform: rotateY(180deg); }
+.biz-card__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-card);
+  overflow: hidden;
+}
+.biz-card__face--back { transform: rotateY(180deg); }
+
+/* Front: monogram, name, tagline, url — centered, like a title slide. */
+.biz-card__face--front {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  padding: var(--space-4) var(--space-3);
+}
+.biz-card__mark {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--color-accent);
+}
+.biz-card__name {
+  font-size: clamp(14px, 1.9vw, 18px);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-strong);
+  margin-top: var(--space-2);
+}
+.biz-card__tagline {
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: var(--color-text-mute);
+  margin-top: 6px;
+  max-width: 30ch;
+}
+.biz-card__url {
+  font-size: 10px;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border-soft);
+  width: 100%;
+}
+
+/* Back: photo left, contact details right. */
+.biz-card__face--back { display: flex; }
+.biz-card__photo {
+  width: 38%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.biz-card__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: var(--space-3);
+}
+.biz-card__info-name {
+  font-size: 13px;
+  font-weight: var(--weight-bold);
+  color: var(--color-text-strong);
+}
+.biz-card__info-role {
+  font-size: 10.5px;
+  color: var(--color-text-mute);
+  margin-bottom: 4px;
+}
+.biz-card__info-row { font-size: 11.5px; color: var(--color-text); }
+.biz-card__info-row a { color: var(--color-accent); }
+
+@media (max-width: 768px) {
+  .biz-card-wrap { width: min(360px, 100%); order: -1; }
+}
+@media (max-width: 380px) {
+  .biz-card__tagline { display: none; }
+}

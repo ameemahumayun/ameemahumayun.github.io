@@ -1,0 +1,89 @@
+---
+layout: default
+title: false
+active: home
+description: Mixed-methods UX researcher working on human-centered AI for healthcare and privacy in culturally complex contexts.
+---
+
+<!-- HERO -->
+<header class="hero hero--profile">
+  <div class="hero__inner">
+    <div class="hero__text">
+<div class="eyebrow eyebrow-rule" style="color:var(--color-text-mute);">UX Researcher · Human-Centered AI · Culturally Situated Design</div>
+      <h1 style="margin-top:0.5rem;margin-bottom:1.5rem;"><span class="serif">Ameemah Humayun</span></h1>
+      <p class="lead" style="max-width:600px;font-size:var(--text-base);">hi! welcome to my space :) i'm a mixed-methods UX researcher working at the intersection of human-centered AI and healthcare. my work focuses on culturally situated technology design, particularly in sensitive and high-stakes contexts. i graduated with a BSc in CS from LUMS in june 2026 and am currently working at Awaaz-e-Sehat and The National AI Hub.</p>
+      <p class="lead" style="max-width:600px;font-size:var(--text-base);">always happy to connect about research or work opportunities!</p>
+<p class="eyebrow" style="margin-top:1.5rem;color:var(--color-text-mute);font-weight:600;letter-spacing:0.1em;">
+        Publications&nbsp;:&nbsp;
+        <a href="https://doi.org/10.1145/3772318.3791315" target="_blank" rel="noopener" class="link-quiet">CHI 2026</a> &nbsp;·&nbsp;
+        <span>SOUPS 2026</span> &nbsp;·&nbsp;
+        <span>Nature Health</span>
+      </p>
+      <p style="margin-top:1.5rem;">
+        <a href="{{ '/work/' | relative_url }}" class="serif" style="font-size:1.125rem;">See all work &rarr;</a>
+      </p>
+    </div>
+
+    <!-- FLIP BUSINESS CARD — replaces the static avatar on this preview page.
+         Click/tap or press Enter/Space to flip; floats gently while idle. -->
+    <div class="biz-card-wrap">
+      <div class="biz-card-float">
+        <button type="button" class="biz-card" id="biz-card" aria-pressed="false" aria-label="Flip business card">
+          <div class="biz-card__inner">
+
+            <div class="biz-card__face biz-card__face--front">
+              <div class="biz-card__mark">AH</div>
+              <div>
+                <div class="biz-card__name">Ameemah Humayun</div>
+                <div class="biz-card__tagline">UX Researcher · Human-Centered AI · Culturally Situated Design</div>
+              </div>
+              <div class="biz-card__url">ameemahumayun.github.io</div>
+            </div>
+
+            <div class="biz-card__face biz-card__face--back">
+              <img class="biz-card__photo" src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Portrait of Ameemah Humayun" width="600" height="802">
+              <div class="biz-card__info">
+                <div class="biz-card__info-name">Ameemah Humayun</div>
+                <div class="biz-card__info-role">UX Researcher · Human-Centered AI</div>
+                <div class="biz-card__info-row">ameemah.humayun@gmail.com</div>
+                <div class="biz-card__info-row"><a href="{{ site.linkedin }}" target="_blank" rel="noopener">LinkedIn</a></div>
+                <div class="biz-card__info-row">{{ site.location }}</div>
+              </div>
+            </div>
+
+          </div>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- RECENT UPDATES -->
+<section class="section" id="recent-updates" style="padding-top:var(--space-6);">
+  <div class="container-wide">
+    <!-- <div class="section-num">Recent Updates</div> -->
+    <h3>Recent Updates</h3>
+    <!-- Items are generated from _data/updates.yml (newest first).
+         To add an update, add an entry at the top of that file — not here. -->
+    <div class="timeline">
+      {%- for update in site.data.updates %}
+      <div class="timeline__item">
+        <div class="timeline__date">{{ update.date }}</div>
+        <div class="timeline__text">{{ update.text }}</div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var card = document.getElementById('biz-card');
+    if (!card) return;
+    card.addEventListener('click', function () {
+      var flipped = card.classList.toggle('is-flipped');
+      card.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+    });
+  })();
+</script>

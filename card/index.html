@@ -10,18 +10,6 @@ description: Mixed-methods UX researcher working on human-centered AI for health
 <header class="hero hero--card">
   <div class="hero__inner">
 
-    <div class="hero__updates">
-      <h3>Recent Updates</h3>
-      <div class="timeline">
-        {%- for update in site.data.updates %}
-        <div class="timeline__item">
-          <div class="timeline__date">{{ update.date }}</div>
-          <div class="timeline__text">{{ update.text }}</div>
-        </div>
-        {%- endfor %}
-      </div>
-    </div>
-
     <div class="biz-card-wrap">
       <div class="biz-card-float">
         <button type="button" class="biz-card" id="biz-card" aria-pressed="false" aria-label="Flip business card">
@@ -78,6 +66,21 @@ description: Mixed-methods UX researcher working on human-centered AI for health
 
   </div>
 </header>
+
+<!-- RECENT UPDATES -->
+<section class="section" id="recent-updates" style="padding-top:var(--space-6);">
+  <div class="container-wide">
+    <h3>Recent Updates</h3>
+    <div class="timeline">
+      {%- for update in site.data.updates %}
+      <div class="timeline__item">
+        <div class="timeline__date">{{ update.date }}</div>
+        <div class="timeline__text">{{ update.text }}</div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
 
 <script>
   (function () {

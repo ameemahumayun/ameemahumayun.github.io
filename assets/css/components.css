@@ -1179,6 +1179,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   margin: 0;
 }
 .biz-card__current {
+  margin-top: var(--space-2);
   font-size: clamp(9.5px, 1.05vw, 11px);
   color: var(--color-text-mute);
   text-wrap: balance;

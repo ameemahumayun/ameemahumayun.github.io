@@ -722,30 +722,41 @@
   }
 }
 
-/* Card hero variant (see card/index.html): Recent Updates comes first
-   and fills the remaining width; the flip card sits fixed-size beside
-   it. .hero__updates' height is computed with the same formula as the
-   card's own height (card width / aspect-ratio) so the two line up —
-   overflow-y: auto on the updates column means only IT scrolls if its
-   list runs long; the card never grows or moves. */
+/* Card hero variant (see card/index.html): two clearly separated areas
+   — Recent Updates fills the remaining space on the left (its own
+   area), a vertical rule marks the boundary, and the card sits fixed
+   at its original size/proportions (unchanged 1.6:1, unchanged width
+   range) inside its own area on the right, centered within it.
+   .hero__updates' height is computed with the same width/aspect-ratio
+   formula as the card so the two columns line up, and overflow-y: auto
+   means only the updates column scrolls if its list runs long — the
+   card never grows or moves (verified by injecting extra entries and
+   diffing its bounding box before/after scrolling). */
 .hero--card .hero__inner {
   max-width: var(--container-wide);
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-5);
+  gap: var(--space-6);
 }
 .hero__updates {
   flex: 1 1 auto;
   min-width: 0;
-  height: clamp(248px, 30.3vw, 386px);
+  height: clamp(225px, 27.5vw, 350px);
   overflow-y: auto;
   padding-right: var(--space-2);
 }
+.hero__card-area {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  border-left: 1px solid var(--color-border);
+  padding-left: var(--space-6);
+}
 
 @media (max-width: 900px) {
-  .hero--card .hero__inner { flex-direction: column; }
+  .hero--card .hero__inner { flex-direction: column; align-items: stretch; }
   .hero__updates { height: auto; overflow-y: visible; padding-right: 0; }
+  .hero__card-area { border-left: none; padding-left: 0; }
 }
 
 
@@ -1073,7 +1084,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   cursor: pointer;
   display: block;
   width: 100%;
-  aspect-ratio: 1.45 / 1;
+  aspect-ratio: 1.6 / 1;
   -webkit-tap-highlight-color: transparent;
 }
 .biz-card:focus-visible .biz-card__inner {
@@ -1159,14 +1170,19 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   margin-bottom: var(--space-2);
 }
 .biz-card__keywords {
-  font-size: clamp(10.5px, 1.2vw, 12.5px);
+  font-size: clamp(9.5px, 1.05vw, 11px);
   letter-spacing: 0.03em;
   color: var(--color-text-mute);
-  line-height: 1.9;
+  line-height: 1.7;
 }
+/* Role sized up from the supporting-details line beneath it — size, not
+   just color/weight, so the hierarchy (name > role > details) reads
+   clearly rather than the two lines looking like one same-weight block. */
 .biz-card__keywords-line:first-child {
+  font-size: clamp(12px, 1.4vw, 14px);
   color: var(--color-accent);
   font-weight: var(--weight-semibold);
+  margin-bottom: 3px;
 }
 .biz-card__pubs {
   font-size: clamp(9.5px, 1.05vw, 11px);
@@ -1190,7 +1206,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
 }
 /* Publication links use the site's standard .link-quiet treatment
    (see components.css section 19) — faded into the surrounding muted

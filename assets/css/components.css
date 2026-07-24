@@ -743,7 +743,12 @@
   min-width: 0;
   height: clamp(225px, 27.5vw, 350px);
   overflow-y: auto;
-  padding-right: var(--space-2);
+  /* Setting overflow-y makes this a scroll/clip container on the x-axis
+     too, which was cutting off the timeline dots — they sit outside the
+     timeline's own box via a negative left offset. Left padding gives
+     them room; right balances it visually. */
+  padding: 0 var(--space-2) 0 calc(var(--space-4) + 8px);
+  margin-left: calc(-1 * (var(--space-4) + 8px));
 }
 .hero__card-area {
   flex-shrink: 0;
@@ -1110,7 +1115,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   /* Darker, closer to the page background (--color-bg-lift's rgb) at
      higher opacity — the previous tint read noticeably lighter than
      the page, an odd amount of contrast for a "glass" panel. */
-  background: rgba(33, 29, 26, 0.85);
+  background: rgba(18, 16, 14, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
@@ -1162,7 +1167,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 .biz-card__name-fancy {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(20px, 2.8vw, 28px);
+  font-size: clamp(27px, 3.8vw, 38px);
   color: var(--color-accent);
   line-height: 1.1;
   /* Extra room below the name specifically — the shared flex gap alone

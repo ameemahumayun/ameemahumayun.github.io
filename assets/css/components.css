@@ -1166,7 +1166,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 }
 .biz-card__name-fancy {
   font-family: var(--font-display);
-  font-style: italic;
+  font-style: normal;
   font-size: clamp(27px, 3.8vw, 38px);
   color: var(--color-accent);
   line-height: 1.1;

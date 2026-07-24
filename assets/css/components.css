@@ -1190,23 +1190,11 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   color: var(--color-text-mute);
 }
 .biz-card__pubs-label {
-  display: block;
   text-transform: uppercase;
   letter-spacing: var(--tracking-wider);
   font-weight: var(--weight-bold);
   color: var(--color-text-soft);
-  margin-bottom: 6px;
-}
-/* One publication per line, with real vertical gaps — was a single
-   inline row (CHI 2026 · SOUPS 2026 · Nature Health) that read as one
-   cramped clump. */
-.biz-card__pubs-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  margin-right: 6px;
 }
 /* Publication links use the site's standard .link-quiet treatment
    (see components.css section 19) — faded into the surrounding muted

@@ -765,14 +765,6 @@
 }
 
 
-/* 22. CV DOWNLOAD ROW ----------------------------------------------------- */
-.cv-downloads {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: var(--space-3);
-}
-
 /* 23. ACCORDION (collapsible CV sections) --------------------------------- */
 /* Built on native <details>/<summary> — no JS needed. */
 .accordion { margin-top: var(--space-3); }

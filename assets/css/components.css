@@ -936,6 +936,10 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 .timeline__item {
   position: relative;
   padding-bottom: var(--space-4);
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px var(--space-3);
 }
 .timeline__item:last-child { padding-bottom: 0; }
 /* dot on the line */
@@ -955,7 +959,8 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   text-transform: uppercase;
   color: var(--color-accent);
   font-weight: var(--weight-bold);
-  margin-bottom: 4px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .timeline__text {
   font-size: var(--text-base);

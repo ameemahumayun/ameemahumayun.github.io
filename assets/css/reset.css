@@ -9,7 +9,12 @@
 
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
-body { min-height: 100vh; text-rendering: optimizeLegibility; }
+body { min-height: 100vh; display: flex; flex-direction: column; text-rendering: optimizeLegibility; }
+
+/* Sticky footer: main grows to fill leftover viewport height so the
+   footer always sits directly under content instead of leaving a
+   variable gap of bare background beneath it on short pages. */
+.page-main { flex: 1 0 auto; }
 
 img, picture, svg, video { display: block; max-width: 100%; }
 

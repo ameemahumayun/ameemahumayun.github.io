@@ -114,7 +114,7 @@ padding-top: 0;
 
 /* ----- FOOTER ------------------------------------------------------------ */
 .footer {
-  padding: var(--space-6) 0 var(--space-4);
+  padding: var(--space-3) 0 var(--space-4);
   text-align: center;
   border-top: var(--hairline);
 }

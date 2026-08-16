@@ -87,6 +87,16 @@ a { transition: color var(--duration) var(--ease); }
   letter-spacing: 0.005em;
 }
 
+/* Hero name mark. Echoes .nav__home (Nunito Sans, uppercase, bold) at
+   hero scale, distinguished by the accent color and a touch of tracking. */
+.hero-name {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  font-weight: var(--weight-black);
+  color: var(--color-accent);
+  letter-spacing: var(--tracking-wide);
+}
+
 
 /* ----- TEXT HELPERS ------------------------------------------------------ */
 .lead {

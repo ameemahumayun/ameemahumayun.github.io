@@ -32,8 +32,8 @@
   --color-border-soft:  #2a2624;  /* faint dividers */
   --color-rule:         #3a3431;  /* tag borders, tracks */
 
-  --color-accent:       #7fa3a0;
---color-accent-deep:  #5f807d;
+  --color-accent:       #8ed4cc;
+  --color-accent-deep:  #6ea59f;
 
   --color-selection-bg: var(--color-accent);
   --color-selection-fg: var(--color-bg);

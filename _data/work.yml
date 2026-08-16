@@ -29,39 +29,35 @@
 
 - meta: "CHI 2026 · Health AI · LLM Evaluation"
   title: "Beyond Euphemisms"
-  desc: "A case study on culturally situated SRH communication and LLM failure modes — a field study and model evaluation that reshaped the product direction of a maternal-health AI system in Pakistan."
+  desc: "A case study on culturally situated SRH communication and LLM failure modes, drawing on a field study and model evaluation that reshaped the product direction of a maternal-health AI system in Pakistan."
   links:
-    - label: "Case Study"
-      url: "/work/beyond-euphemisms/"
-    - label: "Paper"
+    - label: "View Publication"
       url: "https://doi.org/10.1145/3772318.3791315"
       external: true
+    - label: "Case Study"
+      url: "/work/beyond-euphemisms/"
 
 - meta: "SOUPS 2026 · Privacy &amp; Security · Qualitative UX"
   title: "Sharing Digital Devices Is Normal and Cultural"
-  desc: "Privacy and security challenges in collectivist immigrant households — a reflexive thematic analysis across 18 families that exposed a structural mismatch between single-user device assumptions and shared-device realities."
+  desc: "Privacy and security challenges in collectivist immigrant households, examined through a reflexive thematic analysis across 18 families that exposed a structural mismatch between single-user device assumptions and shared-device realities."
   links:
+    - label: "View Publication"
+      url: "/assets/soups2026-final545.pdf"
+      external: true
     - label: "Case Study"
       pending: true
       suffix: "· soon"
-    - label: "Paper"
-      pending: true
-      suffix: "· soon"
-      # url: "#"
-      # external: true
 
 - meta: "In submission · Nature Health · Clinical AI Audit"
   title: "Fetal Sex Disclosure &amp; AI Harm Cascades"
-  desc: "A mixed-methods study of conversational AI safety in prenatal care under conservative norms — characterizing a four-pathway harm cascade and a multi-turn audit revealing failures invisible to single-turn benchmarks."
+  desc: "A mixed-methods study of conversational AI safety in prenatal care under conservative norms, characterizing a four-pathway harm cascade and a multi-turn audit revealing failures invisible to single-turn benchmarks."
   links:
+    - label: "View Publication"
+      pending: true
+      suffix: "· soon"
     - label: "Case Study"
       pending: true
       suffix: "· soon"
-    - label: "Paper"
-      pending: true
-      suffix: "· soon"
-      # url: "#"
-      # external: true
 
 - meta: "2024 · Accessibility · UX Design"
   title: "Rehnuma"

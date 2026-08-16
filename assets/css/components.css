@@ -422,7 +422,7 @@
 .cite {
   font-size: 12.5px;
   color: var(--color-text-mute);
-  line-height: 1.8;
+  line-height: 1.6;
   max-width: 600px;
   margin: 0 auto;
   letter-spacing: 0.02em;
@@ -673,7 +673,7 @@
    more compact — enough that Recent Updates' first entry clears the
    fold on typical laptop heights, without affecting Contact/Card
    which also use .hero. */
-.hero--profile { padding: var(--space-6) 0 var(--space-5); }
+.hero--profile { padding: var(--space-5) 0 var(--space-3); }
 .hero--profile .hero__inner {
   max-width: var(--container-wide);
   display: flex;

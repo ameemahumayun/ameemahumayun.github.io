@@ -61,7 +61,7 @@ ameemahumayun.github.io/
 │   ├── js/main.js           section-rail scroll-spy
 │   ├── cv/                  the three CV PDFs go here
 │   └── images/
-│       ├── me.jpg           profile photo — used on the homepage avatar + card back
+│       ├── me.jpeg          profile photo — used on the homepage avatar + card back
 │       └── logo.svg         personal logo mark — used on the card front
 ├── Gemfile                  local dev only (GitHub ignores it)
 └── README.md

@@ -8,7 +8,6 @@ active: work
 <!-- PAGE HEAD (compact) -->
 <header class="page-head">
   <div class="page-head__inner">
-    <div class="eyebrow eyebrow-rule">work stuff</div>
     <h1 class="page-head__title"><span class="serif text-highlight">Portfolio</span></h1>
 
     <p class="page-head__intro">Selected research and design work.</p>
@@ -19,7 +18,7 @@ active: work
 <!-- Cards are generated from _data/work.yml. To add/edit/reorder a project,
      edit that file — not this loop. -->
 <section class="section">
-  <div class="container">
+  <div class="container-wide">
     <div class="work-list">
       {%- for project in site.data.work %}
       <article class="work-card">

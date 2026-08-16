@@ -129,7 +129,10 @@ a { transition: color var(--duration) var(--ease); }
 }
 
 html {
-  scrollbar-gutter: stable;
+  /* both-edges reserves equal gutter on left and right (even though the
+     scrollbar itself only ever renders on the right), so centered content
+     doesn't sit visually off-center by the scrollbar's width. */
+  scrollbar-gutter: stable both-edges;
 }
 
 /* Chrome, Edge, Safari */

@@ -587,16 +587,14 @@
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-pill);
   color: var(--color-text-strong);
-  transition: border-color var(--duration) var(--ease), color var(--duration) var(--ease);
+  transition: border-color var(--duration) var(--ease), color var(--duration) var(--ease), background var(--duration) var(--ease);
 }
-.work-card__link:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.work-card__link:hover { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-bg); }
 .work-card__link--muted { color: var(--color-text-soft); }
-/* Primary CTA (e.g. "View Publication"): solid accent fill at rest, so it
-   stays visually distinct from the secondary link even when the secondary
-   is hovered (hover on .work-card__link turns its outline accent-colored
-   too, which would otherwise match a merely-outlined primary). */
-.work-card__link--primary { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-bg); }
-.work-card__link--primary:hover { background: var(--color-accent-deep); border-color: var(--color-accent-deep); color: var(--color-bg); }
+/* Primary CTA (e.g. "View Publication"): teal outline at rest, distinct
+   from the secondary link's neutral border. Both share the same solid-fill
+   hover above, via the shared .work-card__link:hover rule. */
+.work-card__link--primary { border-color: var(--color-accent); color: var(--color-accent); }
 /* Inert "soon" button: pill look of a link, but non-navigating. Rendered as a
    <span>, not an <a>, so it carries no href. No hover color shift; no pointer
    cursor — it should not look or behave clickable. */

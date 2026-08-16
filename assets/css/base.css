@@ -87,6 +87,17 @@ a { transition: color var(--duration) var(--ease); }
   letter-spacing: 0.005em;
 }
 
+/* Hero name mark: mimics the look of the teal ::selection highlight
+   (accent background, base-dark text) as a permanent treatment. */
+.name-highlight {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  padding: 0.03em 0.32em;
+  letter-spacing: 0.02em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
 /* Inline link inside prose: faded teal, underlined, so it reads as a link
    at a glance without shouting the full-strength accent. */
 .link-teal {

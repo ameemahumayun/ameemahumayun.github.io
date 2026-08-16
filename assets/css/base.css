@@ -87,14 +87,17 @@ a { transition: color var(--duration) var(--ease); }
   letter-spacing: 0.005em;
 }
 
-/* Hero name mark. Echoes .nav__home (Nunito Sans, uppercase, bold) at
-   hero scale, distinguished by the accent color and a touch of tracking. */
-.hero-name {
-  font-family: var(--font-body);
-  text-transform: uppercase;
-  font-weight: var(--weight-black);
+/* Inline link inside prose: faded teal, underlined, so it reads as a link
+   at a glance without shouting the full-strength accent. */
+.link-teal {
+  color: var(--color-accent-deep);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-deep);
+  text-underline-offset: 2px;
+}
+.link-teal:hover {
   color: var(--color-accent);
-  letter-spacing: var(--tracking-wide);
+  text-decoration-color: var(--color-accent);
 }
 
 

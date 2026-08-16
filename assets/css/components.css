@@ -961,6 +961,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   font-weight: var(--weight-bold);
   flex-shrink: 0;
   white-space: nowrap;
+  min-width: 190px;
 }
 .timeline__text {
   font-size: var(--text-base);
@@ -970,7 +971,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 /* Denser entries for the card page's constrained-height column — smaller
    type and less padding per item so more fit before scrolling kicks in. */
 .timeline--compact .timeline__item { padding-bottom: var(--space-2); }
-.timeline--compact .timeline__date { font-size: 10.5px; margin-bottom: 2px; }
+.timeline--compact .timeline__date { font-size: 10.5px; margin-bottom: 2px; min-width: 0; }
 .timeline--compact .timeline__text { font-size: 13px; line-height: 1.4; }
 
 

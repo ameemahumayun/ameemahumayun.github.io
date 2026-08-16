@@ -47,19 +47,22 @@ ameemahumayun.github.io/
 ├── _layouts/
 │   ├── default.html         head + nav + {content} + footer
 │   └── case-study.html      default + scroll-spy JS
-├── index.html               Homepage (hero + recent-updates timeline)
+├── index.html               Homepage (hero--profile + recent-updates timeline)
+├── card/index.html          UNLINKED PREVIEW — flip business-card homepage concept
 ├── 404.html
 ├── work/
 │   ├── index.html           Work listing (work-cards)
 │   └── beyond-euphemisms/index.html   Case study (layout: case-study)
 ├── studio/index.html        Artwork / creative work
-├── cv/index.html            CV: download buttons + collapsible accordion
-├── contact/index.html
+├── cv/index.html             CV: download buttons + collapsible accordion
+├── contact/index.html       page-head + a real contact form (FormSubmit, no backend)
 ├── assets/
 │   ├── css/                 tokens · reset · base · layout · components · main
 │   ├── js/main.js           section-rail scroll-spy
 │   ├── cv/                  the three CV PDFs go here
 │   └── images/
+│       ├── me.jpg           profile photo — used on the homepage avatar + card back
+│       └── logo.svg         personal logo mark — used on the card front
 ├── Gemfile                  local dev only (GitHub ignores it)
 └── README.md
 
@@ -100,10 +103,14 @@ nav_tag: Case Study  # OPTIONAL — shows the "/ Case Study" contextual tag
 
 ## Headers: two kinds
 
-- **`.hero`** — the larger header. Used on the homepage, CV, Contact, and case
+- **`.hero`** — the larger header. Used on the homepage, CV, and case
   studies. Markup: `<header class="hero"><div class="hero__inner">…`
+  - **`.hero--profile`** — homepage variant: intro text + `.hero__avatar` photo.
+  - **`.hero--card`** — `/card/` preview variant: `.hero__updates` (scrollable
+    Recent Updates column) + `.hero__card-area` (the flip business card),
+    split by a `border-left` divider. See "The `/card/` preview" below.
 - **`.page-head`** — the compact header. Used on listing/utility pages (Work,
-  Studio). Markup: `<header class="page-head"><div class="page-head__inner">`
+  Studio, **Contact**). Markup: `<header class="page-head"><div class="page-head__inner">`
   with `<h1 class="page-head__title">` and `<p class="page-head__intro">`.
 
 To convert one to the other, swap those class names.
@@ -115,9 +122,50 @@ To convert one to the other, swap those class names.
 section-num · eyebrow-rule · meta · ledger · quote · callout · duo · stages ·
 framework · insight · eval · terminal · failure · principle · confidential ·
 outcomes · cite · section rail (`.rail`) · work-card · page-head · hero avatar ·
-accordion + subaccordion (collapsible CV) · timeline.
+accordion + subaccordion (collapsible CV) · timeline (+ `--tight` / `--compact`
+modifiers) · `.link-quiet` (muted link, accent + underline on hover) ·
+`.contact-form` (see "Contact form" below) · `.biz-card` flip card (see
+"The `/card/` preview" below).
 
 Build new pages by assembling these classes — don't write new CSS per page.
+
+---
+
+## The `/card/` preview
+
+`card/index.html` is an **unlinked preview page** — deliberately left out of
+`nav_links` in `_config.yml`. It's a prototype of an alternate homepage: a
+3D flip business card (front: name/role/publications, back: photo/about/
+contact) sitting beside the Recent Updates timeline, instead of the current
+`.hero--profile` layout. It doesn't replace `index.html` — the real homepage
+is untouched. Visit it directly at `/card/` to view it.
+
+- Flip mechanic: a real `<button id="biz-card">` toggles `.is-flipped` via
+  the inline `<script>` at the bottom of the page (free keyboard a11y, no
+  library).
+- Layout: `.hero__updates` (flexes to fill remaining space, independently
+  scrollable) + `.hero__card-area` (fixed-width, holds the card, never
+  resizes) — split by a `border-left` divider. The card's size/aspect-ratio
+  is intentionally decoupled from the updates column; don't let flexbox
+  stretch resize it.
+- If this direction is adopted for real, promote it by swapping `index.html`
+  and `card/index.html`'s content (or redirecting), then delete `/card/`.
+
+---
+
+## Contact form
+
+`contact/index.html` posts to **FormSubmit** (`formsubmit.co`) — there's no
+backend on GitHub Pages, so this is a zero-server way to receive form
+submissions by email.
+
+- `action="https://formsubmit.co/ameemah.humayun@gmail.com"` — first
+  submission triggers a one-time confirmation email to that address; until
+  it's confirmed, submissions are silently dropped by FormSubmit.
+- `_captcha=false` disables their captcha page; `_honey` is a hidden
+  honeypot field for spam bots; `_next` redirects back to `/contact/?sent=true`,
+  which the inline `<script>` reads to show the "thanks" state.
+- To change the destination email, edit the `action` URL (and reconfirm).
 
 ---
 
@@ -184,3 +232,10 @@ you-while-editing thing.
 - [ ] Real LinkedIn/external links open in new tab (`target="_blank" rel="noopener"`)
 - [ ] Favicon + OG share image
 - [ ] Build out remaining case studies (shared-devices, fetal-sex-disclosure, rehnuma)
+- [ ] Confirm the FormSubmit activation email for `ameemah.humayun@gmail.com`
+      was clicked — until then, contact form submissions are dropped silently
+- [ ] `_config.yml`'s `email:` field still holds the LUMS address
+      (`26100175@lums.edu.pk`); the contact form + `/card/` use the gmail
+      address instead — decide which is canonical and align them
+- [ ] Decide the fate of `/card/`: adopt it as the new homepage, keep it as
+      a permanent alt-view, or delete it

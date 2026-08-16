@@ -673,7 +673,7 @@
    more compact — enough that Recent Updates' first entry clears the
    fold on typical laptop heights, without affecting Contact/Card
    which also use .hero. */
-.hero--profile { padding: var(--space-3) 0 var(--space-2); }
+.hero--profile { padding: var(--space-4) 0 var(--space-3); }
 .hero--profile .hero__inner {
   max-width: var(--container-wide);
   display: flex;

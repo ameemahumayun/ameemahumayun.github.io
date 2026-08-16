@@ -664,7 +664,7 @@
 .hero--profile .hero__inner {
   max-width: var(--container-wide);
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: var(--space-4);
 }
 .hero__text { flex: 1 1 auto; min-width: 0; }
@@ -673,8 +673,12 @@
   font-size: 10px;
   letter-spacing: var(--tracking-wider);
 }
+/* Fixed (not viewport-scaled) so its height stays matched to the text
+   column's height — which is itself stable across desktop widths since
+   the paragraphs cap out at max-width:660px. A vw-based width used to
+   drift out of sync with the text block at in-between viewport widths. */
 .hero__avatar {
-  width: clamp(140px, 19vw, 220px);
+  width: 227px;
   height: auto;
   aspect-ratio: 600 / 802;
   border-radius: 14px;
@@ -698,7 +702,12 @@
   padding: var(--space-3);
 }
 
-@media (max-width: 768px) {
+/* Switches to stacked layout at a wider breakpoint (900px, not the
+   site's usual 768px) — below ~900px the fixed-width avatar and the
+   wrapping text column no longer stay height-matched (see
+   .hero__avatar comment above), so we drop to stacked before that
+   mismatch shows up rather than after. */
+@media (max-width: 900px) {
   .hero--profile .hero__inner {
     flex-direction: column;
     align-items: flex-start;

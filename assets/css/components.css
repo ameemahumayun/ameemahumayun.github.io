@@ -616,7 +616,6 @@
    modest title + optional one-line intro. No oversized h1, no tagline. */
 .page-head {
   padding: var(--space-6) 0 var(--space-5);
-  border-bottom: var(--hairline);
 }
 .page-head__inner {
   max-width: var(--container-narrow);

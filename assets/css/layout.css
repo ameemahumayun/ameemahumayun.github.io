@@ -104,7 +104,6 @@ padding-top: 0;
 /* ----- HERO -------------------------------------------------------------- */
 .hero {
   padding: var(--space-7) 0 var(--space-6);
-  border-bottom: var(--hairline);
 }
 .hero__inner {
   max-width: var(--container-narrow);

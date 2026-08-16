@@ -87,6 +87,16 @@ a { transition: color var(--duration) var(--ease); }
   letter-spacing: 0.005em;
 }
 
+/* Text-selection-highlight look (accent background, base-dark text) as a
+   standing treatment on page/section headings. Overrides .serif's accent
+   text color since the background now carries the accent instead. */
+.text-highlight {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  padding: 0.05em 0.35em;
+  letter-spacing: 0.02em;
+}
+
 /* Inline link inside prose: faded teal, underlined, so it reads as a link
    at a glance without shouting the full-strength accent. */
 .link-teal {

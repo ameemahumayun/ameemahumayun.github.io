@@ -673,11 +673,11 @@
    more compact — enough that Recent Updates' first entry clears the
    fold on typical laptop heights, without affecting Contact/Card
    which also use .hero. */
-.hero--profile { padding: var(--space-4) 0 var(--space-2); }
+.hero--profile { padding: var(--space-3) 0 var(--space-2); }
 .hero--profile .hero__inner {
   max-width: var(--container-wide);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: var(--space-4);
 }
 .hero__text { flex: 1 1 auto; min-width: 0; }
@@ -687,7 +687,7 @@
   letter-spacing: var(--tracking-wider);
 }
 .hero__avatar {
-  width: clamp(160px, 24vw, 270px);
+  width: clamp(140px, 19vw, 220px);
   height: auto;
   aspect-ratio: 600 / 802;
   border-radius: 14px;

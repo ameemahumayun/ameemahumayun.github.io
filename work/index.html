@@ -9,10 +9,9 @@ active: work
 <header class="page-head">
   <div class="page-head__inner">
     <div class="eyebrow eyebrow-rule">work stuff</div>
-    <!-- <h1 class="page-head__title">Selected research &amp; projects</h1> -->
-       <h1 class="page-head__title"><span class="serif" style="color:var(--color-text-strong);">Selected Projects</span></h1>
+    <h1 class="page-head__title"><span class="serif" style="color:var(--color-text-strong);">Portfolio</span></h1>
 
-    <p class="page-head__intro">Case studies for product and UX audiences. Papers for the full details.</p>
+    <p class="page-head__intro">Selected research and design work, compiled as a portfolio for graduate school applications.</p>
   </div>
 </header>
 
@@ -33,7 +32,7 @@ active: work
               {%- if link.pending %}
           <span class="work-card__link work-card__link--disabled">{{ link.label }}{% if link.suffix %} <span style="opacity:.6">{{ link.suffix }}</span>{% endif %}</span>
               {%- else %}
-          <a class="work-card__link{% if link.muted %} work-card__link--muted{% endif %}" href="{% if link.url contains '://' or link.url == '#' %}{{ link.url }}{% else %}{{ link.url | relative_url }}{% endif %}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}{% if link.suffix %} <span style="opacity:.6">{{ link.suffix }}</span>{% endif %}</a>
+          <a class="work-card__link{% if link.muted %} work-card__link--muted{% endif %}{% if link.primary %} work-card__link--primary{% endif %}" href="{% if link.url contains '://' or link.url == '#' %}{{ link.url }}{% else %}{{ link.url | relative_url }}{% endif %}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}{% if link.suffix %} <span style="opacity:.6">{{ link.suffix }}</span>{% endif %}</a>
               {%- endif %}
             {%- endfor %}
           {%- elsif project.status %}

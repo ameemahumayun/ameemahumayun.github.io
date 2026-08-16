@@ -17,24 +17,28 @@
 #                         through relative_url), or a full https:// URL.
 #                 external  (optional) true -> opens in new tab w/ rel=noopener
 #                 muted     (optional) true -> adds work-card__link--muted
+#                 primary   (optional) true -> adds work-card__link--primary
+#                           (accent-outlined, fills solid on hover). Use for
+#                           the lead CTA, e.g. "View Publication".
 #                 suffix    (optional) faint appended text, e.g. "· soon"
 #                 pending   (optional) true -> renders an INERT button (a <span>,
 #                           not a link): same pill look, but goes nowhere and is
-#                           not clickable. Use for "Case Study · soon". When
-#                           pending is true, `url`/`external` are ignored.
+#                           not clickable. Use for "View Case Study · soon". When
+#                           pending is true, `url`/`external`/`primary` are ignored.
 #
 #   status:     a plain string -> renders one .work-card__status span instead
 #               of any link buttons. Use for projects with nothing to link yet.
 # ============================================================
 
-- meta: "CHI 2026 · Health AI · LLM Evaluation"
+- meta: "CHI 2026 · Health AI · Qualitative UX + LLM Evaluation"
   title: "Beyond Euphemisms"
   desc: "A case study on culturally situated SRH communication and LLM failure modes, drawing on a field study and model evaluation that reshaped the product direction of a maternal-health AI system in Pakistan."
   links:
     - label: "View Publication"
       url: "https://doi.org/10.1145/3772318.3791315"
       external: true
-    - label: "Case Study"
+      primary: true
+    - label: "View Case Study"
       url: "/work/beyond-euphemisms/"
 
 - meta: "SOUPS 2026 · Privacy &amp; Security · Qualitative UX"
@@ -44,25 +48,26 @@
     - label: "View Publication"
       url: "/assets/soups2026-final545.pdf"
       external: true
-    - label: "Case Study"
+      primary: true
+    - label: "View Case Study"
       pending: true
       suffix: "· soon"
 
-- meta: "In submission · Nature Health · Clinical AI Audit"
+- meta: "Nature Health · Health AI · Qualitative UX + LLM Evaluation"
   title: "Fetal Sex Disclosure &amp; AI Harm Cascades"
   desc: "A mixed-methods study of conversational AI safety in prenatal care under conservative norms, characterizing a four-pathway harm cascade and a multi-turn audit revealing failures invisible to single-turn benchmarks."
   links:
     - label: "View Publication"
       pending: true
       suffix: "· soon"
-    - label: "Case Study"
+    - label: "View Case Study"
       pending: true
       suffix: "· soon"
 
-- meta: "2024 · Accessibility · UX Design"
+- meta: "Accessibility · UX Design · Interactive Prototype"
   title: "Rehnuma"
   desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
   links:
-    - label: "Case Study"
+    - label: "View Case Study"
       pending: true
       suffix: "· soon"

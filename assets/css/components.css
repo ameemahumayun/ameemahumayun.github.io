@@ -591,11 +591,12 @@
 }
 .work-card__link:hover { border-color: var(--color-accent); color: var(--color-accent); }
 .work-card__link--muted { color: var(--color-text-soft); }
-/* Primary CTA (e.g. "View Publication"): accent outline by default, fills
-   solid on hover so it reads as the lead action next to the plain-bordered
-   secondary links (e.g. "View Case Study"). */
-.work-card__link--primary { border-color: var(--color-accent); color: var(--color-accent); }
-.work-card__link--primary:hover { background: var(--color-accent); color: var(--color-bg); }
+/* Primary CTA (e.g. "View Publication"): solid accent fill at rest, so it
+   stays visually distinct from the secondary link even when the secondary
+   is hovered (hover on .work-card__link turns its outline accent-colored
+   too, which would otherwise match a merely-outlined primary). */
+.work-card__link--primary { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-bg); }
+.work-card__link--primary:hover { background: var(--color-accent-deep); border-color: var(--color-accent-deep); color: var(--color-bg); }
 /* Inert "soon" button: pill look of a link, but non-navigating. Rendered as a
    <span>, not an <a>, so it carries no href. No hover color shift; no pointer
    cursor — it should not look or behave clickable. */

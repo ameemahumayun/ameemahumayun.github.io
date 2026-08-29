@@ -32,7 +32,7 @@
 #               of any link buttons. Use for projects with nothing to link yet.
 # ============================================================
 
-- meta: "CHI 2026 · Health AI · Qualitative UX + LLM Evaluation"
+- meta: "ACM CHI 2026 · Health AI · Qualitative UX + LLM Evaluation"
   title: "Beyond Euphemisms"
   type: publication
   desc: "A case study on culturally situated SRH communication and LLM failure modes, drawing on a field study and model evaluation that reshaped the product direction of a maternal-health AI system in Pakistan."
@@ -44,7 +44,7 @@
     - label: "View Case Study"
       url: "/work/beyond-euphemisms/"
 
-- meta: "SOUPS 2026 · Privacy &amp; Security · Qualitative UX"
+- meta: "USENIX SOUPS 2026 · Privacy &amp; Security · Qualitative UX"
   title: "Sharing Digital Devices Is Normal and Cultural"
   type: publication
   desc: "Privacy and security challenges in collectivist immigrant households, examined through a reflexive thematic analysis across 18 families that exposed a structural mismatch between single-user device assumptions and shared-device realities."

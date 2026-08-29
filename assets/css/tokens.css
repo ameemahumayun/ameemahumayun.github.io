@@ -1,15 +1,14 @@
 /* ==========================================================================
    TOKENS.CSS — Design System Single Source of Truth
    --------------------------------------------------------------------------
-   Chocolate Dark Editorial. Every color, type size, spacing value, and
-   layout constant lives here as a CSS custom property. Change a value here
-   and it propagates everywhere. No raw values should appear in any other
-   CSS file.
+   Cool Dark Editorial. Every color, type size, spacing value, and layout
+   constant lives here as a CSS custom property. Change a value here and it
+   propagates everywhere. No raw values should appear in any other CSS file.
 
    DESIGN LANGUAGE SUMMARY
-   - Concept:   Chocolate dark editorial. Reads like a printed research monograph.
-   - Color:     Deep chocolate-brown base, high-contrast light body text,
-                single baby-pink accent.
+   - Concept:   Cool dark editorial. Reads like a printed research monograph.
+   - Color:     Cool stark near-black base, high-contrast light body text,
+                single butter-yellow accent.
    - Type:      Nunito Sans (structural) + Fraunces italic (editorial voice).
                 Romanized Urdu always = Fraunces italic + accent. The signature.
    - Structure: Hairline rules over boxes. Lines, not cards, by default.
@@ -19,23 +18,23 @@
 :root {
 
   /* ----- COLOR ----------------------------------------------------------- */
-  --color-bg:           #1a1616;  /* deep grey-black, reddish-brown undertone */
-  --color-bg-lift:      #241e1e;  /* slightly raised panels */
-  --color-bg-card:      #2c2424;  /* contained blocks */
-  --color-bg-card-deep: #362b2a;  /* deepest surface */
-  --color-bg-terminal:  #0d0b0c;  /* code / failure-output blocks */
+  --color-bg:           #0d0e10;  /* cool stark near-black base */
+  --color-bg-lift:      #17181b;  /* slightly raised panels */
+  --color-bg-card:      #1e1f23;  /* contained blocks */
+  --color-bg-card-deep: #24262b;  /* deepest surface */
+  --color-bg-terminal:  #060708;  /* code / failure-output blocks */
 
   --color-text:         #d7d9dc;  /* body — cool light grey */
   --color-text-strong:  #f5f6f7;  /* headings, emphasis — near white */
   --color-text-soft:    #a3a7ac;  /* secondary text */
   --color-text-mute:    #888c91;  /* labels, captions */
 
-  --color-border:       #302725;  /* hairlines */
-  --color-border-soft:  #221b1b;  /* faint dividers */
-  --color-rule:         #382d2c;  /* tag borders, tracks */
+  --color-border:       #2c2e33;  /* hairlines */
+  --color-border-soft:  #222327;  /* faint dividers */
+  --color-rule:         #34363c;  /* tag borders, tracks */
 
-  --color-accent:       #f4b8c9;  /* baby pink */
-  --color-accent-deep:  #dd93a8;
+  --color-accent:       #f2e3a0;  /* butter yellow */
+  --color-accent-deep:  #d9c67e;
 
   --color-selection-bg: var(--color-accent);
   --color-selection-fg: var(--color-bg);

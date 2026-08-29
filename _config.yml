@@ -24,12 +24,9 @@ nav_links:
   - label: home
     url: /
     key: home
-  - label: work stuff
+  - label: portfolio
     url: /work/
     key: work
-  - label: fun stuff
-    url: /studio/
-    key: studio
   - label: cv
     url: /cv/
     key: cv

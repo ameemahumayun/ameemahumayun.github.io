@@ -1,9 +1,11 @@
 /* ==========================================================================
    MAIN.JS — minimal site scripts
    --------------------------------------------------------------------------
-   Currently one job: scroll-spy for the case-study section rail. Highlights
-   the rail link matching the section currently in view. Progressive
-   enhancement — if JS is off, the rail still works as plain anchor links.
+   1. Scroll-spy for the case-study section rail. Highlights the rail link
+      matching the section currently in view. Progressive enhancement — if
+      JS is off, the rail still works as plain anchor links.
+   2. Work-page filter tabs (All / Publications / Prototypes). Progressive
+      enhancement — if JS is off, every card just stays visible.
    ========================================================================== */
 
 (function () {
@@ -43,4 +45,24 @@
   );
 
   sections.forEach((section) => observer.observe(section));
+})();
+
+(function () {
+  "use strict";
+
+  const filterBar = document.querySelector(".work-filter");
+  if (!filterBar) return; // page has no filter tabs
+
+  const buttons = Array.from(filterBar.querySelectorAll(".work-filter__btn"));
+  const cards = Array.from(document.querySelectorAll(".work-card"));
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.getAttribute("data-filter");
+      buttons.forEach((b) => b.classList.toggle("is-active", b === btn));
+      cards.forEach((card) => {
+        card.hidden = filter !== "all" && card.getAttribute("data-type") !== filter;
+      });
+    });
+  });
 })();

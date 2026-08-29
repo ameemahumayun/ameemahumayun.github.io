@@ -538,6 +538,23 @@
 
 
 /* 19. WORK CARD (project listing) ----------------------------------------- */
+/* Filter tabs above the list. Plain buttons — JS in main.js toggles
+   .is-active and hides non-matching .work-card entries. Degrades safely
+   with JS off: every card just stays visible. */
+.work-filter { display: flex; gap: 10px; flex-wrap: wrap; margin-top: var(--space-3); }
+.work-filter__btn {
+  font-size: 12px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.02em;
+  padding: 7px 16px;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-soft);
+  background: transparent;
+  transition: border-color var(--duration) var(--ease), color var(--duration) var(--ease), background var(--duration) var(--ease);
+}
+.work-filter__btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.work-filter__btn.is-active { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-bg); }
 .work-list { margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-3); }
 .work-card {
   padding: var(--space-5);

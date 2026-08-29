@@ -7,6 +7,8 @@
 #   meta        (required) the small label line above the title
 #   title       (required) project name
 #   desc        (required) one-paragraph description
+#   type        (required) "publication" or "prototype" — powers the
+#               All / Publications / Prototypes filter on /work/.
 #
 #   Then EITHER a list of links OR a status string (not both):
 #
@@ -32,6 +34,7 @@
 
 - meta: "CHI 2026 · Health AI · Qualitative UX + LLM Evaluation"
   title: "Beyond Euphemisms"
+  type: publication
   desc: "A case study on culturally situated SRH communication and LLM failure modes, drawing on a field study and model evaluation that reshaped the product direction of a maternal-health AI system in Pakistan."
   links:
     - label: "View Publication"
@@ -43,6 +46,7 @@
 
 - meta: "SOUPS 2026 · Privacy &amp; Security · Qualitative UX"
   title: "Sharing Digital Devices Is Normal and Cultural"
+  type: publication
   desc: "Privacy and security challenges in collectivist immigrant households, examined through a reflexive thematic analysis across 18 families that exposed a structural mismatch between single-user device assumptions and shared-device realities."
   links:
     - label: "View Publication"
@@ -55,6 +59,7 @@
 
 - meta: "Nature Health · Health AI · Qualitative UX + LLM Evaluation"
   title: "Fetal Sex Disclosure &amp; AI Harm Cascades"
+  type: publication
   desc: "A mixed-methods study of conversational AI safety in prenatal care under conservative norms, characterizing a four-pathway harm cascade and a multi-turn audit revealing failures invisible to single-turn benchmarks."
   links:
     - label: "View Publication"
@@ -66,6 +71,7 @@
 
 - meta: "Accessibility · UX Design · Interactive Prototype"
   title: "Rehnuma"
+  type: prototype
   desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
   links:
     - label: "View Case Study"

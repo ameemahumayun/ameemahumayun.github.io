@@ -19,9 +19,14 @@ active: work
      edit that file — not this loop. -->
 <section class="section">
   <div class="container-wide">
+    <div class="work-filter" role="tablist" aria-label="Filter portfolio by type">
+      <button type="button" class="work-filter__btn is-active" data-filter="all">All</button>
+      <button type="button" class="work-filter__btn" data-filter="publication">Publications</button>
+      <button type="button" class="work-filter__btn" data-filter="prototype">Prototypes</button>
+    </div>
     <div class="work-list">
       {%- for project in site.data.work %}
-      <article class="work-card">
+      <article class="work-card" data-type="{{ project.type }}">
         <div class="work-card__meta">{{ project.meta }}</div>
         <h2 class="work-card__title">{{ project.title }}</h2>
         <p class="work-card__desc">{{ project.desc }}</p>

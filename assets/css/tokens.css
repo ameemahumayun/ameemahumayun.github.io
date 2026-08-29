@@ -19,20 +19,20 @@
 :root {
 
   /* ----- COLOR ----------------------------------------------------------- */
-  --color-bg:           #241708;  /* deep chocolate brown base */
-  --color-bg-lift:      #2e1f10;  /* slightly raised panels */
-  --color-bg-card:      #362512;  /* contained blocks */
-  --color-bg-card-deep: #402c16;  /* deepest surface */
-  --color-bg-terminal:  #180f05;  /* code / failure-output blocks */
+  --color-bg:           #241c1a;  /* deep grey-black, reddish-brown undertone */
+  --color-bg-lift:      #2e2422;  /* slightly raised panels */
+  --color-bg-card:      #362a28;  /* contained blocks */
+  --color-bg-card-deep: #40312e;  /* deepest surface */
+  --color-bg-terminal:  #171110;  /* code / failure-output blocks */
 
   --color-text:         #d7d9dc;  /* body — cool light grey */
   --color-text-strong:  #f5f6f7;  /* headings, emphasis — near white */
   --color-text-soft:    #a3a7ac;  /* secondary text */
   --color-text-mute:    #888c91;  /* labels, captions */
 
-  --color-border:       #3d2c17;  /* hairlines */
-  --color-border-soft:  #2e2010;  /* faint dividers */
-  --color-rule:         #45311a;  /* tag borders, tracks */
+  --color-border:       #3a2d29;  /* hairlines */
+  --color-border-soft:  #2c211f;  /* faint dividers */
+  --color-rule:         #423330;  /* tag borders, tracks */
 
   --color-accent:       #f4b8c9;  /* baby pink */
   --color-accent-deep:  #dd93a8;

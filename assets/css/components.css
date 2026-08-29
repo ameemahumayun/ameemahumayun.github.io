@@ -625,6 +625,10 @@
   border-bottom: 1px solid transparent;
   transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
 }
+/* Shows the underline at rest (not just on hover) in a muted color.
+   Must come after .link-quiet — its border-bottom shorthand would
+   otherwise reset this back to transparent regardless of specificity. */
+.link-underline-mute { border-bottom-color: var(--color-text-mute); }
 .link-quiet:hover { color: var(--color-accent); border-bottom-color: var(--color-accent); }
 
 

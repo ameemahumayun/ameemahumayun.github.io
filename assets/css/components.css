@@ -1115,10 +1115,10 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   /* Muted teal-gray — blended halfway between the accent and a plain
      border gray, rather than the fuller teal of --color-accent-deep. */
   border: 1.5px solid color-mix(in srgb, var(--color-accent-deep) 55%, var(--color-border) 45%);
-  /* Darker, closer to the page background (--color-bg-lift's rgb) at
-     higher opacity — the previous tint read noticeably lighter than
-     the page, an odd amount of contrast for a "glass" panel. */
-  background: rgba(18, 16, 14, 0.92);
+  /* Darker, closer to the page background (--color-bg-lift) at higher
+     opacity — the previous tint read noticeably lighter than the page,
+     an odd amount of contrast for a "glass" panel. */
+  background: color-mix(in srgb, var(--color-bg-lift) 92%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);

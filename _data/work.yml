@@ -46,7 +46,7 @@
   desc: "Privacy and security challenges in collectivist immigrant households, examined through a reflexive thematic analysis across 18 families that exposed a structural mismatch between single-user device assumptions and shared-device realities."
   links:
     - label: "View Publication"
-      url: "/assets/soups2026-final545.pdf"
+      url: "https://www.usenix.org/conference/soups2026/presentation/shanza"
       external: true
       primary: true
     - label: "View Case Study"

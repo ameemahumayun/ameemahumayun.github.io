@@ -37,7 +37,7 @@
   type: publication
   desc: "A case study on culturally situated SRH communication and LLM failure modes, drawing on a field study and model evaluation that reshaped the product direction of a maternal-health AI system in Pakistan."
   links:
-    - label: "DOI"
+    - label: "View Publication"
       url: "https://doi.org/10.1145/3772318.3791315"
       external: true
       primary: true

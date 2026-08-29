@@ -1,13 +1,14 @@
 /* ==========================================================================
    TOKENS.CSS — Design System Single Source of Truth
    --------------------------------------------------------------------------
-   Warm Dark Editorial. Every color, type size, spacing value, and layout
-   constant lives here as a CSS custom property. Change a value here and it
-   propagates everywhere. No raw values should appear in any other CSS file.
+   Chocolate Dark Editorial. Every color, type size, spacing value, and
+   layout constant lives here as a CSS custom property. Change a value here
+   and it propagates everywhere. No raw values should appear in any other
+   CSS file.
 
    DESIGN LANGUAGE SUMMARY
-   - Concept:   Cool dark editorial. Reads like a printed research monograph.
-   - Color:     Cool stark near-black base, high-contrast light body text,
+   - Concept:   Chocolate dark editorial. Reads like a printed research monograph.
+   - Color:     Deep chocolate-brown base, high-contrast light body text,
                 single baby-pink accent.
    - Type:      Nunito Sans (structural) + Fraunces italic (editorial voice).
                 Romanized Urdu always = Fraunces italic + accent. The signature.
@@ -18,20 +19,20 @@
 :root {
 
   /* ----- COLOR ----------------------------------------------------------- */
-  --color-bg:           #0d0e10;  /* cool stark near-black base */
-  --color-bg-lift:      #17181b;  /* slightly raised panels */
-  --color-bg-card:      #1e1f23;  /* contained blocks */
-  --color-bg-card-deep: #24262b;  /* deepest surface */
-  --color-bg-terminal:  #060708;  /* code / failure-output blocks */
+  --color-bg:           #241708;  /* deep chocolate brown base */
+  --color-bg-lift:      #2e1f10;  /* slightly raised panels */
+  --color-bg-card:      #362512;  /* contained blocks */
+  --color-bg-card-deep: #402c16;  /* deepest surface */
+  --color-bg-terminal:  #180f05;  /* code / failure-output blocks */
 
   --color-text:         #d7d9dc;  /* body — cool light grey */
   --color-text-strong:  #f5f6f7;  /* headings, emphasis — near white */
   --color-text-soft:    #a3a7ac;  /* secondary text */
   --color-text-mute:    #888c91;  /* labels, captions */
 
-  --color-border:       #2c2e33;  /* hairlines */
-  --color-border-soft:  #222327;  /* faint dividers */
-  --color-rule:         #34363c;  /* tag borders, tracks */
+  --color-border:       #3d2c17;  /* hairlines */
+  --color-border-soft:  #2e2010;  /* faint dividers */
+  --color-rule:         #45311a;  /* tag borders, tracks */
 
   --color-accent:       #f4b8c9;  /* baby pink */
   --color-accent-deep:  #dd93a8;

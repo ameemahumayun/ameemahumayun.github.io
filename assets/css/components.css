@@ -695,7 +695,7 @@
    the paragraphs cap out at max-width:660px. A vw-based width used to
    drift out of sync with the text block at in-between viewport widths. */
 .hero__avatar {
-  width: 227px;
+  width: 248px;
   height: auto;
   aspect-ratio: 600 / 802;
   border-radius: 14px;

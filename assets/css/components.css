@@ -988,7 +988,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
    narrow reading column, so the fields have real horizontal room —
    the header above stays on the narrow column intentionally, to match
    Work/CV/Studio's page-head dimensions. */
-.contact-form { margin-top: var(--space-3); }
+.contact-form { margin-top: var(--space-5); }
 /* Name + Email stacked in a narrower left column; Message fills a taller
    right column beside them (grid items stretch to the row height by
    default, so the textarea can fill: 1 down to match). Send spans full
@@ -996,12 +996,12 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 .contact-form__grid {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 .contact-form__col {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 .contact-form__field { display: flex; flex-direction: column; }
 .contact-form__field label {
@@ -1011,7 +1011,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   text-transform: uppercase;
   color: var(--color-text-mute);
   font-weight: var(--weight-bold);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   transition: color var(--duration) var(--ease);
 }
 .contact-form__field:has(input:focus) label,
@@ -1038,15 +1038,15 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
    isn't a feature here. flex: 1 lets it fill the stretched grid cell so
    it matches the height of the stacked Name/Email column beside it. */
 .contact-form__field--message textarea { resize: none; flex: 1; min-height: 140px; }
-.contact-form__submit-row { margin-top: var(--space-4); }
+.contact-form__submit-row { margin-top: var(--space-6); }
 .contact-form__submit {
   display: block;
   width: 100%;
   padding: 14px 30px;
   border: 1px solid var(--color-accent);
   border-radius: var(--radius-md);
-  background: transparent;
-  color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-bg);
   font-size: 13px;
   font-weight: var(--weight-bold);
   letter-spacing: 0.04em;
@@ -1054,7 +1054,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   text-align: center;
   transition: background var(--duration) var(--ease), border-color var(--duration) var(--ease), color var(--duration) var(--ease);
 }
-.contact-form__submit:hover { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-bg); }
+.contact-form__submit:hover { background: var(--color-accent-deep); border-color: var(--color-accent-deep); color: var(--color-bg); }
 /* Shown in place of the fields after a successful submit — sized and
    bordered like a real confirmation banner, not a stray line of text. */
 .contact-form__thanks {

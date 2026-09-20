@@ -65,6 +65,10 @@
   title: "Rehnuma"
   type: prototype
   desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
+  links:
+    - label: "View Prototype"
+      pending: true
+      suffix: "· soon"
 
 - meta: "Maternal Health · UX Design · Interactive Prototype"
   title: "TBA Maternal-Health Prototype"

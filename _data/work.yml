@@ -70,3 +70,7 @@
   title: "TBA Maternal-Health Prototype"
   type: prototype
   desc: "A low-literacy maternal-health prototype for Traditional Birth Attendants (TBAs), led in collaboration with Aga Khan University and VITAL Pakistan. Synthesized official TBA curricula, WHO guidance, and focus-group findings from frontline TBAs into the prototype's information architecture, content structure, and interaction flows, iteratively refined around information overload, literacy constraints, usability, and referral needs in Pakistan."
+  links:
+    - label: "View Prototype"
+      pending: true
+      suffix: "· soon"

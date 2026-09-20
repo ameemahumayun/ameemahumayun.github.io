@@ -35,7 +35,7 @@
 - meta: "ACM CHI 2026 · Health AI · Qualitative UX + LLM Evaluation"
   title: "Beyond Euphemisms"
   type: publication
-  desc: "A case study on culturally situated SRH communication and LLM failure modes, drawing on a field study and model evaluation that reshaped the product direction of a maternal-health AI system in Pakistan."
+  desc: "This project studied how LLMs interpret culturally specific, indirect, and euphemistic language used to discuss sexual, reproductive, and maternal health in Pakistan. Combining field observations, interviews, focus groups, and systematic evaluation of five LLMs, we developed a Domain–Approach framework for characterizing indirect communication and identified failure modes that conventional aggregate model-performance measures can obscure."
   links:
     - label: "View Publication"
       url: "https://doi.org/10.1145/3772318.3791315"
@@ -45,7 +45,7 @@
 - meta: "USENIX SOUPS 2026 · Privacy &amp; Security · Qualitative UX"
   title: "Sharing Digital Devices Is Normal and Cultural"
   type: publication
-  desc: "Privacy and security challenges in collectivist immigrant households, examined through a reflexive thematic analysis across 18 families that exposed a structural mismatch between single-user device assumptions and shared-device realities."
+  desc: "This project examined how privacy and security are negotiated when digital devices are routinely shared within South Asian immigrant families. Through qualitative research with 18 families, we studied how social expectations around helping, access, and family responsibility shape privacy risks, and developed frameworks translating participants' everyday sharing practices and feature requests into broader needs around autonomy, access control, and multi-user device design."
   links:
     - label: "View Publication"
       url: "https://www.usenix.org/conference/soups2026/presentation/shanza"
@@ -55,7 +55,7 @@
 - meta: "Nature Health · Health AI · Qualitative UX + LLM Evaluation"
   title: "Fetal Sex Disclosure &amp; AI Harm Cascades"
   type: publication
-  desc: "A mixed-methods study of conversational AI safety in prenatal care under conservative norms, characterizing a four-pathway harm cascade and a multi-turn audit revealing failures invisible to single-turn benchmarks."
+  desc: "This project investigates how conversational AI can create safety risks when responding to requests for fetal sex information in contexts where disclosure may carry downstream gender-related harms. Drawing on interviews with OB/GYNs and radiologists, we developed a clinically grounded harm framework and used it to design a multi-turn adversarial evaluation of leading LLMs, testing how safety behavior changes under sustained conversational pressure and across language conditions."
   links:
     - label: "View Publication"
       pending: true

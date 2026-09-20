@@ -582,7 +582,6 @@
   color: var(--color-text);
   line-height: 1.6;
   margin-bottom: var(--space-3);
-  max-width: 60ch;
 }
 .work-card__links { display: flex; gap: 12px; flex-wrap: wrap; }
 .work-card__link {

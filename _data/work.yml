@@ -41,8 +41,6 @@
       url: "https://doi.org/10.1145/3772318.3791315"
       external: true
       primary: true
-    - label: "View Case Study"
-      url: "/work/beyond-euphemisms/"
 
 - meta: "USENIX SOUPS 2026 · Privacy &amp; Security · Qualitative UX"
   title: "Sharing Digital Devices Is Normal and Cultural"
@@ -53,9 +51,6 @@
       url: "https://www.usenix.org/conference/soups2026/presentation/shanza"
       external: true
       primary: true
-    - label: "View Case Study"
-      pending: true
-      suffix: "· soon"
 
 - meta: "Nature Health · Health AI · Qualitative UX + LLM Evaluation"
   title: "Fetal Sex Disclosure &amp; AI Harm Cascades"
@@ -65,15 +60,8 @@
     - label: "View Publication"
       pending: true
       suffix: "· soon"
-    - label: "View Case Study"
-      pending: true
-      suffix: "· soon"
 
 - meta: "Accessibility · UX Design · Interactive Prototype"
   title: "Rehnuma"
   type: prototype
   desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
-  links:
-    - label: "View Case Study"
-      pending: true
-      suffix: "· soon"

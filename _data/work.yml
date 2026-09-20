@@ -61,20 +61,24 @@
       pending: true
       suffix: "· soon"
 
-- meta: "Accessibility · UX Design · Interactive Prototype"
-  title: "Rehnuma"
-  type: prototype
-  desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
-  links:
-    - label: "View Prototype"
-      pending: true
-      suffix: "· soon"
-
 - meta: "Maternal Health · UX Design · Interactive Prototype"
   title: "TBA Maternal-Health Prototype"
   type: prototype
   desc: "A low-literacy maternal-health prototype for Traditional Birth Attendants (TBAs), led in collaboration with Aga Khan University and VITAL Pakistan. Synthesized official TBA curricula, WHO guidance, and focus-group findings from frontline TBAs into the prototype's information architecture, content structure, and interaction flows, iteratively refined around information overload, literacy constraints, usability, and referral needs in Pakistan."
   links:
     - label: "View Prototype"
+      url: "/prototypes/tba-maternal-health/"
+      external: true
+      pending: true
+      suffix: "· soon"
+
+- meta: "Accessibility · UX Design · Interactive Prototype"
+  title: "Rehnuma"
+  type: prototype
+  desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
+  links:
+    - label: "View Prototype"
+      url: "/prototypes/rehnuma/"
+      external: true
       pending: true
       suffix: "· soon"

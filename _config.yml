@@ -12,6 +12,7 @@ url: ""
 # Don't process these with Jekyll
 exclude:
   - README.md
+  - prototypes/README.md
   - _templates/
   - "*.zip"
 

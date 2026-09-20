@@ -9,15 +9,26 @@ active: cv
   <div class="page-head__inner">
    <h1 class="page-head__title"><span class="serif text-highlight">Curriculum Vitae</span></h1>
     <!-- <h1 class="page-head__title">Curriculum Vitae</h1> -->
-    <p class="page-head__intro">Browse below, or <a href="{{ '/assets/cv/ameemah_humayun_cv_pdf.pdf' | relative_url }}" target="_blank" rel="noopener" class="link-teal">download the PDF</a>.</p>
+    <p class="page-head__intro">Browse below, or <a href="{{ '/assets/cv/ameemah_humayun_cv.pdf' | relative_url }}" target="_blank" rel="noopener" class="link-teal">download the PDF</a>.</p>
   </div>
 </header>
- 
+
 <section class="section">
   <div class="container-wide">
 
     <div class="accordion">
- 
+
+      <!-- RESEARCH INTERESTS -->
+      <details class="accordion__item">
+        <summary class="accordion__head">
+          <span class="accordion__title">Research Interests</span>
+          <span class="accordion__icon"></span>
+        </summary>
+        <div class="accordion__body">
+          <p>Culturally situated human&ndash;AI interaction in low-resource and health contexts, with a focus on language, literacy, and social norms; LLM safety and evaluation, spanning cross-lingual, multi-turn, adversarial, and expert-validated benchmarking, automated model testing, and statistical analysis of failure modes; and sociotechnical HCI, particularly privacy and shared-device access, AI mental models, and the ways AI redistributes healthcare and information-seeking work.</p>
+        </div>
+      </details>
+
       <!-- EDUCATION (closed on load) -->
       <details class="accordion__item">
         <summary class="accordion__head">
@@ -30,15 +41,15 @@ active: cv
             <div class="cv-entry__meta">2022 – 2026 · Lahore, Pakistan</div>
           </div>
           <div class="cv-entry">
-            <div class="cv-entry__role">Cambridge International O &amp; A Levels — Beaconhouse Liberty Lahore (BLL)</div>
+            <div class="cv-entry__role">Cambridge International O &amp; A Levels — Beaconhouse Liberty Campus</div>
             <div class="cv-entry__meta">2017 – 2022 · Lahore, Pakistan</div>
             <ul class="cv-list">
-              <li>O Levels: 8A*s, 2As &nbsp;·&nbsp; A Levels: 1A*, 3As &nbsp;·&nbsp; SAT: 1550</li>
+              <li>SAT: 1550 &nbsp;·&nbsp; A Levels: 1A*, 3A &nbsp;·&nbsp; O Levels: 8A*, 2A</li>
             </ul>
           </div>
         </div>
       </details>
- 
+
       <!-- PUBLICATIONS -->
       <details class="accordion__item">
         <summary class="accordion__head">
@@ -47,156 +58,108 @@ active: cv
         </summary>
         <div class="accordion__body">
           <ul class="cv-pubs">
-            <li>A. Humayun, B. Zubair, and M. Mustafa. 2026. <em>Beyond Euphemisms: Rethinking LLMs for SRH in Conservative Contexts.</em> In Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems (CHI ’26), Barcelona, Spain. Presented in person. Supported by the Gates Foundation. DOI: 10.1145/3772318.3791315</li>
-            <li>S. Shanza, A. Humayun, U. Hengartner, and L. Zhang-Kennedy. 2026. <em>Sharing Digital Devices is Normal and Cultural: Privacy and Security Challenges in Collectivist Immigrant Households.</em> In Proceedings of the Twenty-Second Symposium on Usable Privacy and Security (SOUPS ’26), Hannover, Germany. Accepted, to appear.</li>
+            <li><strong>A. Humayun</strong>, B. Zubair, and M. Mustafa. <em><a href="https://dl.acm.org/doi/10.1145/3772318.3791315" target="_blank" rel="noopener" class="link-teal">Beyond Euphemisms: Rethinking LLMs for SRH in Conservative Contexts.</a></em> <em>ACM CHI '26</em>, Barcelona.</li>
+            <li>S. Shanza, <strong>A. Humayun</strong>, U. Hengartner, and L. Zhang-Kennedy. <em><a href="https://www.usenix.org/conference/soups2026/presentation/shanza" target="_blank" rel="noopener" class="link-teal">Sharing Digital Devices is Normal and Cultural: Privacy and Security Challenges in Collectivist Immigrant Households.</a></em> <em>USENIX SOUPS '26</em>, Hannover.</li>
+            <li><em>(Under Review)</em> <strong>A. Humayun</strong>, B. Zubair, and M. Mustafa. <em>Patient Safety Implications of LLM-Mediated Fetal Sex Disclosure in Conservative Healthcare Contexts.</em> <em>Nature Health</em>, 2026.</li>
           </ul>
         </div>
       </details>
- 
-      <!-- UX & RESEARCH EXPERIENCE (nested: lab > project) -->
+
+      <!-- AWARDS, SERVICE & TEACHING -->
       <details class="accordion__item">
         <summary class="accordion__head">
-          <span class="accordion__title">UX &amp; Research Experience</span>
+          <span class="accordion__title">Awards, Service &amp; Teaching</span>
           <span class="accordion__icon"></span>
         </summary>
         <div class="accordion__body">
- 
-          <!-- LAB 1: Interactive Media Lab (two projects nested inside) -->
-          <div class="cv-group">
-            <div class="cv-entry__role">Research Lead — Interactive Media Lab, LUMS</div>
-            <div class="cv-entry__meta">May 2025 – Present · Advisor: Dr. Maryam Mustafa · Lahore, Pakistan</div>
- 
-            <div class="subaccordion">
-              <details class="subaccordion__item">
-                <summary class="subaccordion__head">
-                  <span class="subaccordion__chev"></span>
-                  <span class="subaccordion__title">SRH communication &amp; LLM safety</span>
-                  <span class="subaccordion__meta">CHI 2026</span>
-                </summary>
-                <div class="subaccordion__body">
-                  <ul class="cv-list">
-                    <li>Led mixed-methods user research on AI-mediated health communication in conservative, low-resource contexts; accepted to CHI 2026 (CORE A*), presented in person in Barcelona, supported by the Gates Foundation and Patrick J. McGovern Foundation.</li>
-                    <li>Conducted 22 user interviews, 5 focus groups, and 40 contextual observations of clinician-patient interactions; led thematic analysis and produced the Domain-Approach framework for mapping how users actually talk about sensitive health topics, used to inform interface and prompt design.</li>
-                    <li>Evaluated 5 conversational AI systems (Claude Sonnet 4, GPT-4o, GPT-OSS, Gemma 3, LLaMA 3.2) against 71 real user utterances with dual-rater scoring; documented user-facing failure modes (polysemy collapse, semantic drift, script degradation, persona inconsistency) and their interaction-design consequences.</li>
-                    <li>Translated findings into concrete design recommendations — synchronous terminology management, miscommunication-as-default interaction patterns, multimodal gestural input under privacy constraints — and drafted the full manuscript.</li>
-                  </ul>
-                </div>
-              </details>
- 
-              <details class="subaccordion__item">
-                <summary class="subaccordion__head">
-                  <span class="subaccordion__chev"></span>
-                  <span class="subaccordion__title">Conversational AI safety in prenatal care</span>
-                  <span class="subaccordion__meta">Nature Health · in progress</span>
-                </summary>
-                <div class="subaccordion__body">
-                  <ul class="cv-list">
-                    <li>Co-first author on a mixed-methods study of conversational AI safety in patient-facing healthcare contexts; targeting Nature Health (in progress).</li>
-                    <li>Co-designed and conducted 13 expert interviews with OB/GYNs and radiologists; led thematic analysis and produced a four-pathway harm model showing how AI disclosure decisions cascade into real-world user harm (care withdrawal, unsafe medical pathways, family-composition risk, provider liability).</li>
-                    <li>Co-designed a 3-condition conversational evaluation (single-turn, 6-turn naturalistic, 18-turn adversarial) of GPT-4.1, Claude Sonnet 4, and Gemini 1.5 Pro across 40 images; revealed UX failure modes invisible to single-turn benchmarks (100% hallucinated disclosure from Gemini on non-inferable images vs. complete refusal from Claude) — directly informing procurement and product safety decisions.</li>
-                    <li>Drafted Introduction, Discussion, and qualitative findings; framed implications for AI product evaluation and locally grounded multi-turn user testing.</li>
-                  </ul>
-                </div>
-              </details>
-            </div>
+          <div class="cv-entry">
+            <div class="cv-entry__role">Gary Marsden Travel Award — SIGCHI</div>
+            <div class="cv-entry__meta">February 2026</div>
           </div>
- 
-          <!-- LAB 2: Safe Interactions Lab -->
-          <div class="cv-group">
-            <div class="cv-entry__role">Research Assistant — Safe Interactions Lab, University of Waterloo</div>
-            <div class="cv-entry__meta">November 2025 – Present · Advisors: Dr. Leah Zhang-Kennedy, Dr. Urs Hengartner · Remote</div>
- 
-            <div class="subaccordion">
-              <details class="subaccordion__item">
-                <summary class="subaccordion__head">
-                  <span class="subaccordion__chev"></span>
-                  <span class="subaccordion__title">Shared-device practices in collectivist households</span>
-                  <span class="subaccordion__meta">SOUPS 2026</span>
-                </summary>
-                <div class="subaccordion__body">
-                  <ul class="cv-list">
-                    <li>Co-led qualitative UX research on shared-device user experiences in collectivist immigrant households in Canada; accepted to SOUPS 2026 (CORE A*), co-located with USENIX Security.</li>
-                    <li>Analyzed 41 user interviews across 18 families using reflexive thematic analysis in Atlas.ti; developed and iterated the codebook across multiple coding rounds.</li>
-                    <li>Translated findings into interaction-design recommendations for multi-user authentication, identity-aware access patterns, and culturally configurable privacy controls.</li>
-                    <li>Drafted manuscript sections and rebuttal response through acceptance.</li>
-                  </ul>
-                </div>
-              </details>
-            </div>
+          <div class="cv-entry">
+            <div class="cv-entry__role">Student Volunteer — CHI 2026, Barcelona</div>
+            <div class="cv-entry__meta">April 2026</div>
           </div>
- 
-        </div>
-      </details>
- 
-      <!-- TEACHING -->
-      <details class="accordion__item">
-        <summary class="accordion__head">
-          <span class="accordion__title">Teaching Experience</span>
-          <span class="accordion__icon"></span>
-        </summary>
-        <div class="accordion__body">
           <div class="cv-entry">
             <div class="cv-entry__role">Teaching Assistant — CS 5606: Designing Human-Centered AI, LUMS</div>
-            <div class="cv-entry__meta">Jan 2026 – Present · On-site</div>
-            <ul class="cv-list">
-              <li>Facilitated discussions, graded assignments, and mentored student projects on human-centered AI prototypes.</li>
-            </ul>
+            <div class="cv-entry__meta">Jan – June 2026</div>
           </div>
         </div>
       </details>
- 
-      <!-- AWARDS & SERVICE -->
+
+      <!-- RESEARCH & WORK EXPERIENCE (flat entries, one per project) -->
       <details class="accordion__item">
         <summary class="accordion__head">
-          <span class="accordion__title">Awards &amp; Service</span>
+          <span class="accordion__title">Research &amp; Work Experience</span>
           <span class="accordion__icon"></span>
         </summary>
         <div class="accordion__body">
+
           <div class="cv-entry">
-            <div class="cv-entry__role">Gary Marsden Travel Award</div>
-            <div class="cv-entry__meta">2026 · To attend CHI 2026, Barcelona</div>
+            <div class="cv-entry__role">Awaaz-e-Sehat &amp; The National AI Hub — UX Researcher &amp; Designer</div>
+            <div class="cv-entry__meta">July 2026 – Present · Maternal-health AI, clinical workflows &amp; evaluation · PI: Dr. Maryam Mustafa · Lahore, Pakistan</div>
+            <ul class="cv-list">
+              <li>Lead methods design for a 2-site, 500-patient comparative maternal-health pilot, building 7 linked instruments that integrate survey, usability, workflow-timing, consultation-observation, provider, and facility-level data to evaluate the effects of AI-generated EMR summaries on care quality and clinical workflows.</li>
+              <li>Led iterative redesign of the electronic medical record (EMR), reducing intake time by 78% (90 &rarr; 20 min) while retaining ~70&ndash;75% of clinically relevant information, and translating 35+ maternal and obstetric risk criteria into automated backend flags.</li>
+              <li>Redesigned the AI-generated clinical summary for rapid provider review, restructuring key obstetric variables and risk information for 10&ndash;20-second interpretation during high-volume consultations.</li>
+              <li>Design and conduct usability research with patients and frontline health workers, examining comprehension, workflow fit, low-literacy interaction, and shared or mediated phone access, and translate findings into product iterations.</li>
+              <li>Led design and development of a low-literacy maternal-health prototype for traditional birth attendants (TBAs), in collaboration with Aga Khan University and VITAL Pakistan.</li>
+              <li>Synthesized official TBA curricula, WHO guidance, and focus-group findings from frontline TBAs into the prototype's information architecture, content structure, and interaction flows; iteratively refined the design around information overload, literacy constraints, usability, and referral needs in Pakistan.</li>
+              <li>Supervised three qualitative research projects examining (1) how low-literacy, digitally excluded users form mental models of technically opaque AI systems; (2) how women turn to GenAI following dismissive clinical encounters, shaping subsequent information-seeking and care trajectories; and (3) a multi-country study with Google on how women perceive AI personhood and how these perceptions shape trust and engagement.</li>
+              <li>Conduct field visits across partner healthcare sites and design patient-facing recruitment and onboarding materials, including clinic handout cards and Facebook ads, iterating messaging, visual hierarchy, and accessibility for low-literacy audiences.</li>
+            </ul>
           </div>
+
           <div class="cv-entry">
-            <div class="cv-entry__role">Student Volunteer — CHI 2026</div>
-            <div class="cv-entry__meta">2026 · Barcelona, Spain</div>
+            <div class="cv-entry__role">Safe Interactions Lab, University of Waterloo — Research Assistant</div>
+            <div class="cv-entry__meta">Nov 2025 – June 2026 · Shared-device privacy in collectivist immigrant households (USENIX SOUPS '26) · Advisors: Dr. Leah Zhang-Kennedy, Dr. Urs Hengartner · Remote</div>
+            <ul class="cv-list">
+              <li>Co-led qualitative research on privacy and security in shared-device use across 18 South Asian immigrant families (41 participants).</li>
+              <li>Served as one of two primary qualitative coders; analyzed ~50% of interviews in Atlas.ti using reflexive thematic analysis and co-developed and iteratively refined the study codebook.</li>
+              <li>Synthesized coded data across research questions on sociocultural drivers, privacy/security risks, and unmet design needs, contributing to the study's broader framing of shared devices as socially and culturally governed infrastructures.</li>
+              <li>Co-developed: (1) a 5-category taxonomy of shared-device privacy and security risks; and (2) a desires-to-needs framework translating participants' stated feature requests into underlying privacy, access-control, and autonomy needs.</li>
+              <li>Substantially drafted and revised the findings and discussion, translating empirical insights into design recommendations for multi-user authentication, identity-aware access, and configurable privacy controls.</li>
+            </ul>
           </div>
+
+          <div class="cv-entry">
+            <div class="cv-entry__role">Interactive Media Lab, LUMS — Research Project Lead</div>
+            <div class="cv-entry__meta">May 2025 – June 2026 · Conversational AI safety and fetal sex disclosure in healthcare (<em>Nature Health</em>, under review) · Advisor: Dr. Maryam Mustafa · Lahore, Pakistan</div>
+            <ul class="cv-list">
+              <li>Led mixed-methods research on safety risks from LLM-mediated fetal-sex disclosure, in collaboration with Awaaz-e-Sehat.</li>
+              <li>Designed the interview protocol; recruited and interviewed 13 OB/GYNs and radiologists across two hospital sites, and coordinated clinical annotation of study materials.</li>
+              <li>Conducted inductive thematic analysis in ATLAS.ti, iteratively developing the qualitative codebook and synthesizing practitioner accounts into a four-pathway clinical harm framework.</li>
+              <li>Translated qualitative findings into a locally grounded clinical reference standard for evaluating model disclosure behavior and the conceptual basis for a technical audit of conversational AI safety.</li>
+              <li>Designed a 3-condition adversarial evaluation spanning single-, 6-, and 18-turn conversations to test guardrail degradation under sustained conversational pressure, surfacing failures missed by single-turn benchmarks, including hallucinated disclosure and over-refusal.</li>
+              <li>Built a Python-based multi-provider LLM evaluation pipeline spanning 3 model providers and 3 language conditions; engineered resumable multimodal API orchestration and automated statistical analysis for disclosure-rate and self-contradiction metrics.</li>
+              <li>Led manuscript drafting and contributed to the study's research framing, analysis, and interpretation.</li>
+            </ul>
+          </div>
+
+          <div class="cv-entry">
+            <div class="cv-entry__role">Interactive Media Lab, LUMS — Research Project Lead</div>
+            <div class="cv-entry__meta">May 2025 – June 2026 · LLM performance on conservative, indirect health language (CHI '26) · Advisor: Dr. Maryam Mustafa · Lahore, Pakistan</div>
+            <ul class="cv-list">
+              <li>Led mixed-methods research on culturally situated LLM failures in maternal and sexual/reproductive health communication in Pakistan; accepted to CHI 2026 (CORE A*) and presented in Barcelona. Project associated with Awaaz-e-Sehat and supported by the Gates Foundation.</li>
+              <li>Designed and conducted qualitative fieldwork comprising 40 clinician&ndash;patient observations, 22 semi-structured interviews, and 5 focus groups with patients and healthcare practitioners.</li>
+              <li>Adapted the study methodology in response to early field findings, shifting from primarily elicited accounts toward naturalistic observation and clinician interviews to better capture embedded euphemistic and indirect language.</li>
+              <li>Developed through bottom-up qualitative analysis: (1) a novel Domain&ndash;Approach framework for classifying indirect health communication by referential domain and communicative strategy; and (2) a decision-tree classification procedure applied across ~95 patient-derived expressions.</li>
+              <li>Co-designed and executed a systematic evaluation of 5 LLMs on 71 culturally grounded Roman Urdu utterances across controlled prompting conditions, with gynecologist validation and statistical model comparison; demonstrated how strong aggregate scores can mask clinically and contextually important failures, and characterized recurrent failure modes including polysemy blindness, script instability, and persona inconsistency.</li>
+              <li>Synthesized qualitative and model-evaluation findings into design recommendations for culturally situated health AI, including terminology management, miscommunication-aware interaction design, and privacy-conscious multimodal input.</li>
+            </ul>
+          </div>
+
+          <div class="cv-entry">
+            <div class="cv-entry__role">Other UX &amp; Interaction Design Projects</div>
+            <div class="cv-entry__meta">2024 · Introductory projects in UX research, interaction design, and prototyping · Lahore, Pakistan</div>
+            <ul class="cv-list">
+              <li>45+ interviews and usability studies across <em>Rehnuma</em> (accessibility ratings, w/ PSRD), <em>Safarnama</em> (cultural tourism), and <em>TurboTrack</em> (booking system); user research, design, prototyping, testing. Tools: Figma, HTML/CSS, Atlas.ti.</li>
+            </ul>
+          </div>
+
         </div>
       </details>
- 
-      <!-- DESIGN PROJECTS -->
-      <details class="accordion__item">
-        <summary class="accordion__head">
-          <span class="accordion__title">Design Projects</span>
-          <span class="accordion__icon"></span>
-        </summary>
-        <div class="accordion__body">
-          <div class="cv-entry">
-            <div class="cv-entry__role">Rehnuma — Accessibility rating platform for public spaces</div>
-            <div class="cv-entry__meta"><span class="accent">Figma · Canva · Atlas.ti</span></div>
-            <ul class="cv-list">
-              <li>Based on lived experiences of people with disabilities; conducted 20+ semi-structured interviews.</li>
-              <li>Designed an interface for granular crowdsourced accessibility ratings and qualitative reviews.</li>
-              <li>Collaborated with the Pakistan Society for Rehabilitation of Differently Abled (PSRD).</li>
-            </ul>
-          </div>
-          <div class="cv-entry">
-            <div class="cv-entry__role">Safarnama — Community-led cultural tourism platform</div>
-            <div class="cv-entry__meta"><span class="accent">Figma · Canva</span></div>
-            <ul class="cv-list">
-              <li>Connecting travelers with local hosts and experiences; conducted 25+ interviews with locals and travelers.</li>
-              <li>Performed usability testing and iteration.</li>
-            </ul>
-          </div>
-          <div class="cv-entry">
-            <div class="cv-entry__role">TurboTrack — Karting reservation &amp; profile management system</div>
-            <div class="cv-entry__meta"><span class="accent">Figma · Canva · Miro · HTML/CSS</span></div>
-            <ul class="cv-list">
-              <li>Designed booking flow, user profiles, and admin views.</li>
-            </ul>
-          </div>
-        </div>
-      </details>
- 
+
       <!-- SKILLS -->
       <details class="accordion__item">
         <summary class="accordion__head">
@@ -205,28 +168,28 @@ active: cv
         </summary>
         <div class="accordion__body">
           <div class="cv-skills__row">
-            <div class="cv-skills__label">Research Interests</div>
-            <div class="cv-skills__val">Culturally-grounded LLMs, health AI, human-centered AI, fairness &amp; equity, security &amp; privacy</div>
+            <div class="cv-skills__label">Research Methods</div>
+            <div class="cv-skills__val">Semi-structured and expert interviews, focus groups, contextual inquiry, usability testing, reflexive thematic analysis, inductive coding, codebook development</div>
           </div>
           <div class="cv-skills__row">
-            <div class="cv-skills__label">Design Tools</div>
-            <div class="cv-skills__val">Figma, Canva, Miro, Procreate, Blender, Nomad Sculpt</div>
+            <div class="cv-skills__label">LLM Evaluation</div>
+            <div class="cv-skills__val">Single- and multi-turn evaluation (naturalistic and adversarial); cross-lingual LLM benchmarking (English/Roman Urdu) across OpenAI, Anthropic, and Google models; human and expert evaluation; failure-mode, safety, and self-contradiction analysis; statistical model comparison with exact binomial confidence intervals (Clopper&ndash;Pearson)</div>
           </div>
           <div class="cv-skills__row">
-            <div class="cv-skills__label">Research &amp; Analysis</div>
-            <div class="cv-skills__val">MAXQDA / Dedoose / Atlas.ti, Zotero / Mendeley, LaTeX / Overleaf, Excel / Sheets</div>
+            <div class="cv-skills__label">Research &amp; Design Tools</div>
+            <div class="cv-skills__val">ATLAS.ti, MAXQDA, Dedoose, Figma, Miro, Zotero, LaTeX/Overleaf, Canva, Procreate, Blender, Nomad Sculpt</div>
           </div>
           <div class="cv-skills__row">
-            <div class="cv-skills__label">Programming</div>
-            <div class="cv-skills__val">Python, C/C++, React, HTML/CSS, MATLAB, Git/GitHub, VS Code</div>
+            <div class="cv-skills__label">Programming &amp; Technical</div>
+            <div class="cv-skills__val">Python, C/C++, JavaScript/React, HTML/CSS, MATLAB, Git</div>
           </div>
           <div class="cv-skills__row">
             <div class="cv-skills__label">Languages</div>
-            <div class="cv-skills__val">Urdu, English, Punjabi, Hindi (can understand)</div>
+            <div class="cv-skills__val">English, Urdu, Punjabi, Hindi</div>
           </div>
         </div>
       </details>
- 
+
     </div>
   </div>
 </section>

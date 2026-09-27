@@ -6,37 +6,17 @@ og_type: article
 active: work
 ---
 
-<header class="hero">
-  <div class="hero__inner">
-    <div class="eyebrow eyebrow-rule">Maternal Health · UX Design · Interactive Prototype</div>
-    <h1>TBA Maternal-Health Prototype</h1>
-    <p class="lead" style="max-width:620px;margin-bottom:2.5rem;">A low-literacy maternal-health prototype for Traditional Birth Attendants (TBAs), built in collaboration with Aga Khan University and VITAL Pakistan — designed to hold clinical guidance in a form frontline attendants can actually use in the field.</p>
-
-    <a class="work-card__link work-card__link--primary" href="{{ '/prototypes/tba-maternal-health/' | relative_url }}" target="_blank" rel="noopener" style="margin-bottom:3rem;display:inline-flex;">Launch Prototype</a>
-
-    <div class="meta">
-      <div class="meta__item">
-        <div class="meta__label">Role</div>
-        <div class="meta__value">Design &amp; development<br>lead</div>
-      </div>
-      <div class="meta__item">
-        <div class="meta__label">Collaborators</div>
-        <div class="meta__value">Aga Khan University<br>VITAL Pakistan</div>
-      </div>
-      <div class="meta__item">
-        <div class="meta__label">Input sources</div>
-        <div class="meta__value">TBA curricula · WHO<br>guidance · focus groups</div>
-      </div>
-      <div class="meta__item">
-        <div class="meta__label">Status</div>
-        <div class="meta__value">Prototype<br>live for review</div>
-      </div>
-    </div>
+<header class="page-head">
+  <div class="page-head__inner">
+    <a href="{{ '/work/' | relative_url }}" class="back-link">&larr; All Projects</a>
+    <h1 class="page-head__title"><span class="serif text-highlight">TBA Maternal-Health Prototype</span></h1>
+    <p class="page-head__intro" style="max-width:none;">A low-literacy maternal-health prototype for Traditional Birth Attendants (TBAs), built in collaboration with Aga Khan University and VITAL Pakistan — designed to hold clinical guidance in a form frontline attendants can actually use in the field.</p>
+    <a class="work-card__link work-card__link--primary" href="{{ '/prototypes/tba-maternal-health/' | relative_url }}" target="_blank" rel="noopener" style="margin-top:1.5rem;display:inline-flex;">Launch Prototype</a>
   </div>
 </header>
 
 <section class="section" id="context">
-  <div class="container">
+  <div class="container-wide">
     <h2>Context</h2>
     <p>Traditional Birth Attendants remain a real point of contact for maternal care in many low-resource communities in Pakistan, often working with limited formal training materials and inconsistent access to updated clinical guidance. The question behind this prototype was simple to state and hard to solve: what does maternal-health guidance look like when it has to be usable by someone with limited literacy, under real time pressure, without a clinician standing next to them?</p>
 
@@ -45,7 +25,7 @@ active: work
 </section>
 
 <section class="section" id="approach">
-  <div class="container">
+  <div class="container-wide">
     <h2>Approach</h2>
     <p>I synthesized official TBA curricula, WHO guidance, and focus-group findings from frontline TBAs into the prototype's information architecture, content structure, and interaction flows. Each source did different work: the curricula and WHO guidance anchored clinical correctness, while the focus groups surfaced how TBAs actually think through a case — what they check first, what they're unsure about, and when they know to refer a patient onward.</p>
 
@@ -54,7 +34,7 @@ active: work
 </section>
 
 <section class="section" id="design">
-  <div class="container">
+  <div class="container-wide">
     <h2>Design considerations</h2>
     <p>The design was iteratively refined around four constraints that shaped nearly every decision:</p>
 
@@ -68,12 +48,13 @@ active: work
 </section>
 
 <section class="section" id="preview">
-  <div class="container">
+  <div class="container-wide">
     <h2>Preview</h2>
     <p>The prototype below is the live, interactive build — the same one linked at the top of this page.</p>
 
-    <div style="border:var(--hairline);border-radius:12px;overflow:hidden;margin-top:2rem;">
-      <iframe src="{{ '/prototypes/tba-maternal-health/' | relative_url }}" title="TBA Maternal-Health Prototype" loading="lazy" style="width:100%;height:640px;border:0;display:block;background:var(--color-bg);"></iframe>
+    <div class="carousel__viewport" style="margin-top:2rem;">
+      <iframe src="{{ '/prototypes/tba-maternal-health/' | relative_url }}" title="TBA Maternal-Health Prototype" loading="lazy" style="width:100%;height:900px;border:0;display:block;background:var(--color-bg);"></iframe>
+      <button type="button" class="carousel__btn carousel__btn--fullscreen" aria-label="View fullscreen">&#9974; Fullscreen</button>
     </div>
     <p style="margin-top:1rem;"><a class="link-teal" href="{{ '/prototypes/tba-maternal-health/' | relative_url }}" target="_blank" rel="noopener">Open the prototype in its own tab &rarr;</a></p>
   </div>

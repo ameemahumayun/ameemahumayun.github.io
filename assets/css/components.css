@@ -638,6 +638,20 @@
 .page-head {
   padding: var(--space-5) 0 var(--space-2);
 }
+/* Back link on individual project pages, sitting above the title so
+   there's always a clear way back to the full list. */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-mute);
+  margin-bottom: var(--space-3);
+  transition: color var(--duration) var(--ease);
+}
+.back-link:hover { color: var(--color-accent); }
 .page-head__inner {
   max-width: var(--container-wide);
   margin: 0 auto;
@@ -1361,4 +1375,11 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   height: 100%;
   max-width: 100%;
   object-fit: contain;
+}
+/* A plain embedded iframe (e.g. a live prototype preview) just fills
+   the fullscreen viewport edge-to-edge instead. */
+.carousel__viewport:fullscreen iframe,
+.carousel__viewport:-webkit-full-screen iframe {
+  width: 100%;
+  height: 100%;
 }

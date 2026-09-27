@@ -25,7 +25,12 @@ active: work
       <button type="button" class="work-filter__btn" data-filter="design">Design</button>
     </div>
     <div class="work-list">
+      {%- assign archives_started = false -%}
       {%- for project in site.data.work %}
+        {%- if project.archived and archives_started == false %}
+      <div class="eyebrow" data-type="design" style="margin-top:var(--space-2);">Archives</div>
+          {%- assign archives_started = true -%}
+        {%- endif %}
       <article class="work-card" data-type="{{ project.type }}">
         <div class="work-card__meta">{{ project.meta }}</div>
         <h2 class="work-card__title">{{ project.title }}</h2>

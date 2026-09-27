@@ -63,7 +63,9 @@
   if (!filterBar) return; // page has no filter tabs
 
   const buttons = Array.from(filterBar.querySelectorAll(".work-filter__btn"));
-  const cards = Array.from(document.querySelectorAll(".work-card"));
+  // [data-type] also matches the "Archives" divider, not just .work-card,
+  // so it hides/shows along with the design cards it introduces.
+  const cards = Array.from(document.querySelectorAll("[data-type]"));
   const validFilters = buttons.map((b) => b.getAttribute("data-filter"));
 
   const applyFilter = (filter, btn) => {
@@ -133,12 +135,10 @@
   }
   if (!slides.length) return;
 
-  const viewport = carousel.querySelector(".carousel__viewport");
   const img = carousel.querySelector(".carousel__slide");
   const counter = carousel.querySelector(".carousel__counter");
   const prevBtn = carousel.querySelector(".carousel__btn--prev");
   const nextBtn = carousel.querySelector(".carousel__btn--next");
-  const fullscreenBtn = carousel.querySelector(".carousel__btn--fullscreen");
   let index = 0;
 
   const render = () => {
@@ -155,15 +155,25 @@
     if (index < slides.length - 1) { index += 1; render(); }
   });
 
-  if (fullscreenBtn && viewport) {
-    fullscreenBtn.addEventListener("click", () => {
+  render();
+})();
+
+(function () {
+  "use strict";
+
+  // Generic fullscreen trigger: any .carousel__btn--fullscreen requests
+  // fullscreen on its nearest .carousel__viewport, whether that viewport
+  // holds a carousel image or a plain embedded iframe.
+  const buttons = Array.from(document.querySelectorAll(".carousel__btn--fullscreen"));
+  buttons.forEach((btn) => {
+    const viewport = btn.closest(".carousel__viewport");
+    if (!viewport) return;
+    btn.addEventListener("click", () => {
       if (viewport.requestFullscreen) {
         viewport.requestFullscreen();
       } else if (viewport.webkitRequestFullscreen) {
         viewport.webkitRequestFullscreen();
       }
     });
-  }
-
-  render();
+  });
 })();

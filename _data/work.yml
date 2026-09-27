@@ -15,7 +15,7 @@
 #   links:      list of buttons. Each link has:
 #               - label   (required) text shown
 #                 url     (for real links) destination. Use a site path like
-#                         "/work/beyond-euphemisms/" for internal pages (passed
+#                         "/work/safarnama/" for internal pages (passed
 #                         through relative_url), or a full https:// URL.
 #                 external  (optional) true -> opens in new tab w/ rel=noopener
 #                 muted     (optional) true -> adds work-card__link--muted
@@ -30,6 +30,11 @@
 #
 #   status:     a plain string -> renders one .work-card__status span instead
 #               of any link buttons. Use for projects with nothing to link yet.
+#
+#   archived:   (optional) true -> a plain "Archives" label is inserted in
+#               the Design list right before the first entry with this set.
+#               Keep archived entries grouped together at the end of the
+#               design-type block so the divider only appears once.
 # ============================================================
 
 - meta: "ACM CHI 2026 · Health AI · Qualitative UX + LLM Evaluation"
@@ -70,26 +75,38 @@
       url: "/work/tba-maternal-health/"
       primary: true
 
-- meta: "Accessibility · UX Design · Interactive Prototype"
-  title: "Rahnuma"
+- meta: "Product &amp; Visual Design · On the Job"
+  title: "Odds &amp; Ends"
   type: design
-  desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
-  links:
-    - label: "View Case Study"
-      url: "/work/rahnuma/"
-      primary: true
+  desc: "The smaller design work woven into a bigger research role: redesigning the electronic medical record intake and the AI-generated clinical summary for faster provider review, and designing patient-facing recruitment materials — clinic handout cards, Facebook ads — iterating messaging, visual hierarchy, and accessibility for low-literacy audiences."
+  status: "Ongoing · job work"
 
 - meta: "Team Project · UX Research + Product Design"
   title: "Safarnama"
   type: design
+  archived: true
   desc: "A tourism app connecting travelers with local hosts, built with a five-person university team. Contributed across the full project — survey and interview research, usability testing, and product design — and led the product and UI design in Figma."
   links:
     - label: "View Case Study"
       url: "/work/safarnama/"
       primary: true
 
-- meta: "Product &amp; Visual Design · On the Job"
-  title: "Odds &amp; Ends"
+- meta: "Accessibility · UX Design · Interactive Prototype"
+  title: "Rahnuma"
   type: design
-  desc: "The smaller design work woven into a bigger research role: redesigning the electronic medical record intake and the AI-generated clinical summary for faster provider review, and designing patient-facing recruitment materials — clinic handout cards, Facebook ads — iterating messaging, visual hierarchy, and accessibility for low-literacy audiences."
-  status: "Ongoing · job work"
+  archived: true
+  desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
+  links:
+    - label: "View Case Study"
+      url: "/work/rahnuma/"
+      primary: true
+
+- meta: "Booking Platform · UX Design · 2024"
+  title: "TurboTrack"
+  type: design
+  archived: true
+  desc: "A booking-system prototype from the same 2024 cohort of introductory UX research and design projects as Safarnama and Rahnuma — user research, interaction design, and prototyping, using Figma and HTML/CSS."
+  links:
+    - label: "View Case Study"
+      url: "/work/turbotrack/"
+      primary: true

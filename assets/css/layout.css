@@ -38,8 +38,7 @@
   gap: var(--space-3);
 }
 
-/* Brand: the NAME is the home link and behaves like "home".
-   The "/ Case Study" tag is contextual page label — NOT a link. */
+/* Brand: the NAME is the home link and behaves like "home". */
 .nav__brand {
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
@@ -61,11 +60,6 @@
   color: var(--color-accent);
   border-bottom-color: var(--color-accent);
 }
-.nav__tag {
-  color: var(--color-text-mute);
-  font-weight: var(--weight-semibold);
-}
-.nav__tag::before { content: "/ "; }
 
 .nav__links {
   display: flex;
@@ -89,7 +83,6 @@
 .section {
   padding: var(--space-9) 0;
   scroll-margin-top: 80px;
-  border-bottom: var(--hairline);
 }
 /* Tighten the gap directly under the hero / page-head (their bottom padding
    already provides space; the section's full top padding stacks on top). */
@@ -98,13 +91,11 @@
 /* padding-top: var(--space-1); */
 padding-top: 0;
 }
-.section:last-of-type { border-bottom: none; }
 
 
 /* ----- HERO -------------------------------------------------------------- */
 .hero {
   padding: var(--space-7) 0 var(--space-6);
-  border-bottom: var(--hairline);
 }
 .hero__inner {
   max-width: var(--container-narrow);
@@ -140,7 +131,6 @@ padding-top: 0;
   .nav { padding: 14px var(--gutter-mobile); }
   .nav__links { gap: 18px; }
   .nav__links a { font-size: 11px; }
-  .nav__tag { display: none; }   /* hide contextual tag on mobile */
 
   .hero { padding: 5rem 0 4.5rem; }
   .section { padding: 4.5rem 0; }

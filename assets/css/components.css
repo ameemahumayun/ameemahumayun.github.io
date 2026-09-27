@@ -1305,6 +1305,7 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 
 /* 28. CAROUSEL (slide-deck viewer) ----------------------------------------- */
 .carousel__viewport {
+  position: relative;
   border: var(--hairline);
   border-radius: 12px;
   overflow: hidden;
@@ -1332,3 +1333,32 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
 .carousel__btn:disabled { opacity: 0.35; cursor: default; }
 .carousel__btn:disabled:hover { border-color: var(--color-border); color: var(--color-text); }
 .carousel__counter { font-size: 13px; color: var(--color-text-mute); }
+
+.carousel__btn--fullscreen {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 6px 14px;
+  font-size: 12px;
+  background: color-mix(in srgb, var(--color-bg) 65%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Fullscreen mode: contain the image within the screen instead of
+   stretching it edge-to-edge at its native (cropped) aspect ratio. */
+.carousel__viewport:fullscreen,
+.carousel__viewport:-webkit-full-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  border-radius: 0;
+}
+.carousel__viewport:fullscreen .carousel__slide,
+.carousel__viewport:-webkit-full-screen .carousel__slide {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}

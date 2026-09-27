@@ -9,12 +9,12 @@ active: work
 <header class="page-head">
   <div class="page-head__inner">
     <h1 class="page-head__title"><span class="serif text-highlight">Safarnama</span></h1>
-    <p class="page-head__intro">"People, not places" — a tourism app connecting travelers directly with local hosts. My first full design project, run through the whole cycle: interactive ideation and interviews, lo-fi prototyping and usability testing, then hi-fi design and a second round of usability testing.</p>
+    <p class="page-head__intro" style="max-width:none;">"People, not places" — a tourism app connecting travelers directly with local hosts. My first full design project, run through the whole cycle: interactive ideation and interviews, lo-fi prototyping and usability testing, then hi-fi design and a second round of usability testing.</p>
   </div>
 </header>
 
 <section class="section">
-  <div class="container">
+  <div class="container-wide">
     <div class="view-toggle" role="tablist" aria-label="View toggle">
       <button type="button" class="work-filter__btn is-active" data-view="slides">Slides</button>
       <button type="button" class="work-filter__btn" data-view="prototype">Prototype</button>
@@ -24,6 +24,7 @@ active: work
       <div class="carousel" data-slides='[{%- for n in (1..11) -%}{%- assign padded = n | prepend: "00" | slice: -2, 2 -%}"{{ '/assets/images/safarnama/slides/slide-' | append: padded | append: '.jpg' | relative_url }}"{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]'>
         <div class="carousel__viewport">
           <img class="carousel__slide" src="{{ '/assets/images/safarnama/slides/slide-01.jpg' | relative_url }}" alt="Safarnama slide deck">
+          <button type="button" class="carousel__btn carousel__btn--fullscreen" aria-label="View fullscreen">&#9974; Fullscreen</button>
         </div>
         <div class="carousel__controls">
           <button type="button" class="carousel__btn carousel__btn--prev" aria-label="Previous slide">&larr; Prev</button>

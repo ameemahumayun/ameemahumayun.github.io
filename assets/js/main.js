@@ -133,10 +133,12 @@
   }
   if (!slides.length) return;
 
+  const viewport = carousel.querySelector(".carousel__viewport");
   const img = carousel.querySelector(".carousel__slide");
   const counter = carousel.querySelector(".carousel__counter");
   const prevBtn = carousel.querySelector(".carousel__btn--prev");
   const nextBtn = carousel.querySelector(".carousel__btn--next");
+  const fullscreenBtn = carousel.querySelector(".carousel__btn--fullscreen");
   let index = 0;
 
   const render = () => {
@@ -152,6 +154,16 @@
   nextBtn.addEventListener("click", () => {
     if (index < slides.length - 1) { index += 1; render(); }
   });
+
+  if (fullscreenBtn && viewport) {
+    fullscreenBtn.addEventListener("click", () => {
+      if (viewport.requestFullscreen) {
+        viewport.requestFullscreen();
+      } else if (viewport.webkitRequestFullscreen) {
+        viewport.webkitRequestFullscreen();
+      }
+    });
+  }
 
   render();
 })();

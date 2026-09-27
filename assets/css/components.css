@@ -1326,6 +1326,15 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   background: var(--color-bg);
 }
 .carousel__slide { display: block; width: 100%; height: auto; }
+.carousel__panel[hidden] { display: none; }
+/* Text-content panel (e.g. a "slide" of write-up, not a deck image). */
+.carousel__panel--text {
+  padding: var(--space-6) var(--space-5);
+  background: var(--color-bg-lift);
+}
+.carousel__panel--text h2 { margin-top: 0; }
+.carousel__panel--text ul.cv-list:last-child,
+.carousel__panel--text p:last-child { margin-bottom: 0; }
 .carousel__controls {
   display: flex;
   align-items: center;
@@ -1384,16 +1393,3 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   height: 100%;
 }
 
-
-/* 29. SLIDE CARD (simple content "slide" — no deck image, just a
-   bordered, raised block so a project's write-up reads as a short set
-   of slides rather than continuous prose) ----------------------------- */
-.slide-card {
-  border: var(--hairline);
-  border-radius: 12px;
-  background: var(--color-bg-lift);
-  padding: var(--space-5);
-}
-.slide-card h2 { margin-top: 0; }
-.slide-card ul.cv-list:last-child,
-.slide-card p:last-child { margin-bottom: 0; }

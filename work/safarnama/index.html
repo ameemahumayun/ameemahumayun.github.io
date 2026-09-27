@@ -22,9 +22,14 @@ active: work
     </div>
 
     <div class="view-panel" data-view="slides" style="margin-top:1.5rem;">
-      <div class="carousel" data-slides='[{%- for n in (1..11) -%}{%- assign padded = n | prepend: "00" | slice: -2, 2 -%}"{{ '/assets/images/safarnama/slides/slide-' | append: padded | append: '.jpg' | relative_url }}"{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]'>
+      <div class="carousel">
         <div class="carousel__viewport">
-          <img class="carousel__slide" src="{{ '/assets/images/safarnama/slides/slide-01.jpg' | relative_url }}" alt="Safarnama slide deck">
+          {%- for n in (1..11) %}
+          {%- assign padded = n | prepend: "00" | slice: -2, 2 %}
+          <div class="carousel__panel"{% unless forloop.first %} hidden{% endunless %}>
+            <img class="carousel__slide" src="{{ '/assets/images/safarnama/slides/slide-' | append: padded | append: '.jpg' | relative_url }}" alt="Safarnama slide deck, slide {{ n }} of 11">
+          </div>
+          {%- endfor %}
           <button type="button" class="carousel__btn carousel__btn--fullscreen" aria-label="View fullscreen">&#9974; Fullscreen</button>
         </div>
         <div class="carousel__controls">

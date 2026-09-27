@@ -12,9 +12,9 @@
       which .view-panel is visible based on the clicked .view-toggle__btn's
       data-view. Progressive enhancement — if JS is off, every panel stays
       visible.
-   4. Slide-deck carousel. One image at a time with prev/next controls and
-      a counter, driven by a JSON array of image paths on the carousel
-      element's data-slides attribute.
+   4. Carousel. One .carousel__panel at a time (image slides or a plain
+      text/HTML block) with prev/next controls and a counter. Works for
+      any number of panels on any page with a .carousel element.
    ========================================================================== */
 
 (function () {
@@ -124,38 +124,32 @@
 (function () {
   "use strict";
 
-  const carousel = document.querySelector(".carousel");
-  if (!carousel) return; // page has no carousel
+  const carousels = Array.from(document.querySelectorAll(".carousel"));
+  carousels.forEach((carousel) => {
+    const panels = Array.from(carousel.querySelectorAll(".carousel__panel"));
+    const counter = carousel.querySelector(".carousel__counter");
+    const prevBtn = carousel.querySelector(".carousel__btn--prev");
+    const nextBtn = carousel.querySelector(".carousel__btn--next");
+    if (!panels.length || !counter || !prevBtn || !nextBtn) return;
 
-  let slides;
-  try {
-    slides = JSON.parse(carousel.getAttribute("data-slides") || "[]");
-  } catch (e) {
-    slides = [];
-  }
-  if (!slides.length) return;
+    let index = 0;
 
-  const img = carousel.querySelector(".carousel__slide");
-  const counter = carousel.querySelector(".carousel__counter");
-  const prevBtn = carousel.querySelector(".carousel__btn--prev");
-  const nextBtn = carousel.querySelector(".carousel__btn--next");
-  let index = 0;
+    const render = () => {
+      panels.forEach((panel, i) => { panel.hidden = i !== index; });
+      counter.textContent = (index + 1) + " / " + panels.length;
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === panels.length - 1;
+    };
 
-  const render = () => {
-    img.src = slides[index];
-    counter.textContent = (index + 1) + " / " + slides.length;
-    prevBtn.disabled = index === 0;
-    nextBtn.disabled = index === slides.length - 1;
-  };
+    prevBtn.addEventListener("click", () => {
+      if (index > 0) { index -= 1; render(); }
+    });
+    nextBtn.addEventListener("click", () => {
+      if (index < panels.length - 1) { index += 1; render(); }
+    });
 
-  prevBtn.addEventListener("click", () => {
-    if (index > 0) { index -= 1; render(); }
+    render();
   });
-  nextBtn.addEventListener("click", () => {
-    if (index < slides.length - 1) { index += 1; render(); }
-  });
-
-  render();
 })();
 
 (function () {

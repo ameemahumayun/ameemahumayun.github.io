@@ -15,55 +15,56 @@ active: work
   </div>
 </header>
 
-<section class="section" id="context">
+<section class="section">
   <div class="container-wide">
-    <div class="slide-card">
-      <h2>Context</h2>
-      <ul class="cv-list">
-        <li>TBAs are a real point of contact for maternal care in many low-resource Pakistani communities, often without updated clinical guidance on hand.</li>
-        <li>The core question: what does maternal-health guidance look like when it has to work for someone with limited literacy, under time pressure, with no clinician nearby?</li>
-        <li>Official TBA curricula and WHO guidance are written for classroom instruction, not point-of-care reference — the prototype had to translate that into something usable in the moment.</li>
-      </ul>
+    <div class="view-toggle" role="tablist" aria-label="View toggle">
+      <button type="button" class="work-filter__btn is-active" data-view="slides">Slides</button>
+      <button type="button" class="work-filter__btn" data-view="prototype">Prototype</button>
     </div>
-  </div>
-</section>
 
-<section class="section" id="approach">
-  <div class="container-wide">
-    <div class="slide-card">
-      <h2>Approach</h2>
-      <ul class="cv-list">
-        <li>Synthesized official TBA curricula, WHO guidance, and focus-group findings from frontline TBAs into the information architecture, content structure, and interaction flows.</li>
-        <li>Curricula and WHO guidance anchored clinical correctness; the focus groups surfaced how TBAs actually reason through a case — what they check first, what they're unsure about, when they refer onward.</li>
-        <li>Content structure follows that real decision order, not the order training manuals happen to present material in.</li>
-      </ul>
+    <div class="view-panel" data-view="slides" style="margin-top:1.5rem;">
+      <div class="carousel">
+        <div class="carousel__viewport">
+          <div class="carousel__panel carousel__panel--text">
+            <h2>Context</h2>
+            <ul class="cv-list">
+              <li>TBAs are a real point of contact for maternal care in many low-resource Pakistani communities, often without updated clinical guidance on hand.</li>
+              <li>The core question: what does maternal-health guidance look like when it has to work for someone with limited literacy, under time pressure, with no clinician nearby?</li>
+              <li>Official TBA curricula and WHO guidance are written for classroom instruction, not point-of-care reference — the prototype had to translate that into something usable in the moment.</li>
+            </ul>
+          </div>
+          <div class="carousel__panel carousel__panel--text" hidden>
+            <h2>Approach</h2>
+            <ul class="cv-list">
+              <li>Synthesized official TBA curricula, WHO guidance, and focus-group findings from frontline TBAs into the information architecture, content structure, and interaction flows.</li>
+              <li>Curricula and WHO guidance anchored clinical correctness; the focus groups surfaced how TBAs actually reason through a case — what they check first, what they're unsure about, when they refer onward.</li>
+              <li>Content structure follows that real decision order, not the order training manuals happen to present material in.</li>
+            </ul>
+          </div>
+          <div class="carousel__panel carousel__panel--text" hidden>
+            <h2>Design considerations</h2>
+            <ul class="cv-list">
+              <li><strong>Information overload</strong> — clinical guidance is dense by nature. The prototype had to surface only what's decision-relevant in the moment, deferring detail rather than presenting it all at once.</li>
+              <li><strong>Literacy constraints</strong> — content had to work for readers with limited literacy, favoring visual and structural cues over dense text, without stripping out clinical precision.</li>
+              <li><strong>Usability under pressure</strong> — a TBA using this mid-case is not browsing; she needs to find the right guidance fast. Navigation and hierarchy were built around speed of retrieval.</li>
+              <li><strong>Referral needs</strong> — knowing when a case exceeds a TBA's scope is as important as the guidance itself, so referral triggers are built into the flow rather than left as a separate reference.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="carousel__controls">
+          <button type="button" class="carousel__btn carousel__btn--prev" aria-label="Previous slide">&larr; Prev</button>
+          <div class="carousel__counter">1 / 3</div>
+          <button type="button" class="carousel__btn carousel__btn--next" aria-label="Next slide">Next &rarr;</button>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
 
-<section class="section" id="design">
-  <div class="container-wide">
-    <div class="slide-card">
-      <h2>Design considerations</h2>
-      <ul class="cv-list">
-        <li><strong>Information overload</strong> — clinical guidance is dense by nature. The prototype had to surface only what's decision-relevant in the moment, deferring detail rather than presenting it all at once.</li>
-        <li><strong>Literacy constraints</strong> — content had to work for readers with limited literacy, favoring visual and structural cues over dense text, without stripping out clinical precision.</li>
-        <li><strong>Usability under pressure</strong> — a TBA using this mid-case is not browsing; she needs to find the right guidance fast. Navigation and hierarchy were built around speed of retrieval.</li>
-        <li><strong>Referral needs</strong> — knowing when a case exceeds a TBA's scope is as important as the guidance itself, so referral triggers are built into the flow rather than left as a separate reference.</li>
-      </ul>
+    <div class="view-panel" data-view="prototype" hidden style="margin-top:1.5rem;">
+      <div class="carousel__viewport">
+        <iframe src="{{ '/prototypes/tba-maternal-health/' | relative_url }}" title="TBA Helper" style="width:100%;height:900px;border:0;display:block;background:var(--color-bg);"></iframe>
+        <button type="button" class="carousel__btn carousel__btn--fullscreen" aria-label="View fullscreen">&#9974; Fullscreen</button>
+      </div>
+      <p style="margin-top:1rem;"><a class="link-teal" href="{{ '/prototypes/tba-maternal-health/' | relative_url }}" target="_blank" rel="noopener">Open the prototype in its own tab &rarr;</a></p>
     </div>
-  </div>
-</section>
-
-<section class="section" id="preview">
-  <div class="container-wide">
-    <h2>Preview</h2>
-    <p>The prototype below is the live, interactive build — the same one linked at the top of this page.</p>
-
-    <div class="carousel__viewport" style="margin-top:2rem;">
-      <iframe src="{{ '/prototypes/tba-maternal-health/' | relative_url }}" title="TBA Helper" loading="lazy" style="width:100%;height:900px;border:0;display:block;background:var(--color-bg);"></iframe>
-      <button type="button" class="carousel__btn carousel__btn--fullscreen" aria-label="View fullscreen">&#9974; Fullscreen</button>
-    </div>
-    <p style="margin-top:1rem;"><a class="link-teal" href="{{ '/prototypes/tba-maternal-health/' | relative_url }}" target="_blank" rel="noopener">Open the prototype in its own tab &rarr;</a></p>
   </div>
 </section>

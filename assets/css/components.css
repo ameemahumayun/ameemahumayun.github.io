@@ -1296,3 +1296,39 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   .biz-card__photo2 { height: auto; width: 60px; max-width: none; aspect-ratio: 1 / 1; border-radius: 50%; }
   .biz-card__pubs { display: none; }
 }
+
+
+/* 27. VIEW TOGGLE (Slides / Prototype switch) ------------------------------ */
+.view-toggle { display: flex; gap: 10px; flex-wrap: wrap; }
+.view-panel[hidden] { display: none; }
+
+
+/* 28. CAROUSEL (slide-deck viewer) ----------------------------------------- */
+.carousel__viewport {
+  border: var(--hairline);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+.carousel__slide { display: block; width: 100%; height: auto; }
+.carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-3);
+}
+.carousel__btn {
+  border: var(--hairline);
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color var(--duration) var(--ease), color var(--duration) var(--ease);
+}
+.carousel__btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.carousel__btn:disabled { opacity: 0.35; cursor: default; }
+.carousel__btn:disabled:hover { border-color: var(--color-border); color: var(--color-text); }
+.carousel__counter { font-size: 13px; color: var(--color-text-mute); }

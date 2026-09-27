@@ -8,6 +8,13 @@
       enhancement — if JS is off, every card just stays visible. The active
       filter is reflected in the URL as ?filter=publication|design so a
       specific view (e.g. "just the design work") has a shareable link.
+   3. View toggle (e.g. Slides / Prototype on a project page). Switches
+      which .view-panel is visible based on the clicked .view-toggle__btn's
+      data-view. Progressive enhancement — if JS is off, every panel stays
+      visible.
+   4. Slide-deck carousel. One image at a time with prev/next controls and
+      a counter, driven by a JSON array of image paths on the carousel
+      element's data-slides attribute.
    ========================================================================== */
 
 (function () {
@@ -90,4 +97,61 @@
 
   filterFromUrl();
   window.addEventListener("popstate", filterFromUrl);
+})();
+
+(function () {
+  "use strict";
+
+  const toggle = document.querySelector(".view-toggle");
+  if (!toggle) return; // page has no view toggle
+
+  const buttons = Array.from(toggle.querySelectorAll(".work-filter__btn"));
+  const panels = Array.from(document.querySelectorAll(".view-panel"));
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const view = btn.getAttribute("data-view");
+      buttons.forEach((b) => b.classList.toggle("is-active", b === btn));
+      panels.forEach((panel) => {
+        panel.hidden = panel.getAttribute("data-view") !== view;
+      });
+    });
+  });
+})();
+
+(function () {
+  "use strict";
+
+  const carousel = document.querySelector(".carousel");
+  if (!carousel) return; // page has no carousel
+
+  let slides;
+  try {
+    slides = JSON.parse(carousel.getAttribute("data-slides") || "[]");
+  } catch (e) {
+    slides = [];
+  }
+  if (!slides.length) return;
+
+  const img = carousel.querySelector(".carousel__slide");
+  const counter = carousel.querySelector(".carousel__counter");
+  const prevBtn = carousel.querySelector(".carousel__btn--prev");
+  const nextBtn = carousel.querySelector(".carousel__btn--next");
+  let index = 0;
+
+  const render = () => {
+    img.src = slides[index];
+    counter.textContent = (index + 1) + " / " + slides.length;
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === slides.length - 1;
+  };
+
+  prevBtn.addEventListener("click", () => {
+    if (index > 0) { index -= 1; render(); }
+  });
+  nextBtn.addEventListener("click", () => {
+    if (index < slides.length - 1) { index += 1; render(); }
+  });
+
+  render();
 })();

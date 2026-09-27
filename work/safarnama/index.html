@@ -1,35 +1,43 @@
 ---
-layout: case-study
+layout: default
 title: Safarnama
 description: A tourism app connecting travelers with local hosts — team UX research and product design, "people, not places."
 og_type: article
 active: work
 ---
 
-<header class="hero">
-  <div class="hero__inner">
-    <div class="eyebrow eyebrow-rule">Team Project · UX Research + Product Design · 2024</div>
-    <h1>Safarnama</h1>
-    <p class="lead" style="max-width:620px;">"People, not places" — a tourism app connecting travelers directly with local hosts. My first full design project, run through the whole cycle: interactive ideation and interviews, lo-fi prototyping and usability testing, then hi-fi design and a second round of usability testing.</p>
+<header class="page-head">
+  <div class="page-head__inner">
+    <h1 class="page-head__title"><span class="serif text-highlight">Safarnama</span></h1>
+    <p class="page-head__intro">"People, not places" — a tourism app connecting travelers directly with local hosts. My first full design project, run through the whole cycle: interactive ideation and interviews, lo-fi prototyping and usability testing, then hi-fi design and a second round of usability testing.</p>
   </div>
 </header>
 
-<section class="section" id="deck">
+<section class="section">
   <div class="container">
-    <p style="font-style:italic;font-size:14px;color:var(--color-text-mute);margin-bottom:12px;">Slide deck</p>
-    <div style="border:var(--hairline);border-radius:12px;overflow:hidden;">
-      <iframe src="{{ '/assets/files/safarnama-deck.pdf' | relative_url }}" title="Safarnama slide deck" style="width:100%;height:1000px;border:0;display:block;background:var(--color-bg);"></iframe>
+    <div class="view-toggle" role="tablist" aria-label="View toggle">
+      <button type="button" class="work-filter__btn is-active" data-view="slides">Slides</button>
+      <button type="button" class="work-filter__btn" data-view="prototype">Prototype</button>
     </div>
-    <p style="margin-top:1rem;"><a class="link-teal" href="{{ '/assets/files/safarnama-deck.pdf' | relative_url }}" target="_blank" rel="noopener">Open the deck in its own tab &rarr;</a></p>
-  </div>
-</section>
 
-<section class="section" id="prototype">
-  <div class="container">
-    <p style="font-style:italic;font-size:14px;color:var(--color-text-mute);margin-bottom:12px;">Prototype</p>
-    <div style="border:var(--hairline);border-radius:12px;overflow:hidden;">
-      <iframe src="https://www.figma.com/embed?embed_host=share&amp;url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FPLnAd9QriQvYzlaa6Z5XcZ%2FSAFARNAMA--People--Not-Places%3Fnode-id%3D2077-4262%26p%3Df%26t%3DQm3WCWdn8BXW2QkU-0" title="Safarnama Figma prototype" allowfullscreen style="width:100%;height:1000px;border:0;display:block;background:var(--color-bg);"></iframe>
+    <div class="view-panel" data-view="slides" style="margin-top:1.5rem;">
+      <div class="carousel" data-slides='[{%- for n in (1..11) -%}{%- assign padded = n | prepend: "00" | slice: -2, 2 -%}"{{ '/assets/images/safarnama/slides/slide-' | append: padded | append: '.jpg' | relative_url }}"{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]'>
+        <div class="carousel__viewport">
+          <img class="carousel__slide" src="{{ '/assets/images/safarnama/slides/slide-01.jpg' | relative_url }}" alt="Safarnama slide deck">
+        </div>
+        <div class="carousel__controls">
+          <button type="button" class="carousel__btn carousel__btn--prev" aria-label="Previous slide">&larr; Prev</button>
+          <div class="carousel__counter">1 / 11</div>
+          <button type="button" class="carousel__btn carousel__btn--next" aria-label="Next slide">Next &rarr;</button>
+        </div>
+      </div>
     </div>
-    <p style="margin-top:1rem;"><a class="link-teal" href="https://www.figma.com/design/PLnAd9QriQvYzlaa6Z5XcZ/SAFARNAMA--People--Not-Places?node-id=2077-4262&amp;p=f&amp;t=Qm3WCWdn8BXW2QkU-0" target="_blank" rel="noopener">Open in Figma &rarr;</a></p>
+
+    <div class="view-panel" data-view="prototype" hidden style="margin-top:1.5rem;">
+      <div style="border:var(--hairline);border-radius:12px;overflow:hidden;">
+        <iframe src="https://www.figma.com/embed?embed_host=share&amp;url=https%3A%2F%2Fwww.figma.com%2Fproto%2FPLnAd9QriQvYzlaa6Z5XcZ%2FSAFARNAMA--People--Not-Places%3Fnode-id%3D166-4315%26p%3Df%26t%3DG40YSIjaULNp6sVp-1%26scaling%3Dscale-down%26content-scaling%3Dfixed%26page-id%3D166%253A3203%26starting-point-node-id%3D166%253A4315%26show-proto-sidebar%3D1" title="Safarnama Figma prototype" allowfullscreen style="width:100%;height:900px;border:0;display:block;background:var(--color-bg);"></iframe>
+      </div>
+      <p style="margin-top:1rem;"><a class="link-teal" href="https://www.figma.com/proto/PLnAd9QriQvYzlaa6Z5XcZ/SAFARNAMA--People--Not-Places?node-id=166-4315&amp;p=f&amp;t=G40YSIjaULNp6sVp-1&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=166%3A3203&amp;starting-point-node-id=166%3A4315&amp;show-proto-sidebar=1" target="_blank" rel="noopener">Open in Figma &rarr;</a></p>
+    </div>
   </div>
 </section>

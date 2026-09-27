@@ -7,8 +7,8 @@
 #   meta        (required) the small label line above the title
 #   title       (required) project name
 #   desc        (required) one-paragraph description
-#   type        (required) "publication" or "prototype" — powers the
-#               All / Publications / Prototypes filter on /work/.
+#   type        (required) "publication" or "design" — powers the
+#               All / Publications / Design filter on /work/.
 #
 #   Then EITHER a list of links OR a status string (not both):
 #
@@ -63,7 +63,7 @@
 
 - meta: "Maternal Health · UX Design · Interactive Prototype"
   title: "TBA Maternal-Health Prototype"
-  type: prototype
+  type: design
   desc: "A low-literacy maternal-health prototype for Traditional Birth Attendants (TBAs), led in collaboration with Aga Khan University and VITAL Pakistan. Synthesized official TBA curricula, WHO guidance, and focus-group findings from frontline TBAs into the prototype's information architecture, content structure, and interaction flows, iteratively refined around information overload, literacy constraints, usability, and referral needs in Pakistan."
   links:
     - label: "View Prototype"
@@ -72,7 +72,7 @@
 
 - meta: "Accessibility · UX Design · Interactive Prototype"
   title: "Rehnuma"
-  type: prototype
+  type: design
   desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
   links:
     - label: "View Prototype"
@@ -80,3 +80,9 @@
       external: true
       pending: true
       suffix: "· soon"
+
+- meta: "Product &amp; Visual Design · On the Job"
+  title: "Odds &amp; Ends"
+  type: design
+  desc: "The smaller design work woven into a bigger research role: redesigning the electronic medical record intake and the AI-generated clinical summary for faster provider review, and designing patient-facing recruitment materials — clinic handout cards, Facebook ads — iterating messaging, visual hierarchy, and accessibility for low-literacy audiences."
+  status: "Ongoing · job work"

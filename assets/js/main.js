@@ -4,10 +4,10 @@
    1. Scroll-spy for the case-study section rail. Highlights the rail link
       matching the section currently in view. Progressive enhancement — if
       JS is off, the rail still works as plain anchor links.
-   2. Work-page filter tabs (All / Publications / Prototypes). Progressive
+   2. Work-page filter tabs (All / Publications / Design). Progressive
       enhancement — if JS is off, every card just stays visible. The active
-      filter is reflected in the URL as ?filter=publication|prototype so a
-      specific view (e.g. "just the prototypes") has a shareable link.
+      filter is reflected in the URL as ?filter=publication|design so a
+      specific view (e.g. "just the design work") has a shareable link.
    ========================================================================== */
 
 (function () {

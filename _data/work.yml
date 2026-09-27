@@ -75,11 +75,9 @@
   type: design
   desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
   links:
-    - label: "View Prototype"
-      url: "/prototypes/rehnuma/"
-      external: true
-      pending: true
-      suffix: "· soon"
+    - label: "View Case Study"
+      url: "/work/rehnuma/"
+      primary: true
 
 - meta: "Team Project · UX Research + Product Design"
   title: "Safarnama"

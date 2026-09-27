@@ -5,7 +5,9 @@
       matching the section currently in view. Progressive enhancement — if
       JS is off, the rail still works as plain anchor links.
    2. Work-page filter tabs (All / Publications / Prototypes). Progressive
-      enhancement — if JS is off, every card just stays visible.
+      enhancement — if JS is off, every card just stays visible. The active
+      filter is reflected in the URL as ?filter=publication|prototype so a
+      specific view (e.g. "just the prototypes") has a shareable link.
    ========================================================================== */
 
 (function () {
@@ -55,14 +57,37 @@
 
   const buttons = Array.from(filterBar.querySelectorAll(".work-filter__btn"));
   const cards = Array.from(document.querySelectorAll(".work-card"));
+  const validFilters = buttons.map((b) => b.getAttribute("data-filter"));
+
+  const applyFilter = (filter, btn) => {
+    buttons.forEach((b) => b.classList.toggle("is-active", b === btn));
+    cards.forEach((card) => {
+      card.hidden = filter !== "all" && card.getAttribute("data-type") !== filter;
+    });
+  };
 
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const filter = btn.getAttribute("data-filter");
-      buttons.forEach((b) => b.classList.toggle("is-active", b === btn));
-      cards.forEach((card) => {
-        card.hidden = filter !== "all" && card.getAttribute("data-type") !== filter;
-      });
+      applyFilter(filter, btn);
+
+      const url = new URL(window.location.href);
+      if (filter === "all") {
+        url.searchParams.delete("filter");
+      } else {
+        url.searchParams.set("filter", filter);
+      }
+      window.history.pushState({ filter }, "", url);
     });
   });
+
+  const filterFromUrl = () => {
+    const requested = new URLSearchParams(window.location.search).get("filter");
+    const filter = validFilters.includes(requested) ? requested : "all";
+    const btn = buttons.find((b) => b.getAttribute("data-filter") === filter) || buttons[0];
+    applyFilter(filter, btn);
+  };
+
+  filterFromUrl();
+  window.addEventListener("popstate", filterFromUrl);
 })();

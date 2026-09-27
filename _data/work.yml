@@ -81,6 +81,15 @@
       pending: true
       suffix: "· soon"
 
+- meta: "Team Project · UX Research + Product Design"
+  title: "Safarnama"
+  type: design
+  desc: "A tourism app connecting travelers with local hosts, built with a five-person university team. Contributed across the full project — survey and interview research, usability testing, and product design — and led the product and UI design in Figma."
+  links:
+    - label: "View Case Study"
+      url: "/work/safarnama/"
+      primary: true
+
 - meta: "Product &amp; Visual Design · On the Job"
   title: "Odds &amp; Ends"
   type: design

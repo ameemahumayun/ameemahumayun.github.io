@@ -12,7 +12,6 @@ at the top is passed through as-is.
 | Folder                        | Portfolio entry              | Upload path                              |
 |--------------------------------|-------------------------------|-------------------------------------------|
 | `tba-maternal-health/`         | TBA Maternal-Health Prototype | `prototypes/tba-maternal-health/index.html` |
-| `rehnuma/`                     | Rehnuma                       | `prototypes/rehnuma/index.html`           |
 
 ## Adding a new prototype
 

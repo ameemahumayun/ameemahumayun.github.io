@@ -231,7 +231,7 @@ you-while-editing thing.
 - [ ] Real Paper link for the SOUPS study (currently `#`) in work/index.html
 - [ ] Real LinkedIn/external links open in new tab (`target="_blank" rel="noopener"`)
 - [ ] Favicon + OG share image
-- [ ] Build out remaining case studies (shared-devices, fetal-sex-disclosure, rehnuma)
+- [ ] Build out remaining case studies (shared-devices, fetal-sex-disclosure)
 - [ ] Confirm the FormSubmit activation email for `ameemah.humayun@gmail.com`
       was clicked — until then, contact form submissions are dropped silently
 - [ ] `_config.yml`'s `email:` field still holds the LUMS address

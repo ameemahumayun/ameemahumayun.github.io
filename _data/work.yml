@@ -71,12 +71,12 @@
       primary: true
 
 - meta: "Accessibility · UX Design · Interactive Prototype"
-  title: "Rehnuma"
+  title: "Rahnuma"
   type: design
   desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
   links:
     - label: "View Case Study"
-      url: "/work/rehnuma/"
+      url: "/work/rahnuma/"
       primary: true
 
 - meta: "Team Project · UX Research + Product Design"

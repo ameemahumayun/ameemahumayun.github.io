@@ -11,7 +11,7 @@ at the top is passed through as-is.
 
 | Folder                        | Portfolio entry              | Upload path                              |
 |--------------------------------|-------------------------------|-------------------------------------------|
-| `tba-maternal-health/`         | TBA Maternal-Health Prototype | `prototypes/tba-maternal-health/index.html` |
+| `tba-maternal-health/`         | TBA Helper                    | `prototypes/tba-maternal-health/index.html` |
 
 ## Adding a new prototype
 

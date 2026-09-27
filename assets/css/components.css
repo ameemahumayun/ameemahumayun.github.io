@@ -1383,3 +1383,17 @@ details[open] > .subaccordion__head .subaccordion__chev { transform: rotate(-135
   width: 100%;
   height: 100%;
 }
+
+
+/* 29. SLIDE CARD (simple content "slide" — no deck image, just a
+   bordered, raised block so a project's write-up reads as a short set
+   of slides rather than continuous prose) ----------------------------- */
+.slide-card {
+  border: var(--hairline);
+  border-radius: 12px;
+  background: var(--color-bg-lift);
+  padding: var(--space-5);
+}
+.slide-card h2 { margin-top: 0; }
+.slide-card ul.cv-list:last-child,
+.slide-card p:last-child { margin-bottom: 0; }

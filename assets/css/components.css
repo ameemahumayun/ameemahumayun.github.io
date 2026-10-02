@@ -827,6 +827,6 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   font-weight: 400;
   font-style: normal;
   color: var(--color-accent);
-  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
   line-height: 1.1;
 }

@@ -36,7 +36,7 @@
   --color-accent:       #f2e3a0;  /* butter yellow */
   --color-accent-deep:  #d9c67e;
 
-  --color-selection-bg: var(--color-accent);
+  --color-selection-bg: #ffe3ef;  /* very light pink, matches cursor */
   --color-selection-fg: var(--color-bg);
 
 

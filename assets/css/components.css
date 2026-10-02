@@ -822,8 +822,15 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: "Amsterdam Handwriting";
+  src: url("/assets/fonts/amsterdam.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 .signature-text {
-  font-family: "Priestacy", "Sacramento", cursive;
+  font-family: "Amsterdam Handwriting", "Priestacy", "Sacramento", cursive;
   font-weight: 400;
   font-style: normal;
   color: var(--color-accent);

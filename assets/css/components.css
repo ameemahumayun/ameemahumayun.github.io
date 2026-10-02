@@ -548,7 +548,7 @@
   letter-spacing: 0.02em;
   padding: 7px 16px;
   border: 1px solid var(--color-rule);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-md);
   color: var(--color-text-soft);
   background: transparent;
   transition: border-color var(--duration) var(--ease), color var(--duration) var(--ease), background var(--duration) var(--ease);

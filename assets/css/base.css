@@ -13,7 +13,18 @@ body {
   font-weight: var(--weight-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.416 3.967 1.48-8.279-6.064-5.828 8.332-1.151z' fill='%23f2e3a0' stroke='%230d0e10' stroke-width='0.75'/></svg>") 12 12, auto;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='5' fill='%23f2e3a0' stroke='%230d0e10' stroke-width='0.75'/></svg>") 8 8, auto;
+}
+
+/* Clickable elements swap the plain dot for an irregular "spiky
+   explosion" burst — same butter-yellow fill, dark outline for
+   contrast. Covers every native clickable element in the site; add
+   a selector here rather than setting cursor:pointer elsewhere. */
+a,
+button,
+summary,
+[role="button"] {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'><path d='M11.0,1.51 L12.73,7.7 L19.21,5.33 L14.58,10.57 L20.17,14.48 L13.68,14.03 L13.17,19.82 L9.98,15.14 L4.99,17.78 L7.12,12.47 L1.96,9.9 L8.01,8.93 L6.52,2.47 Z' fill='%23f2e3a0' stroke='%230d0e10' stroke-width='0.6'/></svg>") 11 11, pointer;
 }
 
 ::selection {

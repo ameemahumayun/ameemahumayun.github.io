@@ -13,7 +13,7 @@ body {
   font-weight: var(--weight-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'><path d='M11.0,1.0 L12.44,7.05 L17.43,3.34 L14.64,8.9 L20.85,9.26 L15.14,11.73 L19.66,16.0 L13.7,14.22 L14.42,20.4 L11.0,15.2 L7.58,20.4 L8.3,14.22 L2.34,16.0 L6.86,11.73 L1.15,9.26 L7.36,8.9 L4.57,3.34 L9.56,7.05 Z' fill='%23c9a7eb' stroke='%230d0e10' stroke-width='0.6'/></svg>") 11 11, auto;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'><path d='M11.0,1.0 L12.44,7.05 L17.43,3.34 L14.64,8.9 L20.85,9.26 L15.14,11.73 L19.66,16.0 L13.7,14.22 L14.42,20.4 L11.0,15.2 L7.58,20.4 L8.3,14.22 L2.34,16.0 L6.86,11.73 L1.15,9.26 L7.36,8.9 L4.57,3.34 L9.56,7.05 Z' fill='%23e3baff' stroke='%230d0e10' stroke-width='0.6'/></svg>") 11 11, auto;
 }
 
 /* Clickable/selectable elements swap the default star for a plain
@@ -24,7 +24,7 @@ a,
 button,
 summary,
 [role="button"] {
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='5' fill='%23c9a7eb' stroke='%230d0e10' stroke-width='0.75'/></svg>") 8 8, pointer;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='5' fill='%23e3baff' stroke='%230d0e10' stroke-width='0.75'/></svg>") 8 8, pointer;
 }
 
 ::selection {

@@ -840,4 +840,5 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
      links underneath, so the name must never intercept pointer
      events itself. */
   pointer-events: none;
+  transform: translateY(-4.5px);
 }

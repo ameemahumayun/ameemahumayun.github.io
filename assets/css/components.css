@@ -843,13 +843,7 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
      links underneath, so the name must never intercept pointer
      events itself. */
   pointer-events: none;
-  transform: translateY(-7.5px);
-}
-/* Stretches just the descender of "Humayun"'s y, rather than the
-   whole word, so it dips further into the paragraph below without
-   making the signature itself any bigger. */
-.signature-text__y {
-  display: inline-block;
-  transform: scaleY(1.4);
-  transform-origin: 55% top;
+  /* Slight upward slant: left edge sits ~3px lower, right edge ~3px
+     higher, like a handwritten signature drifting upward. */
+  transform: translateY(-7.5px) rotate(-0.48deg);
 }

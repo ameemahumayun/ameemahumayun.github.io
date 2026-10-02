@@ -197,7 +197,7 @@
    the paragraphs cap out at max-width:660px. A vw-based width used to
    drift out of sync with the text block at in-between viewport widths. */
 .hero__avatar {
-  width: 261px;
+  width: 282px;
   height: auto;
   aspect-ratio: 600 / 802;
   border-radius: 14px;
@@ -811,3 +811,55 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   height: 100%;
 }
 
+
+
+/* 29. SIGNATURE (animated hand-written name, homepage hero) --------------- */
+/* Static SVG glyph outlines (see _includes/signature.html) so no script
+   webfont has to load just for this. Each letter's stroke draws on via
+   stroke-dashoffset, then fills solid — once, on load. Respects
+   prefers-reduced-motion by skipping straight to the finished state. */
+.signature {
+  display: block;
+  width: clamp(280px, 30vw, 440px);
+  height: auto;
+  overflow: visible;
+}
+.signature__glyph {
+  fill: var(--color-accent);
+  fill-opacity: 0;
+  stroke: var(--color-accent);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 6000;
+  stroke-dashoffset: 6000;
+}
+@keyframes signature-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes signature-fill {
+  to { fill-opacity: 1; stroke-width: 0; }
+}
+#sig-g0 { animation: signature-draw 0.303s ease-in-out 0.0s forwards, signature-fill 0.35s ease-in 0.182s forwards; }
+#sig-g1 { animation: signature-draw 0.215s ease-in-out 0.189s forwards, signature-fill 0.35s ease-in 0.318s forwards; }
+#sig-g2 { animation: signature-draw 0.12s ease-in-out 0.324s forwards, signature-fill 0.35s ease-in 0.396s forwards; }
+#sig-g3 { animation: signature-draw 0.12s ease-in-out 0.392s forwards, signature-fill 0.35s ease-in 0.464s forwards; }
+#sig-g4 { animation: signature-draw 0.215s ease-in-out 0.46s forwards, signature-fill 0.35s ease-in 0.589s forwards; }
+#sig-g5 { animation: signature-draw 0.152s ease-in-out 0.594s forwards, signature-fill 0.35s ease-in 0.685s forwards; }
+#sig-g6 { animation: signature-draw 0.142s ease-in-out 0.689s forwards, signature-fill 0.35s ease-in 0.774s forwards; }
+#sig-g7 { animation: signature-draw 0.59s ease-in-out 0.823s forwards, signature-fill 0.35s ease-in 1.177s forwards; }
+#sig-g8 { animation: signature-draw 0.151s ease-in-out 1.192s forwards, signature-fill 0.35s ease-in 1.283s forwards; }
+#sig-g9 { animation: signature-draw 0.215s ease-in-out 1.286s forwards, signature-fill 0.35s ease-in 1.415s forwards; }
+#sig-g10 { animation: signature-draw 0.152s ease-in-out 1.421s forwards, signature-fill 0.35s ease-in 1.512s forwards; }
+#sig-g11 { animation: signature-draw 0.161s ease-in-out 1.516s forwards, signature-fill 0.35s ease-in 1.613s forwards; }
+#sig-g12 { animation: signature-draw 0.151s ease-in-out 1.616s forwards, signature-fill 0.35s ease-in 1.707s forwards; }
+#sig-g13 { animation: signature-draw 0.143s ease-in-out 1.711s forwards, signature-fill 0.35s ease-in 1.797s forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .signature__glyph {
+    animation: none !important;
+    stroke-width: 0;
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+  }
+}

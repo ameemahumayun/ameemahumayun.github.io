@@ -1,3 +1,8 @@
+---
+# Front matter (otherwise empty) is what makes Jekyll run this file through
+# Liquid at all, so the ?v= cache-buster below can be injected into each
+# import. Without it this file is copied through byte-for-byte as plain CSS.
+---
 /* ==========================================================================
    MAIN.CSS — Single entry point
    --------------------------------------------------------------------------
@@ -8,10 +13,16 @@
    <link rel="stylesheet" href="/assets/css/main.css">
 
    Import order matters. Do not rearrange.
+
+   Every import below carries a ?v=<build time> query string so a deploy
+   can't ever be masked by a stale cached copy of one of these files —
+   browsers and any CDN in front of GitHub Pages treat the querystring as
+   part of the URL, so a new build is always a new request.
    ========================================================================== */
 
-@import url("tokens.css");      /* 1. variables — must come first */
-@import url("reset.css");       /* 2. normalize browser defaults */
-@import url("base.css");        /* 3. element typography & utilities */
-@import url("layout.css");      /* 4. page structure */
-@import url("components.css");  /* 5. reusable blocks — most specific */
+{%- assign v = site.time | date: '%s' -%}
+@import url("tokens.css?v={{ v }}");      /* 1. variables — must come first */
+@import url("reset.css?v={{ v }}");       /* 2. normalize browser defaults */
+@import url("base.css?v={{ v }}");        /* 3. element typography & utilities */
+@import url("layout.css?v={{ v }}");      /* 4. page structure */
+@import url("components.css?v={{ v }}");  /* 5. reusable blocks — most specific */

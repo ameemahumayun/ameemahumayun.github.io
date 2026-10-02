@@ -372,9 +372,9 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   gap: 4px var(--space-3);
 }
 .timeline__item:last-child { padding-bottom: 0; }
-/* Homepage-only: 5px tighter than the default --space-4 gap
+/* Homepage-only: 7px tighter than the default --space-4 gap
    (--compact already sets its own, smaller gap for /card/). */
-.timeline--tight:not(.timeline--compact) .timeline__item { padding-bottom: 1.6875rem; }
+.timeline--tight:not(.timeline--compact) .timeline__item { padding-bottom: 1.5625rem; }
 /* dot on the line */
 .timeline__item::before {
   content: "";

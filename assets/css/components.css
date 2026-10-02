@@ -830,10 +830,11 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   font-display: swap;
 }
 .signature-text {
-  font-family: "Amsterdam Handwriting", "Priestacy", "Sacramento", cursive;
+  font-family: "Priestacy", "Sacramento", cursive;
   font-weight: 400;
   font-style: normal;
   color: var(--color-accent);
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
   line-height: 1.1;
+  margin-left: -0.5rem;
 }

@@ -834,7 +834,7 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   font-weight: 400;
   font-style: normal;
   color: var(--color-accent);
-  font-size: clamp(3.5rem, 7vw, 5.5rem);
+  font-size: clamp(3.75rem, 7.5vw, 6rem);
   line-height: 1.1;
-  margin-left: -2.125rem;
+  margin-left: -1.8125rem;
 }

@@ -112,14 +112,6 @@ padding-top: 0;
 }
 
 
-/* ----- GRID HELPERS ------------------------------------------------------ */
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-6);
-}
-
-
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
@@ -134,8 +126,6 @@ padding-top: 0;
 
   .hero { padding: 5rem 0 4.5rem; }
   .section { padding: 4.5rem 0; }
-
-  .grid-2 { grid-template-columns: 1fr; gap: var(--space-4); }
 }
 
 @media (max-width: 480px) {

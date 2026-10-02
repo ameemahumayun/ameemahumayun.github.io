@@ -1,5 +1,5 @@
 ---
-layout: case-study
+layout: default
 title: TBA Helper
 description: A low-literacy maternal-health prototype for Traditional Birth Attendants, built with Aga Khan University and VITAL Pakistan.
 og_type: article
@@ -21,7 +21,7 @@ active: work
       <button type="button" class="work-filter__btn" data-view="prototype">Prototype</button>
     </div>
 
-    <div class="view-panel" data-view="slides" style="margin-top:1.5rem;">
+    <div class="view-panel" data-view="slides">
       <div class="carousel">
         <div class="carousel__viewport">
           <div class="carousel__panel carousel__panel--text">
@@ -58,9 +58,9 @@ active: work
       </div>
     </div>
 
-    <div class="view-panel" data-view="prototype" hidden style="margin-top:1.5rem;">
+    <div class="view-panel" data-view="prototype" hidden>
       <div class="carousel__viewport">
-        <iframe src="{{ '/prototypes/tba-maternal-health/' | relative_url }}" title="TBA Helper" style="width:100%;height:640px;border:0;display:block;background:var(--color-bg);"></iframe>
+        <iframe class="carousel__iframe" src="{{ '/prototypes/tba-maternal-health/' | relative_url }}" title="TBA Helper"></iframe>
         <button type="button" class="carousel__btn carousel__btn--fullscreen" aria-label="View fullscreen">&#9974; Fullscreen</button>
       </div>
     </div>

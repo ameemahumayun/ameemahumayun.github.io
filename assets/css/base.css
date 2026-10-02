@@ -69,22 +69,13 @@ a { transition: color var(--duration) var(--ease); }
 
 /* ----- SIGNATURE UTILITIES ----------------------------------------------- */
 /* The editorial voice. Use .serif for display accent phrases inside
-   headings/quotes. Use .urdu for ALL romanized Urdu — it is the visual
-   signature of the site and must be consistent everywhere. */
+   headings/quotes. */
 
 .serif {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: var(--weight-light);
   color: var(--color-accent);
-}
-
-.urdu {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: var(--weight-medium);
-  color: var(--color-accent);
-  letter-spacing: 0.005em;
 }
 
 /* Text-selection-highlight look (accent background, base-dark text) as a

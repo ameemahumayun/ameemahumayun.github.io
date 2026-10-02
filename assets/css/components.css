@@ -845,3 +845,11 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   pointer-events: none;
   transform: translateY(-7.5px);
 }
+/* Stretches just the descender of "Humayun"'s y, rather than the
+   whole word, so it dips further into the paragraph below without
+   making the signature itself any bigger. */
+.signature-text__y {
+  display: inline-block;
+  transform: scaleY(1.4);
+  transform-origin: 55% top;
+}

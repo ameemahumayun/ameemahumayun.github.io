@@ -834,4 +834,10 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   font-size: clamp(3.75rem, 7.5vw, 6rem);
   line-height: 1.1;
   margin-left: -1.8125rem;
+  /* Purely decorative — its tall ascender swash visually overflows
+     into the publication links above it. Without this, that ink is
+     still hit-tested and silently steals clicks/hover meant for the
+     links underneath, so the name must never intercept pointer
+     events itself. */
+  pointer-events: none;
 }

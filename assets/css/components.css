@@ -814,8 +814,16 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
 
 
 /* 29. SIGNATURE TEXT (hand-written name, homepage hero) -------------------- */
+/* Self-hosted (personal-use licensed) — not a Google Fonts import. */
+@font-face {
+  font-family: "Priestacy";
+  src: url("/assets/fonts/priestacy.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 .signature-text {
-  font-family: "Sacramento", cursive;
+  font-family: "Priestacy", "Sacramento", cursive;
   font-weight: 400;
   font-style: normal;
   color: var(--color-accent);

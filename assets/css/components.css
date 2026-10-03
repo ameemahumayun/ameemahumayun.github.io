@@ -213,12 +213,13 @@
   flex-shrink: 0;
 }
 /* Bigger than the original 282px rectangular avatar. Width (and so
-   height, at 1:1) tuned so the circle's bottom lines up with "See all
-   work"'s bottom — same empirical pixel-measurement approach used
-   earlier in this file's history for the rectangular version. */
+   height, at 1:1) tuned so the bottom lines up with "See all work"'s
+   bottom — same empirical pixel-measurement approach used earlier in
+   this file's history for the rectangular version. Square, sharp
+   corners (not the earlier circle/rounded treatment). */
 .hero__avatar--round {
   aspect-ratio: 1 / 1;
-  border-radius: 50%;
+  border-radius: 0;
   border: none;
   object-position: center 15%;
   width: 260px;

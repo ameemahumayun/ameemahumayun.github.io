@@ -210,7 +210,7 @@
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   margin-top: 5.73rem;
-  object-position: center 30%;
+  object-position: center 15%;
 }
 /* Switches to stacked layout at a wider breakpoint (900px, not the
    site's usual 768px) — below ~900px the fixed-width avatar and the

@@ -226,47 +226,6 @@
   }
 }
 
-/* Card hero variant (see card/index.html): two clearly separated areas
-   — Recent Updates fills the remaining space on the left (its own
-   area), a vertical rule marks the boundary, and the card sits fixed
-   at its original size/proportions (unchanged 1.6:1, unchanged width
-   range) inside its own area on the right, centered within it.
-   .hero__updates' height is computed with the same width/aspect-ratio
-   formula as the card so the two columns line up, and overflow-y: auto
-   means only the updates column scrolls if its list runs long — the
-   card never grows or moves (verified by injecting extra entries and
-   diffing its bounding box before/after scrolling). */
-.hero--card .hero__inner {
-  max-width: var(--container-wide);
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-6);
-}
-.hero__updates {
-  flex: 1 1 auto;
-  min-width: 0;
-  height: clamp(225px, 27.5vw, 350px);
-  overflow-y: auto;
-  /* Setting overflow-y makes this a scroll/clip container on the x-axis
-     too, which was cutting off the timeline dots — they sit outside the
-     timeline's own box via a negative left offset. Left padding gives
-     them room; right balances it visually. */
-  padding: 0 var(--space-2) 0 calc(var(--space-4) + 8px);
-  margin-left: calc(-1 * (var(--space-4) + 8px));
-}
-.hero__card-area {
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
-  border-left: 1px solid var(--color-border);
-  padding-left: var(--space-6);
-}
-
-@media (max-width: 900px) {
-  .hero--card .hero__inner { flex-direction: column; align-items: stretch; }
-  .hero__updates { height: auto; overflow-y: visible; padding-right: 0; }
-  .hero__card-area { border-left: none; padding-left: 0; }
-}
 
 
 /* 23. ACCORDION (collapsible CV sections) --------------------------------- */
@@ -354,28 +313,37 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
 
 /* 25. TIMELINE (recent updates / news) ------------------------------------ */
 /* Simple vertical timeline. Pure HTML/CSS, no JS. A thin line runs down the
-   left; each entry has a dot, a date, and a line of text. */
+   left; each entry has a dot, a date, and a line of text.
+
+   Spacing between items is a flex `gap` (not padding) so an item's own box
+   is exactly its content height — that matters because the dot and line
+   are centered/sized as percentages of that box. If the gap lived inside
+   the item (as padding-bottom) instead, centering "on the item" would
+   really center on item+gap combined, dragging the dot down into the
+   whitespace below the text. --timeline-gap feeds both the flex `gap`
+   and the line's downward reach, so they can't drift out of sync. */
 .timeline {
+  --timeline-gap: var(--space-4);
   margin-top: var(--space-5);
   padding-left: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--timeline-gap);
 }
-/* Tighter heading-to-list gap — opt in per page via this modifier
-   (used on both the homepage and /card/). */
-.timeline--tight { margin-top: var(--space-2); }
+/* Tighter heading-to-list gap, and a tighter item gap to match. */
+.timeline--tight {
+  --timeline-gap: 1.5625rem;
+  margin-top: var(--space-2);
+}
 .timeline__item {
   position: relative;
-  padding-bottom: var(--space-4);
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
   gap: 4px var(--space-3);
 }
-.timeline__item:last-child { padding-bottom: 0; }
-/* Homepage-only: 7px tighter than the default --space-4 gap
-   (--compact already sets its own, smaller gap for /card/). */
-.timeline--tight:not(.timeline--compact) .timeline__item { padding-bottom: 1.5625rem; }
-/* dot on the line — vertically centered on the row so it still lines
-   up when the date/text wraps to multiple lines. */
+/* dot on the line — vertically centered on the item's own (content-only)
+   box, so it stays put even when the date/text wraps to multiple lines. */
 .timeline__item::before {
   content: "";
   position: absolute;
@@ -388,14 +356,17 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   background: var(--color-accent);
 }
 /* Connecting line, drawn per item instead of one border on the
-   container, so it starts exactly at the first dot and ends exactly
-   at the last — never overshooting past the last item's text. */
+   container: each segment runs from its own top edge down through the
+   gap to the next item's top, so the dots fall exactly on it regardless
+   of how tall any individual item is. First/last items are clipped back
+   to their own dot so the line starts and ends exactly there instead of
+   overshooting past the first/last item's text. */
 .timeline__item::after {
   content: "";
   position: absolute;
   left: calc(-1 * var(--space-4) - 1px);
   top: 0;
-  bottom: 0;
+  bottom: calc(-1 * var(--timeline-gap));
   width: 1px;
   background: var(--color-border);
 }
@@ -416,11 +387,6 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   color: var(--color-text-strong);
   line-height: 1.5;
 }
-/* Denser entries for the card page's constrained-height column — smaller
-   type and less padding per item so more fit before scrolling kicks in. */
-.timeline--compact .timeline__item { padding-bottom: var(--space-2); }
-.timeline--compact .timeline__date { font-size: 10.5px; margin-bottom: 2px; min-width: 0; }
-.timeline--compact .timeline__text { font-size: 13px; line-height: 1.4; }
 
 
 /* 25. CONTACT FORM --------------------------------------------------------- */
@@ -517,222 +483,6 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
 @media (max-width: 600px) {
   .contact-form__grid { grid-template-columns: 1fr; }
   .contact-form__field--message textarea { flex: none; }
-}
-
-
-/* 26. FLIP BUSINESS CARD --------------------------------------------------- */
-/* Preview-only component, used on /card/ in place of the whole about/intro
-   block — see card/index.html. Landscape (business-card proportions),
-   floats gently at idle, flips on click/tap/Enter via the .is-flipped
-   class toggled in JS (a real <button>, so keyboard activation is free).
-   Faces are frosted glass — same recipe as .nav (translucent bg +
-   backdrop-filter blur) — with a thin rounded teal border, not a thick
-   frame, per feedback that the frame read too heavy. */
-.biz-card-wrap {
-  width: clamp(360px, 44vw, 560px);
-  flex-shrink: 0;
-  perspective: 1800px;
-}
-.biz-card-float {
-  animation: biz-card-float 5s ease-in-out infinite;
-}
-@keyframes biz-card-float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-10px); }
-}
-.biz-card {
-  background: none;
-  border: none;
-  margin: 0;
-  padding: 0;
-  font: inherit;
-  color: inherit;
-  text-align: left;
-  display: block;
-  width: 100%;
-  aspect-ratio: 1.6 / 1;
-  -webkit-tap-highlight-color: transparent;
-}
-.biz-card:focus-visible .biz-card__inner {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 4px;
-}
-.biz-card__inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.7s var(--ease);
-  transform-style: preserve-3d;
-}
-.biz-card.is-flipped .biz-card__inner { transform: rotateY(180deg); }
-.biz-card__face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  border-radius: 18px;
-  /* Muted teal-gray — blended halfway between the accent and a plain
-     border gray, rather than the fuller teal of --color-accent-deep. */
-  border: 1.5px solid color-mix(in srgb, var(--color-accent-deep) 55%, var(--color-border) 45%);
-  /* Darker, closer to the page background (--color-bg-lift) at higher
-     opacity — the previous tint read noticeably lighter than the page,
-     an odd amount of contrast for a "glass" panel. */
-  background: color-mix(in srgb, var(--color-bg-lift) 92%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-  box-sizing: border-box;
-  padding: var(--space-3);
-  overflow: hidden;
-}
-.biz-card__face--back { transform: rotateY(180deg); }
-/* Glossy corner highlight — sells the "mirror" glass feel beyond just blur,
-   which barely reads over the hero's flat background otherwise. Kept
-   subtle so it doesn't wash the darker background back out. */
-.biz-card__face::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 45%);
-  pointer-events: none;
-}
-/* Nested inner rectangle, inset a small margin from the card's own edge —
-   the "frame within a frame" look from the reference card. */
-.biz-card__face::after {
-  content: "";
-  position: absolute;
-  inset: 10px;
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  pointer-events: none;
-}
-
-/* Front: logo mark, fancy-serif name, two-line keywords, publications. */
-.biz-card__face--front {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  gap: var(--space-3);
-  text-align: center;
-}
-/* Logo file lives at assets/images/logo.svg (not in this repo yet — drop
-   it in and it'll pick up this sizing automatically). A fixed height
-   (not just width) keeps the box small even while the file is missing —
-   otherwise the broken-image alt text wraps and inflates this section. */
-.biz-card__logo {
-  align-self: center;
-  width: clamp(46px, 5.8vw, 66px);
-  height: clamp(46px, 5.8vw, 66px);
-  object-fit: contain;
-}
-.biz-card__name-fancy {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: clamp(27px, 3.8vw, 38px);
-  color: var(--color-accent);
-  line-height: 1.1;
-  /* Extra room below the name specifically — the shared flex gap alone
-     read too tight between the name and the role/keywords beneath it. */
-  margin-bottom: var(--space-2);
-}
-.biz-card__keywords {
-  font-size: clamp(9.5px, 1.05vw, 11px);
-  letter-spacing: 0.03em;
-  color: var(--color-text-mute);
-  line-height: 1.7;
-}
-/* Role sized up from the supporting-details line beneath it — size, not
-   just color/weight, so the hierarchy (name > role > details) reads
-   clearly rather than the two lines looking like one same-weight block. */
-.biz-card__keywords-line:first-child {
-  font-size: clamp(12px, 1.4vw, 14px);
-  color: var(--color-accent);
-  font-weight: var(--weight-semibold);
-  margin-bottom: 3px;
-}
-.biz-card__pubs {
-  font-size: clamp(9.5px, 1.05vw, 11px);
-  letter-spacing: 0.02em;
-  color: var(--color-text-mute);
-}
-.biz-card__pubs-label {
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-  font-weight: var(--weight-bold);
-  color: var(--color-text-soft);
-  margin-right: 6px;
-}
-/* Publication links use the site's standard .link-quiet treatment
-   (see components.css section 19) — faded into the surrounding muted
-   text until hovered, same as the CHI 2026 link on the real homepage. */
-
-/* Back: photo beside the about text, vertically centered together. */
-.biz-card__face--back { display: flex; align-items: center; gap: var(--space-3); }
-.biz-card__photo2 {
-  height: 100%;
-  width: auto;
-  max-width: 50%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 1px solid var(--color-border);
-  flex-shrink: 0;
-}
-.biz-card__about {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-.biz-card__about p {
-  font-size: clamp(10.5px, 1.3vw, 12.5px);
-  line-height: 1.4;
-  color: var(--color-text);
-  margin: 0;
-}
-.biz-card__current {
-  margin-top: var(--space-2);
-  font-size: clamp(9.5px, 1.05vw, 11px);
-  color: var(--color-text-mute);
-  text-wrap: balance;
-}
-.biz-card__current-label {
-  display: block;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-  font-weight: var(--weight-bold);
-  color: var(--color-text-soft);
-  margin-bottom: 3px;
-}
-.biz-card__contact {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding-top: 4px;
-  border-top: 1px solid var(--color-border-soft);
-}
-.biz-card__contact a {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  font-size: clamp(9.5px, 1.1vw, 11px);
-  color: var(--color-accent);
-  min-width: 0;
-}
-.biz-card__contact a span { min-width: 0; overflow-wrap: anywhere; }
-.biz-card__contact a:hover { color: var(--color-text-strong); }
-.biz-card__contact svg { width: 13px; height: 13px; flex-shrink: 0; stroke: currentColor; }
-
-@media (max-width: 900px) {
-  .biz-card-wrap { width: min(380px, 100%); }
-}
-@media (max-width: 480px) {
-  .biz-card { aspect-ratio: 0.95 / 1; }
-  .biz-card__face--back { flex-direction: column; text-align: center; }
-  .biz-card__contact a { align-self: center; }
-  .biz-card__photo2 { height: auto; width: 60px; max-width: none; aspect-ratio: 1 / 1; border-radius: 50%; }
-  .biz-card__pubs { display: none; }
 }
 
 

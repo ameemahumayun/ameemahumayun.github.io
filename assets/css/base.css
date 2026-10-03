@@ -103,14 +103,14 @@ a { transition: color var(--duration) var(--ease); }
 /* Inline link inside prose: faded teal, underlined, so it reads as a link
    at a glance without shouting the full-strength accent. */
 .link-teal {
-  color: var(--color-accent-deep);
+  color: var(--color-accent);
   text-decoration: underline;
-  text-decoration-color: var(--color-accent-deep);
+  text-decoration-color: var(--color-accent);
   text-underline-offset: 2px;
 }
 .link-teal:hover {
-  color: var(--color-accent);
-  text-decoration-color: var(--color-accent);
+  color: var(--color-accent-light);
+  text-decoration-color: var(--color-accent-light);
 }
 
 

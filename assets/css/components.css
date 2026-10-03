@@ -354,6 +354,10 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   height: 7px;
   border-radius: 50%;
   background: var(--color-accent);
+  /* Pseudo-elements paint in DOM order, so ::after (the line) would
+     otherwise render on top of ::before (the dot), cutting a visible
+     gray stripe through it. */
+  z-index: 1;
 }
 /* Connecting line, drawn per item instead of one border on the
    container: each segment runs from its own top edge down through the

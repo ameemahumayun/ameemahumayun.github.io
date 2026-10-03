@@ -217,7 +217,12 @@
   border-radius: 50%;
   border: none;
   object-position: center 15%;
-  width: 220px;
+  /* Sized to roughly match the intro paragraph's wrapped height at
+     common widths (not just the old flat 282/220px guess) — a float
+     that's much taller than the text it wraps leaves a dead gap below
+     the last line before Publications clears it, which is exactly
+     what was happening at ~220px against a ~4-line paragraph. */
+  width: 160px;
   float: right;
   margin: 0 0 0.5rem 1rem;
 }

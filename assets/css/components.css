@@ -845,5 +845,5 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   pointer-events: none;
   /* Slight upward slant: left edge sits ~3px lower, right edge ~3px
      higher, like a handwritten signature drifting upward. */
-  transform: translateY(-14.5px) rotate(-0.48deg);
+  transform: translateY(-19.5px) rotate(-0.48deg);
 }

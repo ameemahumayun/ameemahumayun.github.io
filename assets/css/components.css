@@ -358,7 +358,6 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
 .timeline {
   margin-top: var(--space-5);
   padding-left: var(--space-4);
-  border-left: 1px solid var(--color-border);
 }
 /* Tighter heading-to-list gap — opt in per page via this modifier
    (used on both the homepage and /card/). */
@@ -375,17 +374,33 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
 /* Homepage-only: 7px tighter than the default --space-4 gap
    (--compact already sets its own, smaller gap for /card/). */
 .timeline--tight:not(.timeline--compact) .timeline__item { padding-bottom: 1.5625rem; }
-/* dot on the line */
+/* dot on the line — vertically centered on the row so it still lines
+   up when the date/text wraps to multiple lines. */
 .timeline__item::before {
   content: "";
   position: absolute;
   left: calc(-1 * var(--space-4) - 4px);
-  top: 7px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: var(--color-accent);
 }
+/* Connecting line, drawn per item instead of one border on the
+   container, so it starts exactly at the first dot and ends exactly
+   at the last — never overshooting past the last item's text. */
+.timeline__item::after {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-4) - 1px);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-border);
+}
+.timeline__item:first-child::after { top: 50%; }
+.timeline__item:last-child::after { bottom: 50%; }
 .timeline__date {
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);

@@ -206,6 +206,10 @@
   background: var(--color-bg-card);
   flex-shrink: 0;
 }
+.hero__avatar--round {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+}
 /* Switches to stacked layout at a wider breakpoint (900px, not the
    site's usual 768px) — below ~900px the fixed-width avatar and the
    wrapping text column no longer stay height-matched (see

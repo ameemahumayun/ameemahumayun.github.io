@@ -221,7 +221,7 @@
   border-radius: 50%;
   border: none;
   object-position: center 15%;
-  width: 300px;
+  width: 260px;
   flex-shrink: 0;
 }
 @media (max-width: 900px) {

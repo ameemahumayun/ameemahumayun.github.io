@@ -219,7 +219,7 @@
   object-position: center 15%;
   width: 220px;
   float: right;
-  margin: 4px 0 var(--space-3) var(--space-4);
+  margin: 0 0 0.5rem 1rem;
 }
 .hero__text > .eyebrow { clear: both; }
 @media (max-width: 600px) {

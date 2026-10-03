@@ -1,4 +1,16 @@
 <head>
+  <!-- Applied before any CSS loads, so the light/dark choice is in place
+       for first paint instead of flashing dark-then-light. Mirrors the
+       toggle logic in assets/js/main.js — keep the two in sync. -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("theme");
+        var theme = stored || (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) {}
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>

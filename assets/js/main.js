@@ -15,6 +15,12 @@
    4. Carousel. One .carousel__panel at a time (image slides or a plain
       text/HTML block) with prev/next controls and a counter. Works for
       any number of panels on any page with a .carousel element.
+   5. Theme toggle. Flips the data-theme attribute on <html> between
+      "light" and "dark", persists the choice to localStorage, and keeps
+      the nav button's icon/label in sync. The actual color swap is pure
+      CSS (see tokens.css's [data-theme="light"] block) — this just
+      flips the attribute. A matching inline script in head.html applies
+      the stored choice before first paint so there's no flash.
    ========================================================================== */
 
 (function () {
@@ -169,5 +175,38 @@
         viewport.webkitRequestFullscreen();
       }
     });
+  });
+})();
+
+
+(function () {
+  "use strict";
+
+  const toggle = document.getElementById("theme-toggle");
+  if (!toggle) return;
+
+  const icon = toggle.querySelector(".theme-toggle__icon");
+  const root = document.documentElement;
+
+  const applyState = (theme) => {
+    const isLight = theme === "light";
+    icon.textContent = isLight ? "☾" : "☀";
+    toggle.setAttribute("aria-label", isLight ? "Switch to dark theme" : "Switch to light theme");
+    toggle.setAttribute("aria-pressed", String(isLight));
+  };
+
+  applyState(root.getAttribute("data-theme") === "light" ? "light" : "dark");
+
+  toggle.addEventListener("click", () => {
+    const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+    if (next === "light") {
+      root.setAttribute("data-theme", "light");
+    } else {
+      root.removeAttribute("data-theme");
+    }
+    try {
+      localStorage.setItem("theme", next);
+    } catch (e) {}
+    applyState(next);
   });
 })();

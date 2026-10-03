@@ -12,6 +12,11 @@
       {%- for link in site.nav_links %}
       <li><a href="{{ link.url | relative_url }}"{% if page.active == link.key %} aria-current="page"{% endif %}>{{ link.label }}</a></li>
       {%- endfor %}
+      <li>
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to light theme" aria-pressed="false">
+          <span class="theme-toggle__icon" aria-hidden="true"></span>
+        </button>
+      </li>
     </ul>
   </div>
 </nav>

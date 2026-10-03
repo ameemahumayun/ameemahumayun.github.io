@@ -114,3 +114,40 @@
   /* ----- Z-INDEX --------------------------------------------------------- */
   --z-nav: 100;
 }
+
+
+/* ==========================================================================
+   LIGHT THEME — same tokens, inverted palette. Toggled via a data-theme
+   attribute on <html> (see the inline script in head.html, which sets it
+   before first paint to avoid a flash, and assets/js/main.js, which wires
+   up the nav toggle button and persists the choice to localStorage).
+   Everything else in the codebase reads color only through these custom
+   properties, so no other file needs a light-mode branch.
+   ========================================================================== */
+:root[data-theme="light"] {
+  --color-bg:           #f7f6f3;
+  --color-bg-lift:      #ffffff;
+  --color-bg-card:      #ffffff;
+  --color-bg-card-deep: #ececea;
+  --color-bg-terminal:  #1c1d20;
+
+  --color-text:         #26272b;
+  --color-text-strong:  #0d0e10;
+  --color-text-soft:    #53565c;
+  --color-text-mute:    #74777d;
+
+  --color-border:       #dcdbd7;
+  --color-border-soft:  #e8e7e3;
+  --color-rule:         #c9c8c3;
+
+  --color-accent:       #9c7a1f;  /* deepened from the dark-mode butter
+                                      yellow so it stays readable as text
+                                      on a light background */
+  --color-accent-deep:  #7e621a;
+  --color-accent-light: #b5912f;
+
+  --color-selection-bg: #ffdfe9;
+  --color-selection-fg: #1a1a1a;  /* fixed, not tied to --color-bg — the
+                                      pink selection needs dark text for
+                                      contrast regardless of theme */
+}

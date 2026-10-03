@@ -37,7 +37,7 @@
   --color-accent-deep:  #d9c67e;
   --color-accent-light: #f8eeba;  /* brighter/lighter than --color-accent */
 
-  --color-selection-bg: #ffe3ef;  /* very light pink, matches cursor */
+  --color-selection-bg: #FFDFE9;  /* very light pink, matches cursor */
   --color-selection-fg: var(--color-bg);
 
 

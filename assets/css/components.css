@@ -183,14 +183,20 @@
 .hero--profile .hero__inner {
   max-width: var(--container-wide);
 }
-/* Name centered across the full hero width, above the text-wrap area.
-   The -1.8125rem margin-left on .signature-text was tuned to nudge the
-   name left of the (left-aligned) paragraph in the old layout — reset
-   it here so centering stays symmetric. */
+/* Name centered across the full hero width, above the two-column row. */
 .hero__name {
   text-align: center;
   margin-left: 0;
 }
+/* Text column + circular portrait, side by side — top of the portrait
+   lines up with the top of the paragraph, bottom with "See all work"
+   (see .hero__avatar--round sizing comment). */
+.hero--profile .hero__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+}
+.hero--profile .hero__text { flex: 1 1 auto; min-width: 0; }
 .hero--profile .eyebrow-rule {
   white-space: nowrap;
   font-size: 10px;
@@ -206,29 +212,21 @@
   background: var(--color-bg-card);
   flex-shrink: 0;
 }
-/* Classic magazine-style text wrap: the circle floats beside the intro
-   paragraph (sits right where it's placed in the markup — directly before
-   p.lead — so its top lines up with the paragraph's first line), sized
-   down from the old 282px so the wrapped lines still have real width to
-   breathe in. Publications/See-all-work clear it so they always start
-   below the image+paragraph block, however long either one runs. */
+/* Bigger than the original 282px rectangular avatar. Width (and so
+   height, at 1:1) tuned so the circle's bottom lines up with "See all
+   work"'s bottom — same empirical pixel-measurement approach used
+   earlier in this file's history for the rectangular version. */
 .hero__avatar--round {
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: none;
   object-position: center 15%;
-  /* Sized to roughly match the intro paragraph's wrapped height at
-     common widths (not just the old flat 282/220px guess) — a float
-     that's much taller than the text it wraps leaves a dead gap below
-     the last line before Publications clears it, which is exactly
-     what was happening at ~220px against a ~4-line paragraph. */
-  width: 160px;
-  float: right;
-  margin: 0 0 0.5rem 1rem;
+  width: 300px;
+  flex-shrink: 0;
 }
-.hero__text > .eyebrow { clear: both; }
-@media (max-width: 600px) {
-  .hero__avatar--round { float: none; width: 160px; margin: 0 0 var(--space-3); }
+@media (max-width: 900px) {
+  .hero--profile .hero__row { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
+  .hero__avatar--round { order: -1; width: 190px; }
   .hero--profile .eyebrow-rule {
     white-space: normal;
     font-size: 11.5px;

@@ -189,10 +189,23 @@
   const moonIcon = toggle.querySelector(".theme-toggle__icon--moon");
   const root = document.documentElement;
 
+  // Setting the .hidden IDL property on these <svg> elements doesn't
+  // reliably reflect to the actual "hidden" HTML attribute (verified:
+  // after toggling, the attribute didn't match what the property
+  // claimed, which is exactly why both icons could end up visible at
+  // once) — set the attribute directly instead.
+  const setHidden = (el, isHidden) => {
+    if (isHidden) {
+      el.setAttribute("hidden", "");
+    } else {
+      el.removeAttribute("hidden");
+    }
+  };
+
   const applyState = (theme) => {
     const isLight = theme === "light";
-    sunIcon.hidden = isLight;
-    moonIcon.hidden = !isLight;
+    setHidden(sunIcon, isLight);
+    setHidden(moonIcon, !isLight);
     toggle.setAttribute("aria-label", isLight ? "Switch to dark theme" : "Switch to light theme");
     toggle.setAttribute("aria-pressed", String(isLight));
   };

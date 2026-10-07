@@ -226,12 +226,32 @@
   transform: translateY(-18px);
 }
 @media (max-width: 900px) {
-  .hero--profile .hero__row { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
-  .hero__avatar--round { order: -1; width: 190px; }
+  /* Stacked layout: center everything instead of left-aligning it
+     (flex-start reads as an accident once there's no second column to
+     justify it against), and size the portrait up a bit — 190px looked
+     small once it's the full width of attention instead of sharing the
+     row with text. The desktop translateY nudge was tuned to bottom-
+     align the portrait with "See all work" in the two-column row; that
+     relationship doesn't exist in the stacked layout, so drop it. */
+  .hero--profile .hero__row { flex-direction: column; align-items: center; gap: var(--space-4); }
+  .hero--profile .hero__text { text-align: center; }
+  .hero__avatar--round { order: -1; width: 220px; transform: none; }
   .hero--profile .eyebrow-rule {
     white-space: normal;
     font-size: 11.5px;
     letter-spacing: var(--tracking-widest);
+  }
+}
+@media (max-width: 600px) {
+  /* The desktop clamp's floor (3.75rem) doesn't shrink further at phone
+     widths, so the name wrapped to two tightly-stacked lines whose tall
+     ascenders/descenders crowded into each other. One clean line reads
+     better than a cramped wrap. (.signature-text.hero__name, not just
+     .hero__name, to outrank .signature-text's own font-size — same
+     specificity, but .signature-text is later in the cascade.) */
+  .signature-text.hero__name {
+    font-size: 2.75rem;
+    margin-left: 0;
   }
 }
 

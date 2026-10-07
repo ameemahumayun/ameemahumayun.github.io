@@ -185,12 +185,14 @@
   const toggle = document.getElementById("theme-toggle");
   if (!toggle) return;
 
-  const icon = toggle.querySelector(".theme-toggle__icon");
+  const sunIcon = toggle.querySelector(".theme-toggle__icon--sun");
+  const moonIcon = toggle.querySelector(".theme-toggle__icon--moon");
   const root = document.documentElement;
 
   const applyState = (theme) => {
     const isLight = theme === "light";
-    icon.textContent = isLight ? "☾" : "☀";
+    sunIcon.hidden = isLight;
+    moonIcon.hidden = !isLight;
     toggle.setAttribute("aria-label", isLight ? "Switch to dark theme" : "Switch to light theme");
     toggle.setAttribute("aria-pressed", String(isLight));
   };

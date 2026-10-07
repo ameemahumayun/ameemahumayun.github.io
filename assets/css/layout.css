@@ -93,7 +93,13 @@
   transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
 }
 .theme-toggle:hover { color: var(--color-accent); border-color: var(--color-accent); }
-.theme-toggle__icon { font-size: 13px; line-height: 1; }
+/* Inline SVG icons (not unicode glyphs — ☀/☾ render with inconsistent,
+   font-dependent internal padding across browsers/OSes, which is what
+   made the button look off-center in the first place and can't be
+   fixed with a single fixed CSS nudge). Each SVG's artwork is already
+   centered in its own viewBox, so flex-centering the button is enough —
+   no manual offset needed. */
+.theme-toggle__icon[hidden] { display: none; }
 
 
 /* ----- SECTIONS ---------------------------------------------------------- */

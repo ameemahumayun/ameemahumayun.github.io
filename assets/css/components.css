@@ -247,6 +247,17 @@
   .hero--profile .hero__row { flex-direction: column; align-items: center; gap: var(--space-4); }
   .hero--profile .hero__text { text-align: center; }
   .hero__avatar-frame { order: -1; width: 220px; transform: none; }
+  /* index.html sets the name's desktop margins inline (tuned against the
+     two-column row, which doesn't exist in this stacked layout) — override
+     with !important since nothing less specific beats an inline style.
+     The signature's own translateY(-24.5px) (base.css) shifts it up
+     visually without shrinking the flow space reserved below it, so the
+     gap this margin alone implies always reads larger than the number
+     suggests; cut further to actually close it on a small screen. */
+  .hero__name {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
   .hero--profile .eyebrow-rule {
     white-space: normal;
     font-size: 11.5px;

@@ -242,95 +242,134 @@
   if (window.matchMedia("(pointer: coarse)").matches) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  const SPIKE_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
   const INTERACTIVE_SELECTOR = 'a, button, summary, [role="button"]';
+  // Elements debris can land on/bounce off, besides the floor and the
+  // cursor itself. Kept to visually "solid" landmarks rather than every
+  // node, since each one is checked against every live particle per frame.
+  const OBSTACLE_SELECTOR = 'img, nav, button, h1, h2, h3, hr, .work-card, .hero__avatar, .carousel, .timeline';
+
+  const CURSOR_RADIUS = 7;
+  const PARTICLE_RADIUS = 3.5;
+  const GRAVITY = 0.42;
+  const AIR_DRAG = 0.992;
+  const FLOOR_RESTITUTION = 0.32;
+  const FLOOR_FRICTION = 0.75;
+  const OBSTACLE_RESTITUTION = 0.4;
+  const SETTLE_SPEED = 0.05;
+  const MAX_PARTICLES = 140;
+
+  // A single closed 16-vertex path, built once in both its spiky-star and
+  // circle form (same vertex count/order in both, so the browser's CSS `d`
+  // transition tweens vertex-to-vertex instead of needing to be redrawn
+  // every frame) — see .custom-cursor__shape / .is-interactive in
+  // components.css. One continuous path keeps the fill and outline a
+  // single coherent shape instead of several unconnected pieces.
+  const STAR_D =
+    "M11.0,0.5 L12.65,7.03 L18.42,3.58 L14.97,9.35 L21.5,11.0 L14.97,12.65 L18.42,18.42 L12.65,14.97 L11.0,21.5 L9.35,14.97 L3.58,18.42 L7.03,12.65 L0.5,11.0 L7.03,9.35 L3.58,3.58 L9.35,7.03 Z";
 
   const cursor = document.createElement("div");
   cursor.className = "custom-cursor";
   cursor.setAttribute("aria-hidden", "true");
-
-  SPIKE_ANGLES.forEach((angle) => {
-    const arm = document.createElement("div");
-    arm.className = "custom-cursor__arm";
-    arm.style.setProperty("--angle", angle + "deg");
-    arm.dataset.angle = String(angle);
-    const spike = document.createElement("div");
-    spike.className = "custom-cursor__spike";
-    arm.appendChild(spike);
-    cursor.appendChild(arm);
-  });
-
-  const core = document.createElement("div");
-  core.className = "custom-cursor__core";
-  cursor.appendChild(core);
+  cursor.innerHTML =
+    '<svg width="22" height="22" viewBox="0 0 22 22"><path class="custom-cursor__shape" d="' + STAR_D + '"></path></svg>';
 
   document.body.appendChild(cursor);
   document.documentElement.classList.add("has-custom-cursor");
 
-  const arms = Array.from(cursor.querySelectorAll(".custom-cursor__arm"));
-
-  let x = -100;
-  let y = -100;
-  let queued = false;
-
-  const render = () => {
-    queued = false;
-    cursor.style.transform = "translate3d(" + (x - 11) + "px, " + (y - 11) + "px, 0)";
-  };
-
-  const queueRender = () => {
-    if (queued) return;
-    queued = true;
-    requestAnimationFrame(render);
-  };
+  let clientX = -100;
+  let clientY = -100;
 
   document.addEventListener("mousemove", (e) => {
-    x = e.clientX;
-    y = e.clientY;
+    clientX = e.clientX;
+    clientY = e.clientY;
     cursor.classList.add("is-visible");
     cursor.classList.toggle("is-interactive", !!e.target.closest(INTERACTIVE_SELECTOR));
-    queueRender();
   });
 
   document.addEventListener("mouseleave", () => {
     cursor.classList.remove("is-visible");
   });
 
-  // Flings each of the 8 star points outward from the click point, then
-  // lets them tumble down and fade — independent elements, since the
-  // cursor itself snaps to a circle immediately and keeps moving.
-  const spawnDebris = (originX, originY) => {
-    arms.forEach((arm) => {
-      const angleDeg = Number(arm.dataset.angle) || 0;
+  // ----- debris physics ------------------------------------------------
+  // Document-space (not viewport) so particles keep their position in the
+  // page as it scrolls, and so "the floor" can be the bottom of the whole
+  // page rather than just whatever's in view.
+
+  let obstacleRects = [];
+  const refreshObstacles = () => {
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    obstacleRects = Array.from(document.querySelectorAll(OBSTACLE_SELECTOR))
+      .map((el) => {
+        if (el === cursor || cursor.contains(el)) return null;
+        const r = el.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0) return null;
+        return { left: r.left + scrollX, right: r.right + scrollX, top: r.top + scrollY, bottom: r.bottom + scrollY };
+      })
+      .filter(Boolean);
+  };
+  refreshObstacles();
+  window.addEventListener("load", refreshObstacles);
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(refreshObstacles, 200);
+  });
+
+  const particles = [];
+
+  const spawnDebris = (originClientX, originClientY) => {
+    const originX = originClientX + window.scrollX;
+    const originY = originClientY + window.scrollY;
+    const angles = [0, 45, 90, 135, 180, 225, 270, 315];
+
+    angles.forEach((angleDeg) => {
       const rad = (angleDeg * Math.PI) / 180;
-      // angle 0 = "up", matching the arm's own un-rotated spike direction.
       const dirX = Math.sin(rad);
       const dirY = -Math.cos(rad);
+      const speed = 3 + Math.random() * 3;
 
-      const particle = document.createElement("div");
-      particle.className = "cursor-particle";
-      document.body.appendChild(particle);
+      const el = document.createElement("div");
+      el.className = "cursor-particle";
+      el.innerHTML = '<svg width="7" height="7" viewBox="0 0 7 7"><path d="M3.5,0 L7,7 L0,7 Z"></path></svg>';
+      document.body.appendChild(el);
 
-      const burst = 10 + Math.random() * 8;
-      const drift = (Math.random() - 0.5) * 16;
-      const fall = 46 + Math.random() * 30;
-      const spin = angleDeg + (Math.random() - 0.5) * 180;
-      const duration = 650 + Math.random() * 300;
-
-      const start = "translate3d(" + (originX - 3.5) + "px, " + (originY - 3.5) + "px, 0) rotate(" + angleDeg + "deg)";
-      const burstPoint = "translate3d(" + (originX - 3.5 + dirX * burst) + "px, " + (originY - 3.5 + dirY * burst) + "px, 0) rotate(" + (angleDeg + 40) + "deg)";
-      const landed = "translate3d(" + (originX - 3.5 + dirX * burst + drift) + "px, " + (originY - 3.5 + dirY * burst + fall) + "px, 0) rotate(" + spin + "deg)";
-
-      const animation = particle.animate(
-        [
-          { transform: start, opacity: 1, easing: "cubic-bezier(0.17, 0.89, 0.32, 1.25)" },
-          { transform: burstPoint, opacity: 1, offset: 0.28, easing: "cubic-bezier(0.45, 0, 0.55, 1)" },
-          { transform: landed, opacity: 0 },
-        ],
-        { duration: duration, fill: "forwards" }
-      );
-      animation.onfinish = () => particle.remove();
+      particles.push({
+        el: el,
+        x: originX,
+        y: originY,
+        vx: dirX * speed,
+        vy: dirY * speed - 2,
+        angle: angleDeg,
+        angularVel: (Math.random() - 0.5) * 14,
+        settled: false,
+      });
     });
+
+    while (particles.length > MAX_PARTICLES) {
+      const oldest = particles.shift();
+      oldest.el.remove();
+    }
+  };
+
+  const resolveObstacle = (p, rect) => {
+    const closestX = Math.max(rect.left, Math.min(p.x, rect.right));
+    const closestY = Math.max(rect.top, Math.min(p.y, rect.bottom));
+    const dx = p.x - closestX;
+    const dy = p.y - closestY;
+    const dist = Math.hypot(dx, dy);
+    if (dist >= PARTICLE_RADIUS || dist <= 0.001) return;
+    const overlap = PARTICLE_RADIUS - dist;
+    const nx = dx / dist;
+    const ny = dy / dist;
+    p.x += nx * overlap;
+    p.y += ny * overlap;
+    const vn = p.vx * nx + p.vy * ny;
+    p.vx -= (1 + OBSTACLE_RESTITUTION) * vn * nx;
+    p.vy -= (1 + OBSTACLE_RESTITUTION) * vn * ny;
+    p.vx *= 0.85;
+    p.vy *= 0.85;
+    p.settled = false;
   };
 
   document.addEventListener("click", (e) => {
@@ -338,10 +377,74 @@
 
     // Snap to a circle immediately. If the click wasn't on something
     // interactive (is-interactive not set), releasing this class lets
-    // the spikes grow back out via .custom-cursor__arm's own transition.
+    // the points grow back out via .custom-cursor__shape's own transition.
     cursor.classList.add("is-clicking");
     window.setTimeout(() => {
       cursor.classList.remove("is-clicking");
     }, 90);
   });
+
+  const tick = () => {
+    cursor.style.transform = "translate3d(" + (clientX - 11) + "px, " + (clientY - 11) + "px, 0)";
+
+    if (particles.length) {
+      const cursorDocX = clientX + window.scrollX;
+      const cursorDocY = clientY + window.scrollY;
+      const floorY = document.documentElement.scrollHeight - PARTICLE_RADIUS;
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
+        if (!p.settled) {
+          p.vy += GRAVITY;
+          p.vx *= AIR_DRAG;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.angle += p.angularVel;
+          p.angularVel *= 0.97;
+
+          for (let j = 0; j < obstacleRects.length; j++) {
+            resolveObstacle(p, obstacleRects[j]);
+          }
+
+          if (p.y > floorY) {
+            p.y = floorY;
+            p.vx *= FLOOR_FRICTION;
+            p.angularVel *= 0.6;
+            if (Math.abs(p.vy) > SETTLE_SPEED) {
+              p.vy *= -FLOOR_RESTITUTION;
+            } else {
+              p.vy = 0;
+            }
+            if (Math.abs(p.vx) < SETTLE_SPEED && Math.abs(p.vy) < SETTLE_SPEED) {
+              p.settled = true;
+            }
+          }
+        }
+
+        // Bump off the cursor whether or not the particle had settled —
+        // moving the pointer through a resting pile should disturb it.
+        const dx = p.x - cursorDocX;
+        const dy = p.y - cursorDocY;
+        const dist = Math.hypot(dx, dy);
+        const minDist = PARTICLE_RADIUS + CURSOR_RADIUS;
+        if (dist < minDist && dist > 0.001) {
+          const overlap = minDist - dist;
+          const nx = dx / dist;
+          const ny = dy / dist;
+          p.x += nx * overlap;
+          p.y += ny * overlap;
+          p.vx += nx * overlap * 0.6;
+          p.vy += ny * overlap * 0.6 - 0.6;
+          p.angularVel += (Math.random() - 0.5) * 6;
+          p.settled = false;
+        }
+
+        p.el.style.transform = "translate3d(" + (p.x - PARTICLE_RADIUS) + "px, " + (p.y - PARTICLE_RADIUS) + "px, 0) rotate(" + p.angle + "deg)";
+      }
+    }
+
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 })();

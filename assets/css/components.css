@@ -215,12 +215,23 @@
 /* Bigger than the original 282px rectangular avatar. Width (and so
    height, at 1:1) tuned so the bottom lines up with "See all work"'s
    bottom — same empirical pixel-measurement approach used earlier in
-   this file's history for the rectangular version. */
+   this file's history for the rectangular version.
+   The circular crop itself is the wrapping .hero__avatar-frame — at this
+   aspect ratio, object-fit:cover's horizontal scale lands almost exactly
+   at the frame's width with no slack to pan sideways within it, so the
+   photo is sized wider than its frame (130%) on purpose, giving room to
+   shift it with object-position without exposing blank space. */
 .hero__avatar--round {
+  width: 130%;
+  height: 100%;
+  border: none;
+  object-fit: cover;
+  object-position: 11.5% 15%;
+}
+.hero__avatar-frame {
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  border: none;
-  object-position: center 15%;
+  overflow: hidden;
   width: 260px;
   flex-shrink: 0;
   transform: translateY(-18px);
@@ -235,7 +246,7 @@
      relationship doesn't exist in the stacked layout, so drop it. */
   .hero--profile .hero__row { flex-direction: column; align-items: center; gap: var(--space-4); }
   .hero--profile .hero__text { text-align: center; }
-  .hero__avatar--round { order: -1; width: 220px; transform: none; }
+  .hero__avatar-frame { order: -1; width: 220px; transform: none; }
   .hero--profile .eyebrow-rule {
     white-space: normal;
     font-size: 11.5px;

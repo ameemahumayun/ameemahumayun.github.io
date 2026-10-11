@@ -88,10 +88,11 @@
 }
 
 /* Shared look for the small circular icon buttons in the nav links row —
-   the theme toggle (#theme-toggle) and the debris clear button
-   (#debris-clear). Named after the first of the two; both are wired up
-   in assets/js/main.js, since the theme toggle's icon needs to reflect
-   actual current state on load, not just guess from CSS. */
+   the theme toggle (#theme-toggle), the explosions on/off toggle
+   (#debris-toggle), and the debris clear button (#debris-clear). Named
+   after the first of the three; all are wired up in assets/js/main.js,
+   since the theme toggle's icon needs to reflect actual current state
+   on load, not just guess from CSS. */
 .theme-toggle {
   display: flex;
   align-items: center;
@@ -111,6 +112,18 @@
    centered in its own viewBox, so flex-centering the button is enough —
    no manual offset needed. */
 .theme-toggle__icon[hidden] { display: none; }
+
+/* Dimmed sparkle = explosions off. Full accent = on, same as its hover
+   color, so the "on" state reads as the button's normal/active look. */
+#debris-toggle.is-off { color: var(--color-text-mute); opacity: 0.55; }
+#debris-toggle.is-off:hover { color: var(--color-text-soft); border-color: var(--color-border); }
+
+/* Explosions don't run on touch devices at all (see main.js) — showing a
+   toggle for a feature that's hard-disabled there would just confuse,
+   so it never renders instead of sitting there inert. */
+@media (pointer: coarse) {
+  #debris-toggle { display: none; }
+}
 
 
 /* ----- SECTIONS ---------------------------------------------------------- */

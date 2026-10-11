@@ -198,11 +198,11 @@
   const roseIcon = toggle.querySelector(".theme-toggle__icon--rose");
   const root = document.documentElement;
 
-  // dark -> light -> rose -> dark. The icon shown is always the *next*
-  // theme a click will switch to (sun showing while dark = "tap for
-  // light"), matching the convention the sun/moon pair already had.
+  // dark -> light -> rose -> dark. The icon shown represents the theme
+  // that's actually active right now (moon while dark, sun while light,
+  // heart while rose) — the label still describes what a click does.
   const ORDER = ["dark", "light", "rose"];
-  const NEXT_ICON = { dark: sunIcon, light: roseIcon, rose: moonIcon };
+  const CURRENT_ICON = { dark: moonIcon, light: sunIcon, rose: roseIcon };
   const LABEL = { dark: "Switch to light theme", light: "Switch to rose theme", rose: "Switch to dark theme" };
 
   // Setting the .hidden IDL property on these <svg> elements doesn't
@@ -219,7 +219,7 @@
   };
 
   const applyState = (theme) => {
-    const shown = NEXT_ICON[theme];
+    const shown = CURRENT_ICON[theme];
     [sunIcon, moonIcon, roseIcon].forEach((icon) => setHidden(icon, icon !== shown));
     toggle.setAttribute("aria-label", LABEL[theme]);
     toggle.setAttribute("aria-pressed", String(theme !== "dark"));
@@ -250,11 +250,10 @@
   "use strict";
 
   if (!window.matchMedia) return;
-  // Reduced-motion means no flying debris at all — leave the plain
-  // cursor:url() from base.css. Touch devices DO still get the tap
-  // explosion (a "click" fires on tap with real coordinates); they just
-  // never see the custom cursor dot itself, since mousemove never fires
-  // there and it stays parked off-screen.
+  // No mouse to skin on touch devices, and no explosions there either
+  // (by request) — in both cases, and for reduced-motion, just leave the
+  // plain cursor:url() from base.css.
+  if (window.matchMedia("(pointer: coarse)").matches) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   // Debris only lands where there's an actual design element to catch it —
@@ -459,6 +458,15 @@
     trimParticles();
   };
 
+  // Persisted per visitor, independent of theme — defaults on. Declared
+  // here (ahead of the save/rehydrate logic below) since turning
+  // explosions off should also stop the nav pile from persisting and
+  // being restored, not just stop new clicks from spawning debris.
+  let debrisEnabled = true;
+  try {
+    debrisEnabled = localStorage.getItem("debrisEnabled") !== "off";
+  } catch (e) {}
+
   // Persist whatever nav-origin debris is currently falling/resting so a
   // nav click's own page navigation doesn't erase it — the next page
   // picks those particles back up and keeps simulating them. Debris from
@@ -466,9 +474,9 @@
   // that page, not the (identical, cross-page) nav bar.
   const saveDebris = () => {
     try {
-      const data = particles
-        .filter((p) => p.fromNav)
-        .map((p) => ({ x: p.x, y: p.y, vx: p.vx, vy: p.vy, angle: p.angle, angularVel: p.angularVel }));
+      const data = debrisEnabled
+        ? particles.filter((p) => p.fromNav).map((p) => ({ x: p.x, y: p.y, vx: p.vx, vy: p.vy, angle: p.angle, angularVel: p.angularVel }))
+        : [];
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     } catch (e) {}
   };
@@ -476,6 +484,7 @@
   window.addEventListener("beforeunload", saveDebris);
 
   (() => {
+    if (!debrisEnabled) return;
     let saved;
     try {
       saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || "[]");
@@ -564,10 +573,30 @@
     return restingOnFloor;
   };
 
+  const toggleButton = document.getElementById("debris-toggle");
+  const applyToggleState = () => {
+    if (!toggleButton) return;
+    toggleButton.classList.toggle("is-off", !debrisEnabled);
+    toggleButton.setAttribute("aria-pressed", String(!debrisEnabled));
+    toggleButton.setAttribute("aria-label", debrisEnabled ? "Turn off click explosions" : "Turn on click explosions");
+  };
+  applyToggleState();
+
+  if (toggleButton) {
+    toggleButton.addEventListener("click", () => {
+      debrisEnabled = !debrisEnabled;
+      try {
+        localStorage.setItem("debrisEnabled", debrisEnabled ? "on" : "off");
+      } catch (e) {}
+      applyToggleState();
+    });
+  }
+
   document.addEventListener("click", (e) => {
-    // The clear-debris button is a utility control, not something to
-    // explode debris from — it would be fighting its own purpose.
-    if (e.target.closest("#debris-clear")) return;
+    // Utility controls, not something to explode debris from — that
+    // would be fighting their own purpose.
+    if (e.target.closest("#debris-clear") || e.target.closest("#debris-toggle")) return;
+    if (!debrisEnabled) return;
 
     spawnDebris(e.clientX, e.clientY, !!e.target.closest(".nav"));
 

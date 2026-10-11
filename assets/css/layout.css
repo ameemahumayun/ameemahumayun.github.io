@@ -63,7 +63,7 @@
 .nav__links {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: 1.375rem;
   font-size: 12.5px;
   letter-spacing: var(--tracking-wide);
 }
@@ -77,6 +77,15 @@
 .nav__links a:hover { color: var(--color-accent); border-bottom-color: var(--color-accent); }
 /* Active page indicator */
 .nav__links a[aria-current="page"] { color: var(--color-accent); }
+
+/* The theme toggle and debris-clear circles sit closer to each other
+   than to the text links either side of them — they read as one small
+   control cluster, not two independent nav items. */
+.nav__icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
 /* Shared look for the small circular icon buttons in the nav links row —
    the theme toggle (#theme-toggle) and the debris clear button

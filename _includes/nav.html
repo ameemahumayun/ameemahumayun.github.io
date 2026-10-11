@@ -12,7 +12,7 @@
       {%- for link in site.nav_links %}
       <li><a href="{{ link.url | relative_url }}"{% if page.active == link.key %} aria-current="page"{% endif %}>{{ link.label }}</a></li>
       {%- endfor %}
-      <li>
+      <li class="nav__icons">
         <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to light theme" aria-pressed="false">
           <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <circle cx="12" cy="12" r="4"/>
@@ -28,9 +28,10 @@
           <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true" hidden>
             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
           </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--rose" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true" hidden>
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
         </button>
-      </li>
-      <li>
         <button type="button" id="debris-clear" class="theme-toggle" aria-label="Clear debris">
           <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polyline points="3 6 5 6 21 6"/>

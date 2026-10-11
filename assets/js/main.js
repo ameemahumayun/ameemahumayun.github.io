@@ -243,22 +243,28 @@
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   // Debris only lands where there's an actual design element to catch it —
-  // text, the site's rule lines, or image/card "squares" — never on a bare
-  // patch of background. The rule lines (nav's bottom edge, the footer and
-  // #recent-updates' top edge) are themselves just a 1px border on a much
-  // bigger element, so each gets its own thin collision band pinned to
-  // that edge rather than the whole element's box — using the full nav/
-  // footer rect would let debris rest anywhere in their padding, nowhere
-  // near the visible line.
+  // never a bare patch of background, and not on plain body text either.
+  // Three kinds of barrier:
+  //  - dividers: every hairline rule on the site, each pinned to just its
+  //    own visible edge rather than its (much bigger) parent's full box —
+  //    using the whole nav/footer/etc. rect would let debris rest
+  //    anywhere in their padding, nowhere near the actual line.
+  //  - solid: images and the accent-highlighted page/section headings
+  //    (Portfolio, CV, Recent Updates) — bounces off the outside only.
+  //  - container: bordered boxes debris should be caught *inside* as well
+  //    as outside — the work-card listings, the contact form's fields,
+  //    and its send button.
   const DIVIDER_EDGES = [
     { selector: ".nav", edge: "bottom" },
     { selector: ".footer", edge: "top" },
     { selector: "#recent-updates", edge: "top" },
     { selector: ".accordion__item", edge: "bottom" },
+    { selector: ".cv-entry:not(:last-child)", edge: "bottom" },
+    { selector: ".cv-skills__row:not(:last-child)", edge: "bottom" },
   ];
   const DIVIDER_BAND = 6;
-  const SURFACE_SELECTOR =
-    "p, li, h1, h2, h3, h4, blockquote, .eyebrow, .lead, img, .work-card, .hero__avatar, .carousel, .timeline";
+  const SOLID_SELECTOR = "img, .text-highlight";
+  const CONTAINER_SELECTOR = ".work-card, .contact-form__field input, .contact-form__field textarea, .contact-form__submit";
 
   const CURSOR_RADIUS = 7;
   const PARTICLE_RADIUS = 3.5;
@@ -313,7 +319,8 @@
   // Document-space (not viewport) so particles and the obstacles they can
   // land on keep their relative position as the page scrolls.
 
-  let obstacleRects = [];
+  let solidRects = [];
+  let containerRects = [];
   // The debris particles themselves are position:absolute, so once any of
   // them fall past the rest of the content they inflate
   // document.documentElement.scrollHeight — which would keep pushing the
@@ -324,7 +331,8 @@
   const refreshObstacles = () => {
     const scrollX = window.scrollX;
     const scrollY = window.scrollY;
-    const rects = [];
+    const solid = [];
+    const containers = [];
 
     const footer = document.querySelector(".footer");
     if (footer) {
@@ -337,7 +345,7 @@
         const r = el.getBoundingClientRect();
         if (r.width === 0 || r.height === 0) return;
         const lineY = (edge === "bottom" ? r.bottom : r.top) + scrollY;
-        rects.push({
+        solid.push({
           left: r.left + scrollX,
           right: r.right + scrollX,
           top: lineY - DIVIDER_BAND / 2,
@@ -346,14 +354,21 @@
       });
     });
 
-    document.querySelectorAll(SURFACE_SELECTOR).forEach((el) => {
+    document.querySelectorAll(SOLID_SELECTOR).forEach((el) => {
       if (el === cursor || cursor.contains(el)) return;
       const r = el.getBoundingClientRect();
       if (r.width === 0 || r.height === 0) return;
-      rects.push({ left: r.left + scrollX, right: r.right + scrollX, top: r.top + scrollY, bottom: r.bottom + scrollY });
+      solid.push({ left: r.left + scrollX, right: r.right + scrollX, top: r.top + scrollY, bottom: r.bottom + scrollY });
     });
 
-    obstacleRects = rects;
+    document.querySelectorAll(CONTAINER_SELECTOR).forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) return;
+      containers.push({ left: r.left + scrollX, right: r.right + scrollX, top: r.top + scrollY, bottom: r.bottom + scrollY });
+    });
+
+    solidRects = solid;
+    containerRects = containers;
   };
   refreshObstacles();
   window.addEventListener("load", refreshObstacles);
@@ -478,6 +493,38 @@
     return ny < -0.5;
   };
 
+  // Unlike resolveObstacle, a "container" rect (work-card, a contact-form
+  // field, the send button) should hold a particle whose center is
+  // already inside it, not just block it from outside — bouncing it off
+  // whichever of the box's 4 inner walls it gets close to, same as the
+  // box's own edges do from the outside (handled by just falling back to
+  // resolveObstacle when the particle isn't inside).
+  const resolveContainer = (p, rect) => {
+    const inside = p.x > rect.left && p.x < rect.right && p.y > rect.top && p.y < rect.bottom;
+    if (!inside) return resolveObstacle(p, rect);
+
+    let restingOnFloor = false;
+
+    if (p.x - rect.left < PARTICLE_RADIUS) {
+      p.x = rect.left + PARTICLE_RADIUS;
+      if (p.vx < 0) p.vx *= -OBSTACLE_RESTITUTION;
+    } else if (rect.right - p.x < PARTICLE_RADIUS) {
+      p.x = rect.right - PARTICLE_RADIUS;
+      if (p.vx > 0) p.vx *= -OBSTACLE_RESTITUTION;
+    }
+
+    if (p.y - rect.top < PARTICLE_RADIUS) {
+      p.y = rect.top + PARTICLE_RADIUS;
+      if (p.vy < 0) p.vy *= -OBSTACLE_RESTITUTION;
+    } else if (rect.bottom - p.y < PARTICLE_RADIUS) {
+      p.y = rect.bottom - PARTICLE_RADIUS;
+      if (p.vy > 0) p.vy *= -OBSTACLE_RESTITUTION;
+      restingOnFloor = true;
+    }
+
+    return restingOnFloor;
+  };
+
   document.addEventListener("click", (e) => {
     spawnDebris(e.clientX, e.clientY, !!e.target.closest(".nav"));
 
@@ -508,8 +555,11 @@
             p.angle += p.angularVel / SUBSTEPS;
 
             let restingOnTop = false;
-            for (let j = 0; j < obstacleRects.length; j++) {
-              if (resolveObstacle(p, obstacleRects[j])) restingOnTop = true;
+            for (let j = 0; j < solidRects.length; j++) {
+              if (resolveObstacle(p, solidRects[j])) restingOnTop = true;
+            }
+            for (let j = 0; j < containerRects.length; j++) {
+              if (resolveContainer(p, containerRects[j])) restingOnTop = true;
             }
             if (restingOnTop && Math.abs(p.vx) < SETTLE_SPEED && Math.abs(p.vy) < SETTLE_SPEED) {
               p.vx = 0;

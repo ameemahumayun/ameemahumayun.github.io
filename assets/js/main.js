@@ -243,20 +243,35 @@
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const INTERACTIVE_SELECTOR = 'a, button, summary, [role="button"]';
-  // Elements debris can land on/bounce off, besides the floor and the
-  // cursor itself. Kept to visually "solid" landmarks rather than every
-  // node, since each one is checked against every live particle per frame.
-  const OBSTACLE_SELECTOR = 'img, nav, button, h1, h2, h3, hr, .work-card, .hero__avatar, .carousel, .timeline';
+  // Debris only lands where there's an actual design element to catch it —
+  // text, the site's rule lines, or image/card "squares" — never on a bare
+  // patch of background. The rule lines (nav's bottom edge, the footer and
+  // #recent-updates' top edge) are themselves just a 1px border on a much
+  // bigger element, so each gets its own thin collision band pinned to
+  // that edge rather than the whole element's box — using the full nav/
+  // footer rect would let debris rest anywhere in their padding, nowhere
+  // near the visible line.
+  const DIVIDER_EDGES = [
+    { selector: ".nav", edge: "bottom" },
+    { selector: ".footer", edge: "top" },
+    { selector: "#recent-updates", edge: "top" },
+    { selector: ".accordion__item", edge: "bottom" },
+  ];
+  const DIVIDER_BAND = 4;
+  const SURFACE_SELECTOR =
+    "p, li, h1, h2, h3, h4, blockquote, .eyebrow, .lead, img, .work-card, .hero__avatar, .carousel, .timeline";
 
   const CURSOR_RADIUS = 7;
   const PARTICLE_RADIUS = 3.5;
   const GRAVITY = 0.42;
   const AIR_DRAG = 0.992;
-  const FLOOR_RESTITUTION = 0.32;
-  const FLOOR_FRICTION = 0.75;
   const OBSTACLE_RESTITUTION = 0.4;
   const SETTLE_SPEED = 0.05;
   const MAX_PARTICLES = 140;
+  // Nothing was there to catch it — let it fall out of view rather than
+  // stopping on an invisible floor, and stop simulating it once it's well
+  // past the page's own content.
+  const FALLOUT_MARGIN = 400;
 
   // A single closed 16-vertex path, built once in both its spiky-star and
   // circle form (same vertex count/order in both, so the browser's CSS `d`
@@ -291,22 +306,50 @@
   });
 
   // ----- debris physics ------------------------------------------------
-  // Document-space (not viewport) so particles keep their position in the
-  // page as it scrolls, and so "the floor" can be the bottom of the whole
-  // page rather than just whatever's in view.
+  // Document-space (not viewport) so particles and the obstacles they can
+  // land on keep their relative position as the page scrolls.
 
   let obstacleRects = [];
+  // The debris particles themselves are position:absolute, so once any of
+  // them fall past the rest of the content they inflate
+  // document.documentElement.scrollHeight — which would keep pushing the
+  // "nothing caught it, let it go" threshold below back further than the
+  // particle can fall, and it would free-fall forever. Anchor to the
+  // footer's own bottom edge instead, which every page layout ends with.
+  let pageBottom = 0;
   const refreshObstacles = () => {
     const scrollX = window.scrollX;
     const scrollY = window.scrollY;
-    obstacleRects = Array.from(document.querySelectorAll(OBSTACLE_SELECTOR))
-      .map((el) => {
-        if (el === cursor || cursor.contains(el)) return null;
+    const rects = [];
+
+    const footer = document.querySelector(".footer");
+    if (footer) {
+      const fr = footer.getBoundingClientRect();
+      pageBottom = fr.bottom + scrollY;
+    }
+
+    DIVIDER_EDGES.forEach(({ selector, edge }) => {
+      document.querySelectorAll(selector).forEach((el) => {
         const r = el.getBoundingClientRect();
-        if (r.width === 0 || r.height === 0) return null;
-        return { left: r.left + scrollX, right: r.right + scrollX, top: r.top + scrollY, bottom: r.bottom + scrollY };
-      })
-      .filter(Boolean);
+        if (r.width === 0 || r.height === 0) return;
+        const lineY = (edge === "bottom" ? r.bottom : r.top) + scrollY;
+        rects.push({
+          left: r.left + scrollX,
+          right: r.right + scrollX,
+          top: lineY - DIVIDER_BAND / 2,
+          bottom: lineY + DIVIDER_BAND / 2,
+        });
+      });
+    });
+
+    document.querySelectorAll(SURFACE_SELECTOR).forEach((el) => {
+      if (el === cursor || cursor.contains(el)) return;
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) return;
+      rects.push({ left: r.left + scrollX, right: r.right + scrollX, top: r.top + scrollY, bottom: r.bottom + scrollY });
+    });
+
+    obstacleRects = rects;
   };
   refreshObstacles();
   window.addEventListener("load", refreshObstacles);
@@ -352,13 +395,16 @@
     }
   };
 
+  // Returns true if p was actually resting against rect's top edge this
+  // frame (not just grazing a side/corner) — used to decide whether the
+  // particle has come to rest on it.
   const resolveObstacle = (p, rect) => {
     const closestX = Math.max(rect.left, Math.min(p.x, rect.right));
     const closestY = Math.max(rect.top, Math.min(p.y, rect.bottom));
     const dx = p.x - closestX;
     const dy = p.y - closestY;
     const dist = Math.hypot(dx, dy);
-    if (dist >= PARTICLE_RADIUS || dist <= 0.001) return;
+    if (dist >= PARTICLE_RADIUS || dist <= 0.001) return false;
     const overlap = PARTICLE_RADIUS - dist;
     const nx = dx / dist;
     const ny = dy / dist;
@@ -369,7 +415,7 @@
     p.vy -= (1 + OBSTACLE_RESTITUTION) * vn * ny;
     p.vx *= 0.85;
     p.vy *= 0.85;
-    p.settled = false;
+    return ny < -0.5;
   };
 
   document.addEventListener("click", (e) => {
@@ -390,9 +436,9 @@
     if (particles.length) {
       const cursorDocX = clientX + window.scrollX;
       const cursorDocY = clientY + window.scrollY;
-      const floorY = document.documentElement.scrollHeight - PARTICLE_RADIUS;
+      const falloutY = pageBottom + FALLOUT_MARGIN;
 
-      for (let i = 0; i < particles.length; i++) {
+      for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
 
         if (!p.settled) {
@@ -403,22 +449,23 @@
           p.angle += p.angularVel;
           p.angularVel *= 0.97;
 
+          let restingOnTop = false;
           for (let j = 0; j < obstacleRects.length; j++) {
-            resolveObstacle(p, obstacleRects[j]);
+            if (resolveObstacle(p, obstacleRects[j])) restingOnTop = true;
+          }
+          if (restingOnTop && Math.abs(p.vx) < SETTLE_SPEED && Math.abs(p.vy) < SETTLE_SPEED) {
+            p.vx = 0;
+            p.vy = 0;
+            p.angularVel = 0;
+            p.settled = true;
           }
 
-          if (p.y > floorY) {
-            p.y = floorY;
-            p.vx *= FLOOR_FRICTION;
-            p.angularVel *= 0.6;
-            if (Math.abs(p.vy) > SETTLE_SPEED) {
-              p.vy *= -FLOOR_RESTITUTION;
-            } else {
-              p.vy = 0;
-            }
-            if (Math.abs(p.vx) < SETTLE_SPEED && Math.abs(p.vy) < SETTLE_SPEED) {
-              p.settled = true;
-            }
+          // Nothing caught it on the way down — let it go rather than
+          // stopping it on a floor that isn't actually part of the page.
+          if (p.y > falloutY) {
+            p.el.remove();
+            particles.splice(i, 1);
+            continue;
           }
         }
 

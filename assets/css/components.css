@@ -695,7 +695,7 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
    main.js for both path strings — and the browser tweens vertex-to-vertex
    between them. */
 .custom-cursor__shape {
-  fill: #FFDFE9;
+  fill: #AB2270;
   stroke: #0d0e10;
   stroke-width: 0.6;
   stroke-linejoin: round;
@@ -711,8 +711,9 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
 }
 
 /* One flung star-point. main.js drives its position every frame (gravity,
-   bouncing off the page floor, obstacles and the cursor); this rule only
-   sets its static look — same fill/stroke treatment as the cursor itself. */
+   bouncing off real page surfaces — text, dividers, cards/images — and the
+   cursor, falling out of view if nothing catches it); this rule only sets
+   its static look — same fill/stroke treatment as the cursor itself. */
 .cursor-particle {
   position: absolute;
   top: 0;
@@ -724,7 +725,7 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   will-change: transform;
 }
 .cursor-particle svg path {
-  fill: #FFDFE9;
+  fill: #AB2270;
   stroke: #0d0e10;
   stroke-width: 0.5;
   stroke-linejoin: round;

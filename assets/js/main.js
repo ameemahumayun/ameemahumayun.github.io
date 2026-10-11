@@ -526,6 +526,10 @@
   };
 
   document.addEventListener("click", (e) => {
+    // The clear-debris button is a utility control, not something to
+    // explode debris from — it would be fighting its own purpose.
+    if (e.target.closest("#debris-clear")) return;
+
     spawnDebris(e.clientX, e.clientY, !!e.target.closest(".nav"));
 
     cursor.classList.add("is-clicking");
@@ -533,6 +537,17 @@
       cursor.classList.remove("is-clicking");
     }, 90);
   });
+
+  const clearButton = document.getElementById("debris-clear");
+  if (clearButton) {
+    clearButton.addEventListener("click", () => {
+      particles.forEach((p) => p.el.remove());
+      particles.length = 0;
+      try {
+        sessionStorage.removeItem(STORAGE_KEY);
+      } catch (e) {}
+    });
+  }
 
   const tick = () => {
     cursor.style.transform = "translate3d(" + (clientX - 11) + "px, " + (clientY - 11) + "px, 0)";

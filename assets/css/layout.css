@@ -78,10 +78,11 @@
 /* Active page indicator */
 .nav__links a[aria-current="page"] { color: var(--color-accent); }
 
-/* Light/dark theme toggle — sits in the nav links row as a small
-   circular icon button. The icon itself (sun vs moon) is set in JS
-   (assets/js/main.js), since it needs to reflect actual current state
-   on load, not just guess from CSS. */
+/* Shared look for the small circular icon buttons in the nav links row —
+   the theme toggle (#theme-toggle) and the debris clear button
+   (#debris-clear). Named after the first of the two; both are wired up
+   in assets/js/main.js, since the theme toggle's icon needs to reflect
+   actual current state on load, not just guess from CSS. */
 .theme-toggle {
   display: flex;
   align-items: center;

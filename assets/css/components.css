@@ -658,7 +658,14 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
    assets/js/main.js, which also runs the debris' fall/bounce physics;
    .has-custom-cursor is only added once that JS has actually constructed
    the cursor element. */
+/* Setting cursor:none on just .has-custom-cursor (<html>) doesn't actually
+   hide anything: base.css's `body { cursor: url(...) }` is an explicit
+   declaration on body itself, and inheriting "none" from an ancestor never
+   outranks an element's own declared value, no matter the specificity. So
+   body (and the interactive elements, which have their own explicit
+   cursor:url() too) each need their own override here. */
 .has-custom-cursor,
+.has-custom-cursor body,
 .has-custom-cursor a,
 .has-custom-cursor button,
 .has-custom-cursor summary,

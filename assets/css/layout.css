@@ -78,9 +78,9 @@
 /* Active page indicator */
 .nav__links a[aria-current="page"] { color: var(--color-accent); }
 
-/* The theme toggle and debris-clear circles sit closer to each other
-   than to the text links either side of them — they read as one small
-   control cluster, not two independent nav items. */
+/* The theme toggle and explosions toggle circles sit closer to each
+   other than to the text links either side of them — they read as one
+   small control cluster, not two independent nav items. */
 .nav__icons {
   display: flex;
   align-items: center;
@@ -88,11 +88,10 @@
 }
 
 /* Shared look for the small circular icon buttons in the nav links row —
-   the theme toggle (#theme-toggle), the explosions on/off toggle
-   (#debris-toggle), and the debris clear button (#debris-clear). Named
-   after the first of the three; all are wired up in assets/js/main.js,
-   since the theme toggle's icon needs to reflect actual current state
-   on load, not just guess from CSS. */
+   the theme toggle (#theme-toggle) and the explosions on/off toggle
+   (#debris-toggle). Named after the first of the two; both are wired up
+   in assets/js/main.js, since the theme toggle's icon needs to reflect
+   actual current state on load, not just guess from CSS. */
 .theme-toggle {
   display: flex;
   align-items: center;
@@ -115,21 +114,22 @@
 
 /* Star shown plain = explosions on. A diagonal slash crosses it out when
    off, rather than dimming the whole button — same full-strength icon
-   either way, just struck through. */
-/* Driven by a data-debris="off" attribute on <html>, not a class on the
-   button — set by the blocking pre-paint script in head.html (so the
-   crossed-out state is already correct on first paint, no flash of the
-   wrong state while main.js is still deferred) and kept in sync live by
-   the same toggle in main.js. Same pattern as data-theme. */
+   either way, just struck through. Turning explosions off also clears
+   every particle (see main.js), so there's no separate clear button
+   anymore — this is the only debris control. Driven by a
+   data-debris="off" attribute on <html>, not a class on the button —
+   set by the blocking pre-paint script in head.html (so the crossed-out
+   state is already correct on first paint, no flash of the wrong state
+   while main.js is still deferred) and kept in sync live by the same
+   toggle in main.js. Same pattern as data-theme. */
 .debris-toggle__slash { display: none; }
 html[data-debris="off"] .debris-toggle__slash { display: block; }
 
-/* Explosions don't run on touch devices at all (see main.js) — showing
-   controls for a feature that's hard-disabled there would just confuse,
-   so neither renders instead of sitting there inert. */
+/* Explosions don't run on touch devices at all (see main.js) — showing a
+   control for a feature that's hard-disabled there would just confuse,
+   so it never renders instead of sitting there inert. */
 @media (pointer: coarse) {
-  #debris-toggle,
-  #debris-clear { display: none; }
+  #debris-toggle { display: none; }
 }
 
 

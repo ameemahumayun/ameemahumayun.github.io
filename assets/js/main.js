@@ -573,6 +573,17 @@
     return restingOnFloor;
   };
 
+  // No separate clear button anymore — turning explosions off sweeps the
+  // board too, so flipping it back on always starts clean rather than
+  // leaving stale debris around that can no longer be clicked away.
+  const clearAllDebris = () => {
+    particles.forEach((p) => p.el.remove());
+    particles.length = 0;
+    try {
+      sessionStorage.removeItem(STORAGE_KEY);
+    } catch (e) {}
+  };
+
   const toggleButton = document.getElementById("debris-toggle");
   // The crossed-out look itself is driven by data-debris="off" on <html>
   // (CSS in layout.css), which head.html's pre-paint script already sets
@@ -596,14 +607,15 @@
       try {
         localStorage.setItem("debrisEnabled", debrisEnabled ? "on" : "off");
       } catch (e) {}
+      if (!debrisEnabled) clearAllDebris();
       applyToggleState();
     });
   }
 
   document.addEventListener("click", (e) => {
-    // Utility controls, not something to explode debris from — that
-    // would be fighting their own purpose.
-    if (e.target.closest("#debris-clear") || e.target.closest("#debris-toggle")) return;
+    // A utility control, not something to explode debris from — that
+    // would be fighting its own purpose.
+    if (e.target.closest("#debris-toggle")) return;
     if (!debrisEnabled) return;
 
     spawnDebris(e.clientX, e.clientY, !!e.target.closest(".nav"));
@@ -613,17 +625,6 @@
       cursor.classList.remove("is-clicking");
     }, 90);
   });
-
-  const clearButton = document.getElementById("debris-clear");
-  if (clearButton) {
-    clearButton.addEventListener("click", () => {
-      particles.forEach((p) => p.el.remove());
-      particles.length = 0;
-      try {
-        sessionStorage.removeItem(STORAGE_KEY);
-      } catch (e) {}
-    });
-  }
 
   const tick = () => {
     cursor.style.transform = "translate3d(" + (clientX - 11) + "px, " + (clientY - 11) + "px, 0)";

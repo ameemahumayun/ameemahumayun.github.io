@@ -242,7 +242,6 @@
   if (window.matchMedia("(pointer: coarse)").matches) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  const INTERACTIVE_SELECTOR = 'a, button, summary, [role="button"]';
   // Debris only lands where there's an actual design element to catch it —
   // text, the site's rule lines, or image/card "squares" — never on a bare
   // patch of background. The rule lines (nav's bottom edge, the footer and
@@ -257,7 +256,7 @@
     { selector: "#recent-updates", edge: "top" },
     { selector: ".accordion__item", edge: "bottom" },
   ];
-  const DIVIDER_BAND = 4;
+  const DIVIDER_BAND = 6;
   const SURFACE_SELECTOR =
     "p, li, h1, h2, h3, h4, blockquote, .eyebrow, .lead, img, .work-card, .hero__avatar, .carousel, .timeline";
 
@@ -272,21 +271,26 @@
   // stopping on an invisible floor, and stop simulating it once it's well
   // past the page's own content.
   const FALLOUT_MARGIN = 400;
-
-  // A single closed 16-vertex path, built once in both its spiky-star and
-  // circle form (same vertex count/order in both, so the browser's CSS `d`
-  // transition tweens vertex-to-vertex instead of needing to be redrawn
-  // every frame) — see .custom-cursor__shape / .is-interactive in
-  // components.css. One continuous path keeps the fill and outline a
-  // single coherent shape instead of several unconnected pieces.
-  const STAR_D =
-    "M11.0,0.5 L12.65,7.03 L18.42,3.58 L14.97,9.35 L21.5,11.0 L14.97,12.65 L18.42,18.42 L12.65,14.97 L11.0,21.5 L9.35,14.97 L3.58,18.42 L7.03,12.65 L0.5,11.0 L7.03,9.35 L3.58,3.58 L9.35,7.03 Z";
+  // Splitting each frame's movement into several smaller steps (each
+  // re-checking collisions) stops a fast particle from tunnelling straight
+  // through a thin divider band between one frame and the next — the
+  // nav's rule line is only DIVIDER_BAND px tall, easy to skip over
+  // otherwise, and landing there reliably is the whole point now that
+  // debris is expected to persist across a nav click's page navigation.
+  const SUBSTEPS = 4;
+  // Clicks navigate away (nav links, "see all work", etc.), which would
+  // normally destroy the burst mid-fall — stash it here on the way out
+  // and pick it back up on the next page, so it reads as one continuous
+  // pile rather than restarting every click.
+  const STORAGE_KEY = "site-cursor-debris-v1";
 
   const cursor = document.createElement("div");
   cursor.className = "custom-cursor";
   cursor.setAttribute("aria-hidden", "true");
+  // A plain dot, always — see components.css; a click pops it slightly
+  // and flings the debris, but the resting shape never changes.
   cursor.innerHTML =
-    '<svg width="22" height="22" viewBox="0 0 22 22"><path class="custom-cursor__shape" d="' + STAR_D + '"></path></svg>';
+    '<svg width="22" height="22" viewBox="0 0 22 22"><circle class="custom-cursor__shape" cx="11" cy="11" r="5"></circle></svg>';
 
   document.body.appendChild(cursor);
   document.documentElement.classList.add("has-custom-cursor");
@@ -298,7 +302,6 @@
     clientX = e.clientX;
     clientY = e.clientY;
     cursor.classList.add("is-visible");
-    cursor.classList.toggle("is-interactive", !!e.target.closest(INTERACTIVE_SELECTOR));
   });
 
   document.addEventListener("mouseleave", () => {
@@ -361,6 +364,21 @@
 
   const particles = [];
 
+  const createParticleEl = () => {
+    const el = document.createElement("div");
+    el.className = "cursor-particle";
+    el.innerHTML = '<svg width="7" height="7" viewBox="0 0 7 7"><path d="M3.5,0 L7,7 L0,7 Z"></path></svg>';
+    document.body.appendChild(el);
+    return el;
+  };
+
+  const trimParticles = () => {
+    while (particles.length > MAX_PARTICLES) {
+      const oldest = particles.shift();
+      oldest.el.remove();
+    }
+  };
+
   const spawnDebris = (originClientX, originClientY) => {
     const originX = originClientX + window.scrollX;
     const originY = originClientY + window.scrollY;
@@ -372,13 +390,8 @@
       const dirY = -Math.cos(rad);
       const speed = 3 + Math.random() * 3;
 
-      const el = document.createElement("div");
-      el.className = "cursor-particle";
-      el.innerHTML = '<svg width="7" height="7" viewBox="0 0 7 7"><path d="M3.5,0 L7,7 L0,7 Z"></path></svg>';
-      document.body.appendChild(el);
-
       particles.push({
-        el: el,
+        el: createParticleEl(),
         x: originX,
         y: originY,
         vx: dirX * speed,
@@ -389,14 +402,48 @@
       });
     });
 
-    while (particles.length > MAX_PARTICLES) {
-      const oldest = particles.shift();
-      oldest.el.remove();
-    }
+    trimParticles();
   };
 
+  // Persist whatever's currently falling/resting so a page navigation
+  // (a nav click, "see all work", etc.) doesn't just erase it — the next
+  // page picks the same particles back up and keeps simulating them.
+  const saveDebris = () => {
+    try {
+      const data = particles.map((p) => ({ x: p.x, y: p.y, vx: p.vx, vy: p.vy, angle: p.angle, angularVel: p.angularVel }));
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {}
+  };
+  window.addEventListener("pagehide", saveDebris);
+  window.addEventListener("beforeunload", saveDebris);
+
+  (() => {
+    let saved;
+    try {
+      saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || "[]");
+    } catch (e) {
+      saved = [];
+    }
+    saved.forEach((d) => {
+      particles.push({
+        el: createParticleEl(),
+        x: d.x,
+        y: d.y,
+        vx: d.vx,
+        vy: d.vy,
+        angle: d.angle,
+        angularVel: d.angularVel,
+        // Always re-settle against this page's own obstacles rather than
+        // trusting the flag from whatever page it was saved on — the
+        // layout underneath it may not be identical.
+        settled: false,
+      });
+    });
+    trimParticles();
+  })();
+
   // Returns true if p was actually resting against rect's top edge this
-  // frame (not just grazing a side/corner) — used to decide whether the
+  // step (not just grazing a side/corner) — used to decide whether the
   // particle has come to rest on it.
   const resolveObstacle = (p, rect) => {
     const closestX = Math.max(rect.left, Math.min(p.x, rect.right));
@@ -421,9 +468,6 @@
   document.addEventListener("click", (e) => {
     spawnDebris(e.clientX, e.clientY);
 
-    // Snap to a circle immediately. If the click wasn't on something
-    // interactive (is-interactive not set), releasing this class lets
-    // the points grow back out via .custom-cursor__shape's own transition.
     cursor.classList.add("is-clicking");
     window.setTimeout(() => {
       cursor.classList.remove("is-clicking");
@@ -440,33 +484,40 @@
 
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
+        let fellOut = false;
 
         if (!p.settled) {
-          p.vy += GRAVITY;
-          p.vx *= AIR_DRAG;
-          p.x += p.vx;
-          p.y += p.vy;
-          p.angle += p.angularVel;
+          for (let s = 0; s < SUBSTEPS && !fellOut; s++) {
+            p.vy += GRAVITY / SUBSTEPS;
+            p.vx *= Math.pow(AIR_DRAG, 1 / SUBSTEPS);
+            p.x += p.vx / SUBSTEPS;
+            p.y += p.vy / SUBSTEPS;
+            p.angle += p.angularVel / SUBSTEPS;
+
+            let restingOnTop = false;
+            for (let j = 0; j < obstacleRects.length; j++) {
+              if (resolveObstacle(p, obstacleRects[j])) restingOnTop = true;
+            }
+            if (restingOnTop && Math.abs(p.vx) < SETTLE_SPEED && Math.abs(p.vy) < SETTLE_SPEED) {
+              p.vx = 0;
+              p.vy = 0;
+              p.angularVel = 0;
+              p.settled = true;
+            }
+
+            // Nothing caught it on the way down — let it go rather than
+            // stopping it on a floor that isn't actually part of the page.
+            if (p.y > falloutY) {
+              fellOut = true;
+            }
+          }
           p.angularVel *= 0.97;
+        }
 
-          let restingOnTop = false;
-          for (let j = 0; j < obstacleRects.length; j++) {
-            if (resolveObstacle(p, obstacleRects[j])) restingOnTop = true;
-          }
-          if (restingOnTop && Math.abs(p.vx) < SETTLE_SPEED && Math.abs(p.vy) < SETTLE_SPEED) {
-            p.vx = 0;
-            p.vy = 0;
-            p.angularVel = 0;
-            p.settled = true;
-          }
-
-          // Nothing caught it on the way down — let it go rather than
-          // stopping it on a floor that isn't actually part of the page.
-          if (p.y > falloutY) {
-            p.el.remove();
-            particles.splice(i, 1);
-            continue;
-          }
+        if (fellOut) {
+          p.el.remove();
+          particles.splice(i, 1);
+          continue;
         }
 
         // Bump off the cursor whether or not the particle had settled —

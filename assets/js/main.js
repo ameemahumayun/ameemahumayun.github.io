@@ -278,10 +278,11 @@
   // otherwise, and landing there reliably is the whole point now that
   // debris is expected to persist across a nav click's page navigation.
   const SUBSTEPS = 4;
-  // Clicks navigate away (nav links, "see all work", etc.), which would
-  // normally destroy the burst mid-fall — stash it here on the way out
-  // and pick it back up on the next page, so it reads as one continuous
-  // pile rather than restarting every click.
+  // A nav click navigates away, which would normally destroy its burst
+  // mid-fall — stash nav-origin debris here on the way out and pick it
+  // back up on the next page, so the nav reads as one continuous pile
+  // rather than restarting every click. Debris from elsewhere on the page
+  // is deliberately left out of this (see spawnDebris' fromNav flag).
   const STORAGE_KEY = "site-cursor-debris-v1";
 
   const cursor = document.createElement("div");
@@ -367,7 +368,7 @@
   const createParticleEl = () => {
     const el = document.createElement("div");
     el.className = "cursor-particle";
-    el.innerHTML = '<svg width="7" height="7" viewBox="0 0 7 7"><path d="M3.5,0 L7,7 L0,7 Z"></path></svg>';
+    el.innerHTML = '<svg width="7" height="7" viewBox="0 0 7 7"><circle cx="3.5" cy="3.5" r="3"></circle></svg>';
     document.body.appendChild(el);
     return el;
   };
@@ -379,7 +380,7 @@
     }
   };
 
-  const spawnDebris = (originClientX, originClientY) => {
+  const spawnDebris = (originClientX, originClientY, fromNav) => {
     const originX = originClientX + window.scrollX;
     const originY = originClientY + window.scrollY;
     const angles = [0, 45, 90, 135, 180, 225, 270, 315];
@@ -399,18 +400,27 @@
         angle: angleDeg,
         angularVel: (Math.random() - 0.5) * 14,
         settled: false,
+        // The nav is the one thing that's identical on every page, so only
+        // debris that came from clicking inside it carries across a
+        // navigation — everything else is just local scatter for the page
+        // it happened on and is meant to vanish with it.
+        fromNav: !!fromNav,
       });
     });
 
     trimParticles();
   };
 
-  // Persist whatever's currently falling/resting so a page navigation
-  // (a nav click, "see all work", etc.) doesn't just erase it — the next
-  // page picks the same particles back up and keeps simulating them.
+  // Persist whatever nav-origin debris is currently falling/resting so a
+  // nav click's own page navigation doesn't erase it — the next page
+  // picks those particles back up and keeps simulating them. Debris from
+  // clicking anywhere else on the page is left out, since it belongs to
+  // that page, not the (identical, cross-page) nav bar.
   const saveDebris = () => {
     try {
-      const data = particles.map((p) => ({ x: p.x, y: p.y, vx: p.vx, vy: p.vy, angle: p.angle, angularVel: p.angularVel }));
+      const data = particles
+        .filter((p) => p.fromNav)
+        .map((p) => ({ x: p.x, y: p.y, vx: p.vx, vy: p.vy, angle: p.angle, angularVel: p.angularVel }));
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     } catch (e) {}
   };
@@ -437,6 +447,9 @@
         // trusting the flag from whatever page it was saved on — the
         // layout underneath it may not be identical.
         settled: false,
+        // Carried over specifically because it was nav debris — keep it
+        // tagged so it keeps surviving further nav navigations too.
+        fromNav: true,
       });
     });
     trimParticles();
@@ -466,7 +479,7 @@
   };
 
   document.addEventListener("click", (e) => {
-    spawnDebris(e.clientX, e.clientY);
+    spawnDebris(e.clientX, e.clientY, !!e.target.closest(".nav"));
 
     cursor.classList.add("is-clicking");
     window.setTimeout(() => {

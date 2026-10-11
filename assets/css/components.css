@@ -692,7 +692,7 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
    the cursor itself a small pop at the same moment, as part of that same
    "explode" beat. */
 .custom-cursor__shape {
-  fill: #AB2270;
+  fill: #FFB347;
   stroke: #0d0e10;
   stroke-width: 0.6;
   stroke-linejoin: round;
@@ -704,7 +704,7 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   transform: scale(1.3);
 }
 
-/* One flung star-point. main.js drives its position every frame (gravity,
+/* One flung debris dot. main.js drives its position every frame (gravity,
    bouncing off real page surfaces — text, dividers, cards/images — and the
    cursor, falling out of view if nothing catches it); this rule only sets
    its static look — same fill/stroke treatment as the cursor itself. */
@@ -718,9 +718,8 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   z-index: var(--z-cursor);
   will-change: transform;
 }
-.cursor-particle svg path {
-  fill: #AB2270;
+.cursor-particle svg circle {
+  fill: #FFB347;
   stroke: #0d0e10;
   stroke-width: 0.5;
-  stroke-linejoin: round;
 }

@@ -113,10 +113,11 @@
    no manual offset needed. */
 .theme-toggle__icon[hidden] { display: none; }
 
-/* Dimmed sparkle = explosions off. Full accent = on, same as its hover
-   color, so the "on" state reads as the button's normal/active look. */
-#debris-toggle.is-off { color: var(--color-text-mute); opacity: 0.55; }
-#debris-toggle.is-off:hover { color: var(--color-text-soft); border-color: var(--color-border); }
+/* Star shown plain = explosions on. A diagonal slash crosses it out when
+   off, rather than dimming the whole button — same full-strength icon
+   either way, just struck through. */
+.debris-toggle__slash { display: none; }
+#debris-toggle.is-off .debris-toggle__slash { display: block; }
 
 /* Explosions don't run on touch devices at all (see main.js) — showing a
    toggle for a feature that's hard-disabled there would just confuse,

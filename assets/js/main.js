@@ -574,9 +574,17 @@
   };
 
   const toggleButton = document.getElementById("debris-toggle");
+  // The crossed-out look itself is driven by data-debris="off" on <html>
+  // (CSS in layout.css), which head.html's pre-paint script already sets
+  // before first paint — this only needs to keep it (and the button's
+  // a11y attributes) in sync from here on, not set it from scratch.
   const applyToggleState = () => {
+    if (debrisEnabled) {
+      document.documentElement.removeAttribute("data-debris");
+    } else {
+      document.documentElement.setAttribute("data-debris", "off");
+    }
     if (!toggleButton) return;
-    toggleButton.classList.toggle("is-off", !debrisEnabled);
     toggleButton.setAttribute("aria-pressed", String(!debrisEnabled));
     toggleButton.setAttribute("aria-label", debrisEnabled ? "Turn off click explosions" : "Turn on click explosions");
   };

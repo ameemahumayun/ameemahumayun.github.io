@@ -116,14 +116,20 @@
 /* Star shown plain = explosions on. A diagonal slash crosses it out when
    off, rather than dimming the whole button — same full-strength icon
    either way, just struck through. */
+/* Driven by a data-debris="off" attribute on <html>, not a class on the
+   button — set by the blocking pre-paint script in head.html (so the
+   crossed-out state is already correct on first paint, no flash of the
+   wrong state while main.js is still deferred) and kept in sync live by
+   the same toggle in main.js. Same pattern as data-theme. */
 .debris-toggle__slash { display: none; }
-#debris-toggle.is-off .debris-toggle__slash { display: block; }
+html[data-debris="off"] .debris-toggle__slash { display: block; }
 
-/* Explosions don't run on touch devices at all (see main.js) — showing a
-   toggle for a feature that's hard-disabled there would just confuse,
-   so it never renders instead of sitting there inert. */
+/* Explosions don't run on touch devices at all (see main.js) — showing
+   controls for a feature that's hard-disabled there would just confuse,
+   so neither renders instead of sitting there inert. */
 @media (pointer: coarse) {
-  #debris-toggle { display: none; }
+  #debris-toggle,
+  #debris-clear { display: none; }
 }
 
 

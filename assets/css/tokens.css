@@ -40,6 +40,9 @@
   --color-selection-bg: #FFDFE9;  /* very light pink text-selection highlight */
   --color-selection-fg: var(--color-bg);
 
+  --color-cursor: #FFB347;  /* custom cursor + debris fill — fixed brand
+                                color across dark/light; rose overrides it */
+
 
   /* ----- TYPOGRAPHY ------------------------------------------------------ */
   --font-body:    'Nunito Sans', system-ui, sans-serif;
@@ -183,4 +186,6 @@
 
   --color-selection-bg: #f6c6cf;
   --color-selection-fg: #2b1214;
+
+  --color-cursor: #7a1620;  /* maroon, in place of the usual orange */
 }

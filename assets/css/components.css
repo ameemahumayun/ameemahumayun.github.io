@@ -714,7 +714,7 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
    the cursor itself a small pop at the same moment, as part of that same
    "explode" beat. */
 .custom-cursor__shape {
-  fill: #FFB347;
+  fill: var(--color-cursor);
   stroke: #0d0e10;
   stroke-width: 0.6;
   stroke-linejoin: round;
@@ -741,7 +741,7 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   will-change: transform;
 }
 .cursor-particle svg circle {
-  fill: #FFB347;
+  fill: var(--color-cursor);
   stroke: #0d0e10;
   stroke-width: 0.5;
 }

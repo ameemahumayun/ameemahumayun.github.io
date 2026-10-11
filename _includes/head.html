@@ -1,13 +1,16 @@
 <head>
-  <!-- Applied before any CSS loads, so the light/dark choice is in place
-       for first paint instead of flashing dark-then-light. Mirrors the
-       toggle logic in assets/js/main.js — keep the two in sync. -->
+  <!-- Applied before any CSS loads, so the dark/light/rose choice is in
+       place for first paint instead of flashing dark-then-something-else.
+       Mirrors the toggle logic in assets/js/main.js — keep the two in
+       sync. Rose is only ever reached via the stored explicit choice —
+       there's no OS-level "prefers rose" to fall back to, only light vs
+       dark. -->
   <script>
     (function () {
       try {
         var stored = localStorage.getItem("theme");
         var theme = stored || (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-        if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
+        if (theme === "light" || theme === "rose") document.documentElement.setAttribute("data-theme", theme);
       } catch (e) {}
     })();
   </script>

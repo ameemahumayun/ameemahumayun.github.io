@@ -152,3 +152,35 @@
                                       pink selection needs dark text for
                                       contrast regardless of theme */
 }
+
+
+/* ==========================================================================
+   ROSE THEME — a third option alongside dark/light: a very soft, almost
+   white pink background with a dark red accent in place of the usual
+   butter yellow. Toggled the same way as light mode (data-theme on
+   <html>), cycled through by the same nav button — see head.html's
+   pre-paint script and assets/js/main.js's three-way toggle.
+   ========================================================================== */
+:root[data-theme="rose"] {
+  --color-bg:           #fdf4f6;
+  --color-bg-lift:      #fffafb;
+  --color-bg-card:      #fffafb;
+  --color-bg-card-deep: #f6e3e8;
+  --color-bg-terminal:  #1a1214;
+
+  --color-text:         #2b1f22;
+  --color-text-strong:  #190f12;
+  --color-text-soft:    #6b575c;
+  --color-text-mute:    #8a7478;
+
+  --color-border:       #ecd9dd;
+  --color-border-soft:  #f3e6e9;
+  --color-rule:         #ddc2c8;
+
+  --color-accent:       #8c1f2b;  /* dark red, in place of butter yellow */
+  --color-accent-deep:  #6e1620;
+  --color-accent-light: #b03a46;
+
+  --color-selection-bg: #f6c6cf;
+  --color-selection-fg: #2b1214;
+}

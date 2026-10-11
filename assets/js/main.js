@@ -15,12 +15,13 @@
    4. Carousel. One .carousel__panel at a time (image slides or a plain
       text/HTML block) with prev/next controls and a counter. Works for
       any number of panels on any page with a .carousel element.
-   5. Theme toggle. Flips the data-theme attribute on <html> between
-      "light" and "dark", persists the choice to localStorage, and keeps
-      the nav button's icon/label in sync. The actual color swap is pure
-      CSS (see tokens.css's [data-theme="light"] block) — this just
-      flips the attribute. A matching inline script in head.html applies
-      the stored choice before first paint so there's no flash.
+   5. Theme toggle. Cycles the data-theme attribute on <html> through
+      dark -> light -> rose -> dark, persists the choice to localStorage,
+      and keeps the nav button's icon/label in sync. The actual color
+      swap is pure CSS (see tokens.css's [data-theme="light"/"rose"]
+      blocks) — this just flips the attribute. A matching inline script
+      in head.html applies the stored choice before first paint so
+      there's no flash.
    6. Custom cursor. Builds the star-shaped pointer as a DOM element (so
       it can be animated) in place of the plain cursor:url() from
       base.css, which stays as the fallback on touch devices and for
@@ -194,7 +195,15 @@
 
   const sunIcon = toggle.querySelector(".theme-toggle__icon--sun");
   const moonIcon = toggle.querySelector(".theme-toggle__icon--moon");
+  const roseIcon = toggle.querySelector(".theme-toggle__icon--rose");
   const root = document.documentElement;
+
+  // dark -> light -> rose -> dark. The icon shown is always the *next*
+  // theme a click will switch to (sun showing while dark = "tap for
+  // light"), matching the convention the sun/moon pair already had.
+  const ORDER = ["dark", "light", "rose"];
+  const NEXT_ICON = { dark: sunIcon, light: roseIcon, rose: moonIcon };
+  const LABEL = { dark: "Switch to light theme", light: "Switch to rose theme", rose: "Switch to dark theme" };
 
   // Setting the .hidden IDL property on these <svg> elements doesn't
   // reliably reflect to the actual "hidden" HTML attribute (verified:
@@ -210,21 +219,25 @@
   };
 
   const applyState = (theme) => {
-    const isLight = theme === "light";
-    setHidden(sunIcon, isLight);
-    setHidden(moonIcon, !isLight);
-    toggle.setAttribute("aria-label", isLight ? "Switch to dark theme" : "Switch to light theme");
-    toggle.setAttribute("aria-pressed", String(isLight));
+    const shown = NEXT_ICON[theme];
+    [sunIcon, moonIcon, roseIcon].forEach((icon) => setHidden(icon, icon !== shown));
+    toggle.setAttribute("aria-label", LABEL[theme]);
+    toggle.setAttribute("aria-pressed", String(theme !== "dark"));
   };
 
-  applyState(root.getAttribute("data-theme") === "light" ? "light" : "dark");
+  const currentTheme = () => {
+    const attr = root.getAttribute("data-theme");
+    return ORDER.includes(attr) ? attr : "dark";
+  };
+
+  applyState(currentTheme());
 
   toggle.addEventListener("click", () => {
-    const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-    if (next === "light") {
-      root.setAttribute("data-theme", "light");
-    } else {
+    const next = ORDER[(ORDER.indexOf(currentTheme()) + 1) % ORDER.length];
+    if (next === "dark") {
       root.removeAttribute("data-theme");
+    } else {
+      root.setAttribute("data-theme", next);
     }
     try {
       localStorage.setItem("theme", next);
@@ -237,9 +250,11 @@
   "use strict";
 
   if (!window.matchMedia) return;
-  // No mouse to skin on touch devices, and reduced-motion means no flying
-  // debris — in both cases just leave the plain cursor:url() from base.css.
-  if (window.matchMedia("(pointer: coarse)").matches) return;
+  // Reduced-motion means no flying debris at all — leave the plain
+  // cursor:url() from base.css. Touch devices DO still get the tap
+  // explosion (a "click" fires on tap with real coordinates); they just
+  // never see the custom cursor dot itself, since mousemove never fires
+  // there and it stays parked off-screen.
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   // Debris only lands where there's an actual design element to catch it —
@@ -328,6 +343,13 @@
   // particle can fall, and it would free-fall forever. Anchor to the
   // footer's own bottom edge instead, which every page layout ends with.
   let pageBottom = 0;
+  // .nav is position:sticky, so unlike every other divider its screen
+  // position stays constant while its *document* position slides down by
+  // the scroll amount — a document-space rect snapshotted once on load
+  // would immediately go stale the moment the page scrolls. Kept in
+  // viewport coordinates instead (which don't change for a stuck sticky
+  // element) and converted to document space fresh every tick.
+  let navDivider = null;
   const refreshObstacles = () => {
     const scrollX = window.scrollX;
     const scrollY = window.scrollY;
@@ -344,12 +366,23 @@
       document.querySelectorAll(selector).forEach((el) => {
         const r = el.getBoundingClientRect();
         if (r.width === 0 || r.height === 0) return;
-        const lineY = (edge === "bottom" ? r.bottom : r.top) + scrollY;
+        const lineY = edge === "bottom" ? r.bottom : r.top;
+
+        if (el.classList.contains("nav")) {
+          navDivider = {
+            left: r.left,
+            right: r.right,
+            top: lineY - DIVIDER_BAND / 2,
+            bottom: lineY + DIVIDER_BAND / 2,
+          };
+          return;
+        }
+
         solid.push({
           left: r.left + scrollX,
           right: r.right + scrollX,
-          top: lineY - DIVIDER_BAND / 2,
-          bottom: lineY + DIVIDER_BAND / 2,
+          top: lineY + scrollY - DIVIDER_BAND / 2,
+          bottom: lineY + scrollY + DIVIDER_BAND / 2,
         });
       });
     });
@@ -404,7 +437,7 @@
       const rad = (angleDeg * Math.PI) / 180;
       const dirX = Math.sin(rad);
       const dirY = -Math.cos(rad);
-      const speed = 3 + Math.random() * 3;
+      const speed = 4.5 + Math.random() * 3.5;
 
       particles.push({
         el: createParticleEl(),
@@ -519,6 +552,12 @@
     } else if (rect.bottom - p.y < PARTICLE_RADIUS) {
       p.y = rect.bottom - PARTICLE_RADIUS;
       if (p.vy > 0) p.vy *= -OBSTACLE_RESTITUTION;
+      // Friction: resting on the container's floor only ever reflected vy
+      // — vx was untouched, so a particle with any sideways speed left
+      // over just kept sliding at (almost) that speed forever, decaying
+      // only via the very weak global air-drag. Without this it could
+      // take upwards of 10 seconds to actually cross the settle threshold.
+      p.vx *= 0.85;
       restingOnFloor = true;
     }
 
@@ -556,6 +595,15 @@
       const cursorDocX = clientX + window.scrollX;
       const cursorDocY = clientY + window.scrollY;
       const falloutY = pageBottom + FALLOUT_MARGIN;
+      // .nav's document position depends on the *current* scroll (see
+      // navDivider above) — re-derive it once per frame rather than once
+      // per load/resize.
+      const navRectDoc = navDivider && {
+        left: navDivider.left + window.scrollX,
+        right: navDivider.right + window.scrollX,
+        top: navDivider.top + window.scrollY,
+        bottom: navDivider.bottom + window.scrollY,
+      };
 
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
@@ -570,6 +618,11 @@
             p.angle += p.angularVel / SUBSTEPS;
 
             let restingOnTop = false;
+            let onNav = false;
+            if (navRectDoc && resolveObstacle(p, navRectDoc)) {
+              restingOnTop = true;
+              onNav = true;
+            }
             for (let j = 0; j < solidRects.length; j++) {
               if (resolveObstacle(p, solidRects[j])) restingOnTop = true;
             }
@@ -581,6 +634,15 @@
               p.vy = 0;
               p.angularVel = 0;
               p.settled = true;
+              // Riding on the sticky nav: remember where relative to the
+              // *viewport*, not the document, so it can be re-derived
+              // from the live scroll position every frame below instead
+              // of staying frozen at today's document coordinates.
+              p.stuckToNav = onNav;
+              if (onNav) {
+                p.navOffsetX = p.x - window.scrollX;
+                p.navOffsetY = p.y - window.scrollY;
+              }
             }
 
             // Nothing caught it on the way down — let it go rather than
@@ -590,6 +652,9 @@
             }
           }
           p.angularVel *= 0.97;
+        } else if (p.stuckToNav) {
+          p.x = p.navOffsetX + window.scrollX;
+          p.y = p.navOffsetY + window.scrollY;
         }
 
         if (fellOut) {
@@ -614,6 +679,7 @@
           p.vy += ny * overlap * 0.6 - 0.6;
           p.angularVel += (Math.random() - 0.5) * 6;
           p.settled = false;
+          p.stuckToNav = false;
         }
 
         p.el.style.transform = "translate3d(" + (p.x - PARTICLE_RADIUS) + "px, " + (p.y - PARTICLE_RADIUS) + "px, 0) rotate(" + p.angle + "deg)";

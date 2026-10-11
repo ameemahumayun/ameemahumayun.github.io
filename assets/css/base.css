@@ -31,14 +31,21 @@ summary,
    maroon — these are baked into a static SVG data URI each, so unlike
    the live custom cursor (components.css, var(--color-cursor)) they
    need their own explicit per-theme override rather than just reading
-   the token. */
-:root[data-theme="rose"] body {
+   the token.
+   Deliberately NOT `:root[data-theme="rose"] body` — that reads clearer
+   but its specificity (0,2,1) beats components.css's
+   `.has-custom-cursor body { cursor: none }` (0,1,1), which is the rule
+   that's supposed to hide this exact fallback once JS has built the
+   real cursor — rose would always leak the native star through. Dropping
+   the leading `:root`/`html` keeps this at (0,1,1), tying that rule, and
+   components.css loading after base.css lets the later one win. */
+[data-theme="rose"] body {
   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'><path d='M11.0,1.0 L12.44,7.05 L17.43,3.34 L14.64,8.9 L20.85,9.26 L15.14,11.73 L19.66,16.0 L13.7,14.22 L14.42,20.4 L11.0,15.2 L7.58,20.4 L8.3,14.22 L2.34,16.0 L6.86,11.73 L1.15,9.26 L7.36,8.9 L4.57,3.34 L9.56,7.05 Z' fill='%237a1620' stroke='%230d0e10' stroke-width='0.6'/></svg>") 11 11, auto;
 }
-:root[data-theme="rose"] a,
-:root[data-theme="rose"] button,
-:root[data-theme="rose"] summary,
-:root[data-theme="rose"] [role="button"] {
+[data-theme="rose"] a,
+[data-theme="rose"] button,
+[data-theme="rose"] summary,
+[data-theme="rose"] [role="button"] {
   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='5' fill='%237a1620' stroke='%230d0e10' stroke-width='0.75'/></svg>") 8 8, pointer;
 }
 

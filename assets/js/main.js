@@ -21,6 +21,13 @@
       CSS (see tokens.css's [data-theme="light"] block) — this just
       flips the attribute. A matching inline script in head.html applies
       the stored choice before first paint so there's no flash.
+   6. Custom cursor. Builds the star-shaped pointer as a DOM element (so
+      it can be animated) in place of the plain cursor:url() from
+      base.css, which stays as the fallback on touch devices and for
+      reduced-motion. Hovering a link/button retracts its points to a
+      circle; clicking anywhere snaps it to a circle too and flings the
+      points off as falling triangle debris, regrowing them only if the
+      click wasn't on something interactive.
    ========================================================================== */
 
 (function () {
@@ -223,5 +230,118 @@
       localStorage.setItem("theme", next);
     } catch (e) {}
     applyState(next);
+  });
+})();
+
+(function () {
+  "use strict";
+
+  if (!window.matchMedia) return;
+  // No mouse to skin on touch devices, and reduced-motion means no flying
+  // debris — in both cases just leave the plain cursor:url() from base.css.
+  if (window.matchMedia("(pointer: coarse)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const SPIKE_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
+  const INTERACTIVE_SELECTOR = 'a, button, summary, [role="button"]';
+
+  const cursor = document.createElement("div");
+  cursor.className = "custom-cursor";
+  cursor.setAttribute("aria-hidden", "true");
+
+  SPIKE_ANGLES.forEach((angle) => {
+    const arm = document.createElement("div");
+    arm.className = "custom-cursor__arm";
+    arm.style.setProperty("--angle", angle + "deg");
+    arm.dataset.angle = String(angle);
+    const spike = document.createElement("div");
+    spike.className = "custom-cursor__spike";
+    arm.appendChild(spike);
+    cursor.appendChild(arm);
+  });
+
+  const core = document.createElement("div");
+  core.className = "custom-cursor__core";
+  cursor.appendChild(core);
+
+  document.body.appendChild(cursor);
+  document.documentElement.classList.add("has-custom-cursor");
+
+  const arms = Array.from(cursor.querySelectorAll(".custom-cursor__arm"));
+
+  let x = -100;
+  let y = -100;
+  let queued = false;
+
+  const render = () => {
+    queued = false;
+    cursor.style.transform = "translate3d(" + (x - 11) + "px, " + (y - 11) + "px, 0)";
+  };
+
+  const queueRender = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(render);
+  };
+
+  document.addEventListener("mousemove", (e) => {
+    x = e.clientX;
+    y = e.clientY;
+    cursor.classList.add("is-visible");
+    cursor.classList.toggle("is-interactive", !!e.target.closest(INTERACTIVE_SELECTOR));
+    queueRender();
+  });
+
+  document.addEventListener("mouseleave", () => {
+    cursor.classList.remove("is-visible");
+  });
+
+  // Flings each of the 8 star points outward from the click point, then
+  // lets them tumble down and fade — independent elements, since the
+  // cursor itself snaps to a circle immediately and keeps moving.
+  const spawnDebris = (originX, originY) => {
+    arms.forEach((arm) => {
+      const angleDeg = Number(arm.dataset.angle) || 0;
+      const rad = (angleDeg * Math.PI) / 180;
+      // angle 0 = "up", matching the arm's own un-rotated spike direction.
+      const dirX = Math.sin(rad);
+      const dirY = -Math.cos(rad);
+
+      const particle = document.createElement("div");
+      particle.className = "cursor-particle";
+      document.body.appendChild(particle);
+
+      const burst = 10 + Math.random() * 8;
+      const drift = (Math.random() - 0.5) * 16;
+      const fall = 46 + Math.random() * 30;
+      const spin = angleDeg + (Math.random() - 0.5) * 180;
+      const duration = 650 + Math.random() * 300;
+
+      const start = "translate3d(" + (originX - 3.5) + "px, " + (originY - 3.5) + "px, 0) rotate(" + angleDeg + "deg)";
+      const burstPoint = "translate3d(" + (originX - 3.5 + dirX * burst) + "px, " + (originY - 3.5 + dirY * burst) + "px, 0) rotate(" + (angleDeg + 40) + "deg)";
+      const landed = "translate3d(" + (originX - 3.5 + dirX * burst + drift) + "px, " + (originY - 3.5 + dirY * burst + fall) + "px, 0) rotate(" + spin + "deg)";
+
+      const animation = particle.animate(
+        [
+          { transform: start, opacity: 1, easing: "cubic-bezier(0.17, 0.89, 0.32, 1.25)" },
+          { transform: burstPoint, opacity: 1, offset: 0.28, easing: "cubic-bezier(0.45, 0, 0.55, 1)" },
+          { transform: landed, opacity: 0 },
+        ],
+        { duration: duration, fill: "forwards" }
+      );
+      animation.onfinish = () => particle.remove();
+    });
+  };
+
+  document.addEventListener("click", (e) => {
+    spawnDebris(e.clientX, e.clientY);
+
+    // Snap to a circle immediately. If the click wasn't on something
+    // interactive (is-interactive not set), releasing this class lets
+    // the spikes grow back out via .custom-cursor__arm's own transition.
+    cursor.classList.add("is-clicking");
+    window.setTimeout(() => {
+      cursor.classList.remove("is-clicking");
+    }, 90);
   });
 })();

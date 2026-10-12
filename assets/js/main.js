@@ -716,7 +716,7 @@
     });
   }
 
-  document.addEventListener("click", (e) => {
+  const explodeAt = (e) => {
     // A utility control, not something to explode debris from — that
     // would be fighting its own purpose.
     if (e.target.closest("#debris-toggle")) return;
@@ -728,6 +728,26 @@
     window.setTimeout(() => {
       cursor.classList.remove("is-clicking");
     }, 90);
+  };
+
+  // A mouse explodes on press, not release: a "click" only fires once
+  // the button comes back up, but a text field (the contact form's
+  // Name/Email) focuses and lights up its border on press — so the first
+  // click into one looked like nothing exploded until the release, while
+  // every later click (field already focused) didn't show that gap.
+  // Touch stays on "click" so a finger that starts a scroll never bursts.
+  // The flag stops that press's own click from bursting a second time.
+  let burstOnPress = false;
+  document.addEventListener("pointerdown", (e) => {
+    burstOnPress = e.pointerType === "mouse" && e.button === 0;
+    if (burstOnPress) explodeAt(e);
+  });
+  document.addEventListener("click", (e) => {
+    if (burstOnPress) {
+      burstOnPress = false;
+      return;
+    }
+    explodeAt(e);
   });
 
   const tick = () => {

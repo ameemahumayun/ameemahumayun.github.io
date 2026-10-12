@@ -37,6 +37,9 @@
   --color-accent-deep:  #d9c67e;
   --color-accent-light: #f8eeba;  /* brighter/lighter than --color-accent */
 
+  --color-link:         var(--color-accent);        /* inline content links (.link-teal) */
+  --color-link-hover:   var(--color-accent-light);
+
   --color-selection-bg: var(--color-accent-deep);  /* darker butter yellow text-selection highlight, matches --color-cursor */
   --color-selection-fg: var(--color-bg);
 
@@ -184,6 +187,8 @@
   --color-accent:       #6b0f1c;  /* deep maroon, in place of butter yellow */
   --color-accent-deep:  #520a14;
   --color-accent-light: #8c1f2b;
+
+  --color-link:         #7a1620;  /* a step brighter than the #6b0f1c accent */
 
   --color-selection-bg: #f6c6cf;
   --color-selection-fg: #2b1214;

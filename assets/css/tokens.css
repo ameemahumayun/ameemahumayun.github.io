@@ -190,3 +190,40 @@
 
   --color-cursor: #7a1620;  /* maroon, in place of the usual orange */
 }
+
+
+/* ==========================================================================
+   GARNET / CRIMSON — two more stops on the same toggle (dark -> rose ->
+   garnet -> crimson -> dark), added to preview a variant: both swap the
+   usual butter-yellow accent for rose's red; crimson additionally swaps
+   the near-black background for a dark maroon pulled from that same red
+   family. Everything not listed here (text, borders, selection, cursor)
+   simply falls through to the values above, since these only override
+   what actually changes.
+   ========================================================================== */
+:root[data-theme="garnet"] {
+  --color-accent:       #8c1f2b;  /* rose's red, in place of butter yellow */
+  --color-accent-deep:  #6e1620;
+  --color-accent-light: #b03a46;
+}
+
+:root[data-theme="crimson"] {
+  --color-bg:           #2a0f13;  /* dark maroon, in place of near-black */
+  --color-bg-lift:      #351317;
+  --color-bg-card:      #3a151a;
+  --color-bg-card-deep: #45191e;
+  --color-bg-terminal:  #150709;
+
+  --color-text:         #e8d9da;
+  --color-text-strong:  #faf2f2;
+  --color-text-soft:    #b89a9c;
+  --color-text-mute:    #9c8183;
+
+  --color-border:       #4a2024;
+  --color-border-soft:  #3a171b;
+  --color-rule:         #5a272c;
+
+  --color-accent:       #8c1f2b;  /* same red as garnet/rose */
+  --color-accent-deep:  #6e1620;
+  --color-accent-light: #b03a46;
+}

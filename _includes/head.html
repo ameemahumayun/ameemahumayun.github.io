@@ -1,26 +1,27 @@
 <head>
-  <!-- Applied before any CSS loads, so the dark/rose choice and the
+  <!-- Applied before any CSS loads, so the theme choice and the
        explosions on/off state are both in place for first paint instead
        of flashing the default and then correcting a moment later once
        main.js runs (deferred, so it only executes after the DOM — and
        this button — exist). Mirrors the toggle logic in assets/js/main.js
-       — keep the two in sync. Light is pulled from the rotation for now
-       (tokens.css still has it, just nothing sets it anymore) — rose is
-       this site's light theme these days, so a first-time visitor with
-       no stored choice who prefers a light OS lands on rose instead of
-       dark; a stale stored "light" from before falls into that same
-       OS-preference check rather than straight to dark. -->
+       (dark -> rose -> garnet -> crimson) — keep the two in sync. Light
+       is pulled from the rotation for now (tokens.css still has it, just
+       nothing sets it anymore) — rose is this site's light theme these
+       days, so a first-time visitor with no stored choice who prefers a
+       light OS lands on rose instead of dark; a stale stored "light"
+       from before falls into that same OS-preference check rather than
+       straight to dark. -->
   <script>
     (function () {
       try {
         var stored = localStorage.getItem("theme");
         var theme;
-        if (stored === "rose" || stored === "dark") {
+        if (stored === "rose" || stored === "dark" || stored === "garnet" || stored === "crimson") {
           theme = stored;
         } else {
           theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "rose" : "dark";
         }
-        if (theme === "rose") document.documentElement.setAttribute("data-theme", "rose");
+        if (theme !== "dark") document.documentElement.setAttribute("data-theme", theme);
       } catch (e) {}
       try {
         if (localStorage.getItem("debrisEnabled") === "off") document.documentElement.setAttribute("data-debris", "off");

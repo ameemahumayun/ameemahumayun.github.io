@@ -451,9 +451,11 @@
         angularVel: (Math.random() - 0.5) * 14,
         settled: false,
         // The nav is the one thing that's identical on every page, so only
-        // debris that came from clicking inside it carries across a
-        // navigation — everything else is just local scatter for the page
-        // it happened on and is meant to vanish with it.
+        // debris that came from clicking inside it — and is still there
+        // when the page unloads (see the settle block in tick(), which
+        // clears this if it ends up resting anywhere else) — carries
+        // across a navigation. Everything else is just local scatter for
+        // the page it happened on and is meant to vanish with it.
         fromNav: !!fromNav,
       });
     });
@@ -657,12 +659,20 @@
   applyToggleState();
 
   if (toggleButton) {
-    toggleButton.addEventListener("click", () => {
+    toggleButton.addEventListener("click", (e) => {
       debrisEnabled = !debrisEnabled;
       try {
         localStorage.setItem("debrisEnabled", debrisEnabled ? "on" : "off");
-      } catch (e) {}
-      if (!debrisEnabled) clearAllDebris();
+      } catch (e2) {}
+      if (debrisEnabled) {
+        // Flipping it back on should feel the same as any other click
+        // that explodes — not a silent state change.
+        spawnDebris(e.clientX, e.clientY, true);
+        cursor.classList.add("is-clicking");
+        window.setTimeout(() => cursor.classList.remove("is-clicking"), 90);
+      } else {
+        clearAllDebris();
+      }
       applyToggleState();
     });
   }
@@ -735,6 +745,13 @@
               if (onNav) {
                 p.navOffsetX = p.x - window.scrollX;
                 p.navOffsetY = p.y - window.scrollY;
+              } else {
+                // Landed somewhere that isn't the nav — even if it
+                // started as a nav-origin burst, it's fallen out and
+                // belongs to this page now, not the (identical,
+                // cross-page) nav bar. Stop carrying it across a
+                // navigation (see fromNav's use in saveDebris).
+                p.fromNav = false;
               }
             }
 

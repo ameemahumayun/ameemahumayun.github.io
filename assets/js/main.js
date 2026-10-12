@@ -573,6 +573,58 @@
     return restingOnFloor;
   };
 
+  // Two debris circles overlapping each other — pushed apart so they
+  // never visibly pass through one another. A still-moving particle
+  // landing on a resting pile knocks it loose (impulse + wakes both up);
+  // two particles already at rest just touching are separated without
+  // being woken, so a settled pile doesn't jitter itself forever.
+  const resolveParticleCollision = (a, b) => {
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const dist = Math.hypot(dx, dy);
+    const minDist = PARTICLE_RADIUS * 2;
+    if (dist >= minDist) return;
+
+    const nx = dist > 0.001 ? dx / dist : 1;
+    const ny = dist > 0.001 ? dy / dist : 0;
+    const overlap = minDist - dist;
+    const aMovable = !a.settled;
+    const bMovable = !b.settled;
+
+    if (aMovable && bMovable) {
+      a.x -= nx * overlap * 0.5;
+      a.y -= ny * overlap * 0.5;
+      b.x += nx * overlap * 0.5;
+      b.y += ny * overlap * 0.5;
+    } else if (aMovable) {
+      a.x -= nx * overlap;
+      a.y -= ny * overlap;
+    } else if (bMovable) {
+      b.x += nx * overlap;
+      b.y += ny * overlap;
+    } else {
+      a.x -= nx * overlap * 0.5;
+      a.y -= ny * overlap * 0.5;
+      b.x += nx * overlap * 0.5;
+      b.y += ny * overlap * 0.5;
+      return;
+    }
+
+    const velAlongNormal = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+    if (velAlongNormal < 0) {
+      const impulse = -(1 + OBSTACLE_RESTITUTION) * velAlongNormal * 0.5;
+      a.vx -= impulse * nx;
+      a.vy -= impulse * ny;
+      b.vx += impulse * nx;
+      b.vy += impulse * ny;
+    }
+
+    a.settled = false;
+    b.settled = false;
+    a.stuckToNav = false;
+    b.stuckToNav = false;
+  };
+
   // No separate clear button anymore — turning explosions off sweeps the
   // board too, so flipping it back on always starts clean rather than
   // leaving stale debris around that can no longer be clicked away.
@@ -719,7 +771,21 @@
           p.settled = false;
           p.stuckToNav = false;
         }
+      }
 
+      // Debris-on-debris: every pair gets a shot at being pushed apart
+      // (so they never visually sit on top of each other), but an
+      // impulse/wake-up only happens when at least one side is actually
+      // still moving — two already-resting particles just touching
+      // shouldn't jitter each other awake forever.
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          resolveParticleCollision(particles[i], particles[j]);
+        }
+      }
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
         p.el.style.transform = "translate3d(" + (p.x - PARTICLE_RADIUS) + "px, " + (p.y - PARTICLE_RADIUS) + "px, 0) rotate(" + p.angle + "deg)";
       }
     }

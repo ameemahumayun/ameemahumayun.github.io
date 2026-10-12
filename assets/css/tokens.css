@@ -166,7 +166,7 @@
    pre-paint script and assets/js/main.js's three-way toggle.
    ========================================================================== */
 :root[data-theme="rose"] {
-  --color-bg:           #fedee4;  /* between the original #fdf4f6 and #ffc7d3 */
+  --color-bg:           #fee8ec;  /* soft pink, a touch lighter than #fedee4 */
   --color-bg-lift:      #fffafb;
   --color-bg-card:      #fffafb;
   --color-bg-card-deep: #f6e3e8;
@@ -189,39 +189,4 @@
   --color-selection-fg: #2b1214;
 
   --color-cursor: #5e0c17;  /* maroon, in place of the usual orange */
-}
-
-
-/* ==========================================================================
-   GARNET — rose inverted, the next stop on the same toggle (dark -> rose
-   -> garnet -> dark). A deep maroon background (#3f040b) with rose's
-   soft pink (#fedee4) as the text/highlight color — the reverse of rose's pink
-   background with dark text. Links use their own brighter pinks
-   (--color-accent #ff99b0, --color-accent-light #ff7a98 on hover) rather
-   than the body-text pink, so they still read as interactive against it.
-   ========================================================================== */
-:root[data-theme="garnet"] {
-  --color-bg:           #3f040b;
-  --color-bg-lift:      #5e0c17;  /* rose's --color-cursor */
-  --color-bg-card:      #5e0c17;
-  --color-bg-card-deep: #520a14;  /* rose's --color-accent-deep */
-  --color-bg-terminal:  #1a1214;  /* rose's --color-bg-terminal, unchanged */
-
-  --color-text:         #fedee4;  /* rose's --color-bg, inverted in */
-  --color-text-strong:  #fedee4;
-  --color-text-soft:    #f6e3e8;  /* rose's --color-bg-card-deep */
-  --color-text-mute:    #f6c6cf;  /* rose's --color-selection-bg */
-
-  --color-border:       #8b5b62;  /* text pink muted over the bg — dividers/hairlines */
-  --color-border-soft:  #744148;
-  --color-rule:         #a87c82;
-
-  --color-accent:       #ff99b0;  /* link color */
-  --color-accent-deep:  #f6c6cf;
-  --color-accent-light: #ff7a98;  /* link hover color */
-
-  --color-selection-bg: #fedee4;
-  --color-selection-fg: var(--color-bg);
-
-  --color-cursor: #fedee4;
 }

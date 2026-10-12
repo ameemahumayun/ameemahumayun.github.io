@@ -37,11 +37,12 @@
   --color-accent-deep:  #d9c67e;
   --color-accent-light: #f8eeba;  /* brighter/lighter than --color-accent */
 
-  --color-selection-bg: #FFB347;  /* orange text-selection highlight, matches --color-cursor */
+  --color-selection-bg: var(--color-accent-deep);  /* darker butter yellow text-selection highlight, matches --color-cursor */
   --color-selection-fg: var(--color-bg);
 
-  --color-cursor: #FFB347;  /* custom cursor + debris fill — fixed brand
-                                color across dark/light; rose overrides it */
+  --color-cursor: var(--color-accent-deep);  /* darker butter yellow —
+                                custom cursor + debris fill, fixed across
+                                dark/light; rose overrides it */
 
 
   /* ----- TYPOGRAPHY ------------------------------------------------------ */

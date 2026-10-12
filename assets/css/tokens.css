@@ -198,8 +198,9 @@
 
    garnet is rose inverted: its bg family (light) and text family (dark)
    swap roles, so the same near-white rose used as a background becomes
-   the text color, and the same near-black rose used as text becomes the
-   background — a photo-negative of rose, not a new palette. The red
+   the text color, and the background becomes a dark plum. (Rose's own
+   near-black text color, used as-is, was too close to black to tell
+   apart from crimson, so the plum is lifted to read as plum.) The red
    accent stays the identity color either way and isn't inverted.
 
    crimson is garnet with its background pushed to the site's actual
@@ -209,20 +210,20 @@
    everything going neutral.
    ========================================================================== */
 :root[data-theme="garnet"] {
-  --color-bg:           #190f12;  /* rose's --color-text-strong, inverted in */
-  --color-bg-lift:      #22141a;
-  --color-bg-card:      #2b1f22;  /* rose's --color-text */
-  --color-bg-card-deep: #352428;
-  --color-bg-terminal:  #0f080a;
+  --color-bg:           #2a141c;  /* a visible plum — rose's near-black read too close to crimson's black */
+  --color-bg-lift:      #341a24;
+  --color-bg-card:      #3d2029;
+  --color-bg-card-deep: #472630;
+  --color-bg-terminal:  #1e0e14;
 
   --color-text:         #fdf4f6;  /* rose's --color-bg, inverted in */
   --color-text-strong:  #ffffff;
   --color-text-soft:    #f6e3e8;  /* rose's --color-bg-card-deep */
   --color-text-mute:    #dcbcc2;
 
-  --color-border:       #3a262a;
-  --color-border-soft:  #2c1a1e;
-  --color-rule:         #4a3034;
+  --color-border:       #4f2c37;
+  --color-border-soft:  #3a1f28;
+  --color-rule:         #5c3440;
 
   --color-accent:       #8c1f2b;  /* rose's red, unchanged — not inverted */
   --color-accent-deep:  #6e1620;
@@ -231,9 +232,9 @@
 
 :root[data-theme="crimson"] {
   --color-bg:           #0d0e10;  /* garnet's plum pushed to the site's actual black */
-  --color-bg-lift:      #22141a;
-  --color-bg-card:      #2b1f22;
-  --color-bg-card-deep: #352428;
+  --color-bg-lift:      #341a24;
+  --color-bg-card:      #3d2029;
+  --color-bg-card-deep: #472630;
   --color-bg-terminal:  #0d0e10;
 
   --color-text:         #fdf4f6;
@@ -241,9 +242,9 @@
   --color-text-soft:    #f6e3e8;
   --color-text-mute:    #dcbcc2;
 
-  --color-border:       #3a262a;
-  --color-border-soft:  #2c1a1e;
-  --color-rule:         #4a3034;
+  --color-border:       #4f2c37;
+  --color-border-soft:  #3a1f28;
+  --color-rule:         #5c3440;
 
   --color-accent:       #8c1f2b;
   --color-accent-deep:  #6e1620;

@@ -212,9 +212,9 @@
   --color-text-soft:    #f6e3e8;  /* rose's --color-bg-card-deep */
   --color-text-mute:    #f6c6cf;  /* rose's --color-selection-bg */
 
-  --color-border:       #6b0f1c;
-  --color-border-soft:  #520a14;
-  --color-rule:         #8c1f2b;  /* rose's --color-accent-light */
+  --color-border:       #8b5b62;  /* text pink muted over the bg — dividers/hairlines */
+  --color-border-soft:  #744148;
+  --color-rule:         #a87c82;
 
   --color-accent:       #ff99b0;  /* link color */
   --color-accent-deep:  #f6c6cf;

@@ -166,7 +166,7 @@
    pre-paint script and assets/js/main.js's three-way toggle.
    ========================================================================== */
 :root[data-theme="rose"] {
-  --color-bg:           #fdf4f6;
+  --color-bg:           #ffc7d3;
   --color-bg-lift:      #fffafb;
   --color-bg-card:      #fffafb;
   --color-bg-card-deep: #f6e3e8;
@@ -194,28 +194,21 @@
 
 /* ==========================================================================
    GARNET — rose inverted, the next stop on the same toggle (dark -> rose
-   -> garnet -> dark). Built only from colors rose already uses: rose's
-   maroon becomes the page background, and rose's soft, almost white pink
-   (#fdf4f6) becomes the text and the accent/highlight. Anything drawn on
-   a highlight (selection, .text-highlight headings, active filters,
-   hovered links) reads var(--color-bg), so it comes out maroon on pink —
-   the exact reverse of rose's pink-on-maroon.
-
-   The background is rose's deeper maroon (#7a1620, its cursor/debris
-   color) rather than its #8c1f2b accent: a whole page of #8c1f2b reads
-   noticeably lighter than the same red as thin lettering on pink. No
-   pure white anywhere — strong text and link hovers stay on rose's pink
-   too, or it reads whiter than rose does.
+   -> garnet -> dark). A deep wine-red background (#54060f) with a bright
+   pink text/highlight family (#ffc7d3) — the reverse of rose's pink
+   background with dark text. Links use their own brighter pinks
+   (--color-accent #ff99b0, --color-accent-light #ff7a98 on hover) rather
+   than the body-text pink, so they still read as interactive against it.
    ========================================================================== */
 :root[data-theme="garnet"] {
-  --color-bg:           #7a1620;  /* rose's --color-cursor maroon, inverted in */
+  --color-bg:           #54060f;
   --color-bg-lift:      #8c1f2b;  /* rose's --color-accent */
   --color-bg-card:      #8c1f2b;
   --color-bg-card-deep: #6e1620;  /* rose's --color-accent-deep */
   --color-bg-terminal:  #1a1214;  /* rose's --color-bg-terminal, unchanged */
 
-  --color-text:         #fdf4f6;  /* rose's --color-bg, inverted in */
-  --color-text-strong:  #fdf4f6;
+  --color-text:         #ffc7d3;
+  --color-text-strong:  #ffc7d3;
   --color-text-soft:    #f6e3e8;  /* rose's --color-bg-card-deep */
   --color-text-mute:    #f6c6cf;  /* rose's --color-selection-bg */
 
@@ -223,12 +216,12 @@
   --color-border-soft:  #841b26;
   --color-rule:         #b03a46;  /* rose's --color-accent-light */
 
-  --color-accent:       #fdf4f6;  /* soft pink highlight, maroon text on it */
+  --color-accent:       #ff99b0;  /* link color */
   --color-accent-deep:  #f6c6cf;
-  --color-accent-light: #fdf4f6;
+  --color-accent-light: #ff7a98;  /* link hover color */
 
-  --color-selection-bg: #fdf4f6;
+  --color-selection-bg: #ffc7d3;
   --color-selection-fg: var(--color-bg);
 
-  --color-cursor: #fdf4f6;
+  --color-cursor: #ffc7d3;
 }

@@ -280,8 +280,18 @@
     { selector: ".cv-skills__row:not(:last-child)", edge: "bottom" },
   ];
   const DIVIDER_BAND = 6;
-  const SOLID_SELECTOR = "img, .text-highlight";
+  // The hero portrait's own <img> can run wider than the circle it's
+  // cropped to (see .hero__avatar--round in components.css, which pans
+  // the photo within the frame) — collide against .hero__avatar-frame,
+  // the actual clipped circle on screen, and skip the img entirely.
+  const SOLID_SELECTOR = "img:not(.hero__avatar--round), .text-highlight";
   const CONTAINER_SELECTOR = ".work-card, .contact-form__field input, .contact-form__field textarea, .contact-form__submit";
+  // Every other obstacle here is a rectangle, resolved as an axis-aligned
+  // box — fine for a square-ish card or input, but a bounding box drawn
+  // around a circle still has 4 corners poking out past its round edge,
+  // where debris would visibly stop on nothing. Truly round elements get
+  // real circle-vs-circle collision instead (resolveCircle below).
+  const CIRCLE_SELECTOR = ".hero__avatar-frame";
 
   const CURSOR_RADIUS = 7;
   const PARTICLE_RADIUS = 3.5;
@@ -337,6 +347,7 @@
 
   let solidRects = [];
   let containerRects = [];
+  let circleRects = [];
   // The debris particles themselves are position:absolute, so once any of
   // them fall past the rest of the content they inflate
   // document.documentElement.scrollHeight — which would keep pushing the
@@ -356,6 +367,7 @@
     const scrollY = window.scrollY;
     const solid = [];
     const containers = [];
+    const circles = [];
 
     const footer = document.querySelector(".footer");
     if (footer) {
@@ -401,8 +413,19 @@
       containers.push({ left: r.left + scrollX, right: r.right + scrollX, top: r.top + scrollY, bottom: r.bottom + scrollY });
     });
 
+    document.querySelectorAll(CIRCLE_SELECTOR).forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) return;
+      circles.push({
+        cx: r.left + scrollX + r.width / 2,
+        cy: r.top + scrollY + r.height / 2,
+        radius: Math.min(r.width, r.height) / 2,
+      });
+    });
+
     solidRects = solid;
     containerRects = containers;
+    circleRects = circles;
   };
   refreshObstacles();
   window.addEventListener("load", refreshObstacles);
@@ -517,6 +540,29 @@
     const dist = Math.hypot(dx, dy);
     if (dist >= PARTICLE_RADIUS || dist <= 0.001) return false;
     const overlap = PARTICLE_RADIUS - dist;
+    const nx = dx / dist;
+    const ny = dy / dist;
+    p.x += nx * overlap;
+    p.y += ny * overlap;
+    const vn = p.vx * nx + p.vy * ny;
+    p.vx -= (1 + OBSTACLE_RESTITUTION) * vn * nx;
+    p.vy -= (1 + OBSTACLE_RESTITUTION) * vn * ny;
+    p.vx *= 0.85;
+    p.vy *= 0.85;
+    return ny < -0.5;
+  };
+
+  // True circle-vs-circle collision (both the obstacle and the particle
+  // are round), for elements like the hero portrait where an AABB rect
+  // would still have 4 corners sticking out past the actual circular
+  // edge debris should bounce off.
+  const resolveCircle = (p, circle) => {
+    const dx = p.x - circle.cx;
+    const dy = p.y - circle.cy;
+    const dist = Math.hypot(dx, dy);
+    const minDist = circle.radius + PARTICLE_RADIUS;
+    if (dist >= minDist || dist <= 0.001) return false;
+    const overlap = minDist - dist;
     const nx = dx / dist;
     const ny = dy / dist;
     p.x += nx * overlap;
@@ -720,6 +766,9 @@
             }
             for (let j = 0; j < containerRects.length; j++) {
               if (resolveContainer(p, containerRects[j])) restingOnTop = true;
+            }
+            for (let j = 0; j < circleRects.length; j++) {
+              if (resolveCircle(p, circleRects[j])) restingOnTop = true;
             }
             if (restingOnTop && Math.abs(p.vx) < SETTLE_SPEED && Math.abs(p.vy) < SETTLE_SPEED) {
               p.vx = 0;

@@ -166,7 +166,7 @@
    pre-paint script and assets/js/main.js's three-way toggle.
    ========================================================================== */
 :root[data-theme="rose"] {
-  --color-bg:           #ffc7d3;
+  --color-bg:           #fedee4;  /* between the original #fdf4f6 and #ffc7d3 */
   --color-bg-lift:      #fffafb;
   --color-bg-card:      #fffafb;
   --color-bg-card-deep: #f6e3e8;
@@ -175,53 +175,53 @@
   --color-text:         #2b1f22;
   --color-text-strong:  #190f12;
   --color-text-soft:    #6b575c;
-  --color-text-mute:    #8a7478;
+  --color-text-mute:    #735e62;  /* darkened so captions stay readable on the pinker bg */
 
   --color-border:       #ecd9dd;
   --color-border-soft:  #f3e6e9;
   --color-rule:         #ddc2c8;
 
-  --color-accent:       #8c1f2b;  /* dark red, in place of butter yellow */
-  --color-accent-deep:  #6e1620;
-  --color-accent-light: #b03a46;
+  --color-accent:       #6b0f1c;  /* deep maroon, in place of butter yellow */
+  --color-accent-deep:  #520a14;
+  --color-accent-light: #8c1f2b;
 
   --color-selection-bg: #f6c6cf;
   --color-selection-fg: #2b1214;
 
-  --color-cursor: #7a1620;  /* maroon, in place of the usual orange */
+  --color-cursor: #5e0c17;  /* maroon, in place of the usual orange */
 }
 
 
 /* ==========================================================================
    GARNET — rose inverted, the next stop on the same toggle (dark -> rose
-   -> garnet -> dark). A deep wine-red background (#54060f) with a bright
-   pink text/highlight family (#ffc7d3) — the reverse of rose's pink
+   -> garnet -> dark). A deep maroon background (#3f040b) with rose's
+   soft pink (#fedee4) as the text/highlight color — the reverse of rose's pink
    background with dark text. Links use their own brighter pinks
    (--color-accent #ff99b0, --color-accent-light #ff7a98 on hover) rather
    than the body-text pink, so they still read as interactive against it.
    ========================================================================== */
 :root[data-theme="garnet"] {
-  --color-bg:           #54060f;
-  --color-bg-lift:      #8c1f2b;  /* rose's --color-accent */
-  --color-bg-card:      #8c1f2b;
-  --color-bg-card-deep: #6e1620;  /* rose's --color-accent-deep */
+  --color-bg:           #3f040b;
+  --color-bg-lift:      #5e0c17;  /* rose's --color-cursor */
+  --color-bg-card:      #5e0c17;
+  --color-bg-card-deep: #520a14;  /* rose's --color-accent-deep */
   --color-bg-terminal:  #1a1214;  /* rose's --color-bg-terminal, unchanged */
 
-  --color-text:         #ffc7d3;
-  --color-text-strong:  #ffc7d3;
+  --color-text:         #fedee4;  /* rose's --color-bg, inverted in */
+  --color-text-strong:  #fedee4;
   --color-text-soft:    #f6e3e8;  /* rose's --color-bg-card-deep */
   --color-text-mute:    #f6c6cf;  /* rose's --color-selection-bg */
 
-  --color-border:       #8c1f2b;
-  --color-border-soft:  #841b26;
-  --color-rule:         #b03a46;  /* rose's --color-accent-light */
+  --color-border:       #6b0f1c;
+  --color-border-soft:  #520a14;
+  --color-rule:         #8c1f2b;  /* rose's --color-accent-light */
 
   --color-accent:       #ff99b0;  /* link color */
   --color-accent-deep:  #f6c6cf;
   --color-accent-light: #ff7a98;  /* link hover color */
 
-  --color-selection-bg: #ffc7d3;
+  --color-selection-bg: #fedee4;
   --color-selection-fg: var(--color-bg);
 
-  --color-cursor: #ffc7d3;
+  --color-cursor: #fedee4;
 }

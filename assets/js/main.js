@@ -289,7 +289,6 @@
   const AIR_DRAG = 0.992;
   const OBSTACLE_RESTITUTION = 0.4;
   const SETTLE_SPEED = 0.05;
-  const MAX_PARTICLES = 140;
   // Nothing was there to catch it — let it fall out of view rather than
   // stopping on an invisible floor, and stop simulating it once it's well
   // past the page's own content.
@@ -423,13 +422,6 @@
     return el;
   };
 
-  const trimParticles = () => {
-    while (particles.length > MAX_PARTICLES) {
-      const oldest = particles.shift();
-      oldest.el.remove();
-    }
-  };
-
   const spawnDebris = (originClientX, originClientY, fromNav) => {
     const originX = originClientX + window.scrollX;
     const originY = originClientY + window.scrollY;
@@ -459,8 +451,6 @@
         fromNav: !!fromNav,
       });
     });
-
-    trimParticles();
   };
 
   // Persisted per visitor, independent of theme — defaults on. Declared
@@ -514,7 +504,6 @@
         fromNav: true,
       });
     });
-    trimParticles();
   })();
 
   // Returns true if p was actually resting against rect's top edge this

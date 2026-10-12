@@ -16,12 +16,13 @@
       text/HTML block) with prev/next controls and a counter. Works for
       any number of panels on any page with a .carousel element.
    5. Theme toggle. Cycles the data-theme attribute on <html> through
-      dark -> light -> rose -> dark, persists the choice to localStorage,
+      dark -> rose -> dark (light is pulled from the rotation for now —
+      see the toggle's own IIFE), persists the choice to localStorage,
       and keeps the nav button's icon/label in sync. The actual color
-      swap is pure CSS (see tokens.css's [data-theme="light"/"rose"]
-      blocks) — this just flips the attribute. A matching inline script
-      in head.html applies the stored choice before first paint so
-      there's no flash.
+      swap is pure CSS (see tokens.css's [data-theme="rose"] block) —
+      this just flips the attribute. A matching inline script in
+      head.html applies the stored choice before first paint so there's
+      no flash.
    6. Custom cursor. Builds the star-shaped pointer as a DOM element (so
       it can be animated) in place of the plain cursor:url() from
       base.css, which stays as the fallback on touch devices and for
@@ -193,17 +194,19 @@
   const toggle = document.getElementById("theme-toggle");
   if (!toggle) return;
 
-  const sunIcon = toggle.querySelector(".theme-toggle__icon--sun");
   const moonIcon = toggle.querySelector(".theme-toggle__icon--moon");
   const roseIcon = toggle.querySelector(".theme-toggle__icon--rose");
   const root = document.documentElement;
 
-  // dark -> light -> rose -> dark. The icon shown represents the theme
-  // that's actually active right now (moon while dark, sun while light,
-  // heart while rose) — the label still describes what a click does.
-  const ORDER = ["dark", "light", "rose"];
-  const CURRENT_ICON = { dark: moonIcon, light: sunIcon, rose: roseIcon };
-  const LABEL = { dark: "Switch to light theme", light: "Switch to rose theme", rose: "Switch to dark theme" };
+  // dark -> rose -> dark. Light is removed from the rotation for now
+  // (not deleted from tokens.css, just unreachable from this toggle) —
+  // a stale data-theme="light" from localStorage falls back to dark via
+  // currentTheme() below rather than erroring. The icon shown represents
+  // the theme that's actually active right now (moon while dark, heart
+  // while rose) — the label still describes what a click does.
+  const ORDER = ["dark", "rose"];
+  const CURRENT_ICON = { dark: moonIcon, rose: roseIcon };
+  const LABEL = { dark: "Switch to rose theme", rose: "Switch to dark theme" };
 
   // Setting the .hidden IDL property on these <svg> elements doesn't
   // reliably reflect to the actual "hidden" HTML attribute (verified:
@@ -220,7 +223,7 @@
 
   const applyState = (theme) => {
     const shown = CURRENT_ICON[theme];
-    [sunIcon, moonIcon, roseIcon].forEach((icon) => setHidden(icon, icon !== shown));
+    [moonIcon, roseIcon].forEach((icon) => setHidden(icon, icon !== shown));
     toggle.setAttribute("aria-label", LABEL[theme]);
     toggle.setAttribute("aria-pressed", String(theme !== "dark"));
   };

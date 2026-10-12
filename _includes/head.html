@@ -1,19 +1,17 @@
 <head>
-  <!-- Applied before any CSS loads, so the dark/light/rose choice and the
+  <!-- Applied before any CSS loads, so the dark/rose choice and the
        explosions on/off state are both in place for first paint instead
        of flashing the default and then correcting a moment later once
        main.js runs (deferred, so it only executes after the DOM — and
        this button — exist). Mirrors the toggle logic in assets/js/main.js
-       — keep the two in sync. Rose is only ever reached via the stored
-       explicit choice — there's no OS-level "prefers rose" to fall back
-       to, only light vs dark. Explosions default on, so only the "off"
-       case needs marking. -->
+       — keep the two in sync. Light is pulled from the rotation for
+       now (tokens.css still has it, just nothing sets it anymore) —
+       a stale stored "light" from before falls through to dark here,
+       same as main.js's own fallback. -->
   <script>
     (function () {
       try {
-        var stored = localStorage.getItem("theme");
-        var theme = stored || (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-        if (theme === "light" || theme === "rose") document.documentElement.setAttribute("data-theme", theme);
+        if (localStorage.getItem("theme") === "rose") document.documentElement.setAttribute("data-theme", "rose");
       } catch (e) {}
       try {
         if (localStorage.getItem("debrisEnabled") === "off") document.documentElement.setAttribute("data-debris", "off");

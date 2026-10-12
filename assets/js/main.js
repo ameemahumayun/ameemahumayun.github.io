@@ -16,11 +16,11 @@
       text/HTML block) with prev/next controls and a counter. Works for
       any number of panels on any page with a .carousel element.
    5. Theme toggle. Cycles the data-theme attribute on <html> through
-      dark -> rose -> garnet -> crimson -> dark (light is pulled from the
+      dark -> rose -> garnet -> dark (light is pulled from the
       rotation for now — see the toggle's own IIFE), persists the choice
       to localStorage, and keeps the nav button's icon/label in sync. The
       actual color swap is pure CSS (see tokens.css's
-      [data-theme="rose"/"garnet"/"crimson"] blocks) — this just flips
+      [data-theme="rose"/"garnet"] blocks) — this just flips
       the attribute. A matching inline script in head.html applies the
       stored choice before first paint so there's no flash.
    6. Custom cursor. Builds the star-shaped pointer as a DOM element (so
@@ -197,24 +197,22 @@
   const moonIcon = toggle.querySelector(".theme-toggle__icon--moon");
   const roseIcon = toggle.querySelector(".theme-toggle__icon--rose");
   const garnetIcon = toggle.querySelector(".theme-toggle__icon--garnet");
-  const crimsonIcon = toggle.querySelector(".theme-toggle__icon--crimson");
   const root = document.documentElement;
 
-  // dark -> rose -> garnet -> crimson -> dark. Light is removed from the
+  // dark -> rose -> garnet -> dark. Light is removed from the
   // rotation for now (not deleted from tokens.css, just unreachable from
   // this toggle) — a stale data-theme="light" from localStorage falls
   // back to dark via currentTheme() below rather than erroring. The icon
   // shown represents the theme that's actually active right now — the
   // label still describes what a click does.
-  const ORDER = ["dark", "rose", "garnet", "crimson"];
-  const CURRENT_ICON = { dark: moonIcon, rose: roseIcon, garnet: garnetIcon, crimson: crimsonIcon };
+  const ORDER = ["dark", "rose", "garnet"];
+  const CURRENT_ICON = { dark: moonIcon, rose: roseIcon, garnet: garnetIcon };
   const LABEL = {
     dark: "Switch to rose theme",
     rose: "Switch to garnet theme",
-    garnet: "Switch to crimson theme",
-    crimson: "Switch to dark theme",
+    garnet: "Switch to dark theme",
   };
-  const ALL_ICONS = [moonIcon, roseIcon, garnetIcon, crimsonIcon];
+  const ALL_ICONS = [moonIcon, roseIcon, garnetIcon];
 
   // Setting the .hidden IDL property on these <svg> elements doesn't
   // reliably reflect to the actual "hidden" HTML attribute (verified:

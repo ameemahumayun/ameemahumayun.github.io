@@ -4,7 +4,7 @@
        of flashing the default and then correcting a moment later once
        main.js runs (deferred, so it only executes after the DOM — and
        this button — exist). Mirrors the toggle logic in assets/js/main.js
-       (dark -> rose -> garnet -> crimson) — keep the two in sync. Light
+       (dark -> rose -> garnet) — keep the two in sync. Light
        is pulled from the rotation for now (tokens.css still has it, just
        nothing sets it anymore) — rose is this site's light theme these
        days, so a first-time visitor with no stored choice who prefers a
@@ -16,7 +16,7 @@
       try {
         var stored = localStorage.getItem("theme");
         var theme;
-        if (stored === "rose" || stored === "dark" || stored === "garnet" || stored === "crimson") {
+        if (stored === "rose" || stored === "dark" || stored === "garnet") {
           theme = stored;
         } else {
           theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "rose" : "dark";

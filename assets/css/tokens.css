@@ -193,66 +193,39 @@
 
 
 /* ==========================================================================
-   GARNET / CRIMSON — two more stops on the same toggle (dark -> rose ->
-   garnet -> crimson -> dark), both built from rose's two signature colors:
-   its soft, almost white pink (#fdf4f6) and its maroon red (#8c1f2b).
+   GARNET — rose inverted, the next stop on the same toggle (dark -> rose
+   -> garnet -> dark). Built only from colors rose already uses: rose's
+   maroon becomes the page background, and rose's soft, almost white pink
+   (#fdf4f6) becomes the text and the accent/highlight. Anything drawn on
+   a highlight (selection, .text-highlight headings, active filters,
+   hovered links) reads var(--color-bg), so it comes out maroon on pink —
+   the exact reverse of rose's pink-on-maroon.
 
-   garnet is rose inverted: the maroon that rose uses for its accent is
-   now the page background, and the soft pink that rose uses for its
-   background is now the text color AND the accent/highlight color. Anything
-   drawn on a highlight (selection, .text-highlight headings, active
-   filter buttons, hovered links) reads var(--color-bg), so it comes out
-   maroon on pink — the exact reverse of rose's pink-on-maroon.
-
-   crimson is garnet with black in place of the maroon: the same pink
-   text and pink highlights, but the background (and anything written on a
-   highlight) is the site's black instead of red.
+   The background is rose's deeper maroon (#7a1620, its cursor/debris
+   color) rather than its #8c1f2b accent: a whole page of #8c1f2b reads
+   noticeably lighter than the same red as thin lettering on pink. No
+   pure white anywhere — strong text and link hovers stay on rose's pink
+   too, or it reads whiter than rose does.
    ========================================================================== */
 :root[data-theme="garnet"] {
-  --color-bg:           #8c1f2b;  /* rose's --color-accent, inverted in */
-  --color-bg-lift:      #962630;
-  --color-bg-card:      #962630;
-  --color-bg-card-deep: #7a1a25;
-  --color-bg-terminal:  #1a1214;
+  --color-bg:           #7a1620;  /* rose's --color-cursor maroon, inverted in */
+  --color-bg-lift:      #8c1f2b;  /* rose's --color-accent */
+  --color-bg-card:      #8c1f2b;
+  --color-bg-card-deep: #6e1620;  /* rose's --color-accent-deep */
+  --color-bg-terminal:  #1a1214;  /* rose's --color-bg-terminal, unchanged */
 
   --color-text:         #fdf4f6;  /* rose's --color-bg, inverted in */
-  --color-text-strong:  #ffffff;
-  --color-text-soft:    #f0d4da;
-  --color-text-mute:    #e8c4cb;
+  --color-text-strong:  #fdf4f6;
+  --color-text-soft:    #f6e3e8;  /* rose's --color-bg-card-deep */
+  --color-text-mute:    #f6c6cf;  /* rose's --color-selection-bg */
 
-  --color-border:       #a63a46;
-  --color-border-soft:  #9a2e3a;
-  --color-rule:         #b04a56;
+  --color-border:       #8c1f2b;
+  --color-border-soft:  #841b26;
+  --color-rule:         #b03a46;  /* rose's --color-accent-light */
 
   --color-accent:       #fdf4f6;  /* soft pink highlight, maroon text on it */
   --color-accent-deep:  #f6c6cf;
-  --color-accent-light: #ffffff;
-
-  --color-selection-bg: #fdf4f6;
-  --color-selection-fg: var(--color-bg);
-
-  --color-cursor: #fdf4f6;
-}
-
-:root[data-theme="crimson"] {
-  --color-bg:           #0d0e10;  /* garnet with black in place of the maroon */
-  --color-bg-lift:      #17181b;
-  --color-bg-card:      #1e1f23;
-  --color-bg-card-deep: #24262b;
-  --color-bg-terminal:  #060708;
-
-  --color-text:         #fdf4f6;
-  --color-text-strong:  #ffffff;
-  --color-text-soft:    #f0d4da;
-  --color-text-mute:    #e8c4cb;
-
-  --color-border:       #2c2e33;
-  --color-border-soft:  #222327;
-  --color-rule:         #34363c;
-
-  --color-accent:       #fdf4f6;  /* same soft pink highlight, black text on it */
-  --color-accent-deep:  #f6c6cf;
-  --color-accent-light: #ffffff;
+  --color-accent-light: #fdf4f6;
 
   --color-selection-bg: #fdf4f6;
   --color-selection-fg: var(--color-bg);

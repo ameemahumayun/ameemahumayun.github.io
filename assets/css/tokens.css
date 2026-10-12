@@ -37,7 +37,7 @@
   --color-accent-deep:  #d9c67e;
   --color-accent-light: #f8eeba;  /* brighter/lighter than --color-accent */
 
-  --color-selection-bg: #FFDFE9;  /* very light pink text-selection highlight */
+  --color-selection-bg: #FFB347;  /* orange text-selection highlight, matches --color-cursor */
   --color-selection-fg: var(--color-bg);
 
   --color-cursor: #FFB347;  /* custom cursor + debris fill — fixed brand

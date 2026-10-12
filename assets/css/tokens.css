@@ -194,36 +194,58 @@
 
 /* ==========================================================================
    GARNET / CRIMSON — two more stops on the same toggle (dark -> rose ->
-   garnet -> crimson -> dark), added to preview a variant: both swap the
-   usual butter-yellow accent for rose's red; crimson additionally swaps
-   the near-black background for a dark maroon pulled from that same red
-   family. Everything not listed here (text, borders, selection, cursor)
-   simply falls through to the values above, since these only override
-   what actually changes.
+   garnet -> crimson -> dark), both built from rose rather than from dark.
+
+   garnet is rose inverted: its bg family (light) and text family (dark)
+   swap roles, so the same near-white rose used as a background becomes
+   the text color, and the same near-black rose used as text becomes the
+   background — a photo-negative of rose, not a new palette. The red
+   accent stays the identity color either way and isn't inverted.
+
+   crimson is garnet with its background pushed to the site's actual
+   black (--color-bg/--color-bg-terminal only) instead of garnet's dark
+   plum — the raised surfaces (bg-lift/card/card-deep) stay on the plum
+   progression, so black sits underneath rose-tinted panels rather than
+   everything going neutral.
    ========================================================================== */
 :root[data-theme="garnet"] {
-  --color-accent:       #8c1f2b;  /* rose's red, in place of butter yellow */
+  --color-bg:           #190f12;  /* rose's --color-text-strong, inverted in */
+  --color-bg-lift:      #22141a;
+  --color-bg-card:      #2b1f22;  /* rose's --color-text */
+  --color-bg-card-deep: #352428;
+  --color-bg-terminal:  #0f080a;
+
+  --color-text:         #fdf4f6;  /* rose's --color-bg, inverted in */
+  --color-text-strong:  #ffffff;
+  --color-text-soft:    #f6e3e8;  /* rose's --color-bg-card-deep */
+  --color-text-mute:    #dcbcc2;
+
+  --color-border:       #3a262a;
+  --color-border-soft:  #2c1a1e;
+  --color-rule:         #4a3034;
+
+  --color-accent:       #8c1f2b;  /* rose's red, unchanged — not inverted */
   --color-accent-deep:  #6e1620;
   --color-accent-light: #b03a46;
 }
 
 :root[data-theme="crimson"] {
-  --color-bg:           #2a0f13;  /* dark maroon, in place of near-black */
-  --color-bg-lift:      #351317;
-  --color-bg-card:      #3a151a;
-  --color-bg-card-deep: #45191e;
-  --color-bg-terminal:  #150709;
+  --color-bg:           #0d0e10;  /* garnet's plum pushed to the site's actual black */
+  --color-bg-lift:      #22141a;
+  --color-bg-card:      #2b1f22;
+  --color-bg-card-deep: #352428;
+  --color-bg-terminal:  #0d0e10;
 
-  --color-text:         #e8d9da;
-  --color-text-strong:  #faf2f2;
-  --color-text-soft:    #b89a9c;
-  --color-text-mute:    #9c8183;
+  --color-text:         #fdf4f6;
+  --color-text-strong:  #ffffff;
+  --color-text-soft:    #f6e3e8;
+  --color-text-mute:    #dcbcc2;
 
-  --color-border:       #4a2024;
-  --color-border-soft:  #3a171b;
-  --color-rule:         #5a272c;
+  --color-border:       #3a262a;
+  --color-border-soft:  #2c1a1e;
+  --color-rule:         #4a3034;
 
-  --color-accent:       #8c1f2b;  /* same red as garnet/rose */
+  --color-accent:       #8c1f2b;
   --color-accent-deep:  #6e1620;
   --color-accent-light: #b03a46;
 }

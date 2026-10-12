@@ -4,14 +4,23 @@
        of flashing the default and then correcting a moment later once
        main.js runs (deferred, so it only executes after the DOM — and
        this button — exist). Mirrors the toggle logic in assets/js/main.js
-       — keep the two in sync. Light is pulled from the rotation for
-       now (tokens.css still has it, just nothing sets it anymore) —
-       a stale stored "light" from before falls through to dark here,
-       same as main.js's own fallback. -->
+       — keep the two in sync. Light is pulled from the rotation for now
+       (tokens.css still has it, just nothing sets it anymore) — rose is
+       this site's light theme these days, so a first-time visitor with
+       no stored choice who prefers a light OS lands on rose instead of
+       dark; a stale stored "light" from before falls into that same
+       OS-preference check rather than straight to dark. -->
   <script>
     (function () {
       try {
-        if (localStorage.getItem("theme") === "rose") document.documentElement.setAttribute("data-theme", "rose");
+        var stored = localStorage.getItem("theme");
+        var theme;
+        if (stored === "rose" || stored === "dark") {
+          theme = stored;
+        } else {
+          theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "rose" : "dark";
+        }
+        if (theme === "rose") document.documentElement.setAttribute("data-theme", "rose");
       } catch (e) {}
       try {
         if (localStorage.getItem("debrisEnabled") === "off") document.documentElement.setAttribute("data-debris", "off");

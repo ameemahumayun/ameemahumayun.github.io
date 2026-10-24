@@ -758,8 +758,8 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   position: absolute;
   top: 0;
   left: 0;
-  width: 7px;
-  height: 7px;
+  width: 3.5px;
+  height: 3.5px;
   pointer-events: none;
   z-index: var(--z-cursor);
   will-change: transform;

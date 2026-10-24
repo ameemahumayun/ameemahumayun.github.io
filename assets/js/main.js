@@ -319,7 +319,7 @@
   const CIRCLE_SELECTOR = ".hero__avatar-frame";
 
   const CURSOR_RADIUS = 6.5;
-  const PARTICLE_RADIUS = 3.5;
+  const PARTICLE_RADIUS = 1.75;
   const GRAVITY = 0.42;
   const AIR_DRAG = 0.992;
   const OBSTACLE_RESTITUTION = 0.4;
@@ -466,7 +466,7 @@
   const createParticleEl = () => {
     const el = document.createElement("div");
     el.className = "cursor-particle";
-    el.innerHTML = '<svg width="7" height="7" viewBox="0 0 7 7"><circle cx="3.5" cy="3.5" r="3"></circle></svg>';
+    el.innerHTML = '<svg width="3.5" height="3.5" viewBox="0 0 7 7"><circle cx="3.5" cy="3.5" r="3"></circle></svg>';
     document.body.appendChild(el);
     return el;
   };

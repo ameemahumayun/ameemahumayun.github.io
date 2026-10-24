@@ -214,7 +214,7 @@
   display: block;
   width: var(--portrait-size);
   height: var(--portrait-size);
-  margin: 0.3rem auto 1.75rem;
+  margin: 0.3rem auto 0;
   object-fit: cover;
   object-position: 50% 12%;
   border: 2px solid var(--color-accent);  /* the theme's signature color: maroon in rose */
@@ -264,14 +264,7 @@
   .hero--profile .hero__row { flex-direction: column; align-items: center; gap: var(--space-4); }
   .hero--profile .hero__text { text-align: center; }
   .hero__avatar-frame { order: -1; width: 220px; transform: none; }
-  .hero__portrait { margin-top: 0; margin-bottom: 1.25rem; }
-  /* index.html sets the name's desktop margins inline (tuned against the
-     two-column row, which doesn't exist in this stacked layout) — override
-     with !important since nothing less specific beats an inline style. */
-  .hero__name {
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
-  }
+  .hero__portrait { margin-top: 0; }
   .hero--profile .eyebrow-rule {
     white-space: normal;
     font-size: 11.5px;
@@ -640,13 +633,27 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
    660px wide (index.html) and otherwise the viewport minus the 24px
    mobile gutters, and Autography's ink runs 7.74x its font-size wide
    (measured on the rendered page, swashes included), so
-   these factors keep the name's ink at ~94% of the bio's longest line at
+   these factors keep the name's ink at ~86% of the bio's longest line at
    every width. --name-width is that ink width, which the Recent Updates
    block reuses so it starts exactly where the name does. Change the
    font and the 7.74 has to be re-measured. */
 :root {
-  --name-size: min(80px, calc((100vw - 48px) * 0.1145));
+  --name-size: min(73.3px, calc((100vw - 48px) * 0.105));
   --name-width: calc(var(--name-size) * 7.74);
+}
+/* Equal visible space above and below the name: --name-gap from the
+   photo's bottom edge to the top of the name's ink, and from the bottom
+   of its ink to the top of the bio's first line. The em terms cancel
+   where Autography's ink sits inside its own box (top ~0.03em above it,
+   bottom ~0.17em above the box's bottom); the 8px is the bio's first
+   line sitting that far inside its own box (its line-height). Measured
+   on the rendered page the visible gap lands ~4px under --name-gap
+   (32px / 26px), equal above and below. */
+:root { --name-gap: 36px; }
+@media (max-width: 900px) { :root { --name-gap: 30px; } }
+.signature-text.hero__name {
+  margin-top: calc(var(--name-gap) + 0.03em);
+  margin-bottom: calc(var(--name-gap) - 8px - 0.17em);
 }
 .name-width {
   width: min(100%, var(--name-width));

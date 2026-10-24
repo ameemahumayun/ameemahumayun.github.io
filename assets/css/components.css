@@ -264,14 +264,13 @@
   .hero--profile .hero__row { flex-direction: column; align-items: center; gap: var(--space-4); }
   .hero--profile .hero__text { text-align: center; }
   .hero__avatar-frame { order: -1; width: 220px; transform: none; }
-  :root { --portrait-size: 160px; }
   .hero__portrait { margin-top: 0; margin-bottom: 1.25rem; }
   /* index.html sets the name's desktop margins inline (tuned against the
      two-column row, which doesn't exist in this stacked layout) — override
      with !important since nothing less specific beats an inline style. */
   .hero__name {
     margin-top: 0.5rem !important;
-    margin-bottom: 1.25rem !important;  /* clears the y's descender */
+    margin-bottom: 2rem !important;  /* clears the y's descender */
   }
   .hero--profile .eyebrow-rule {
     white-space: normal;
@@ -287,7 +286,7 @@
      .hero__name, to outrank .signature-text's own font-size — same
      specificity, but .signature-text is later in the cascade.) */
   .signature-text.hero__name {
-    font-size: 11vw;
+    font-size: 2.75rem;
   }
 }
 
@@ -650,13 +649,6 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
 /* 29. SIGNATURE TEXT (hand-written name, homepage hero) -------------------- */
 /* Self-hosted (personal-use licensed) — not a Google Fonts import. */
 @font-face {
-  font-family: "Darlington";
-  src: url("/assets/fonts/darlington.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
   font-family: "Priestacy";
   src: url("/assets/fonts/priestacy.woff2") format("woff2");
   font-weight: 400;
@@ -671,15 +663,12 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   font-display: swap;
 }
 .signature-text {
-  font-family: "Darlington", "Priestacy", "Sacramento", cursive;
+  font-family: "Priestacy", "Sacramento", cursive;
   font-weight: 400;
   font-style: normal;
   color: var(--color-accent);
-  /* Darlington is compact — its ink is only ~4.3x its font-size wide —
-     so it needs a larger size than the earlier scripts to read at a
-     similar scale. No left offset: its ink sits exactly on its advance
-     box, so plain text-align:center (.hero__name) centers it. */
-  font-size: clamp(2.5rem, 8.3vw, 6.25rem);
+  /* No left offset: plain text-align:center (.hero__name) centers it. */
+  font-size: clamp(3.75rem, 7.5vw, 6rem);
   line-height: 1.1;
   /* A connected script has to keep its own spacing — the tight tracking
      h1 inherits from base.css squeezed the letters together and broke
@@ -693,7 +682,10 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   pointer-events: none;
   /* Slight upward slant: left edge sits ~3px lower, right edge ~3px
      higher, like a handwritten signature drifting upward. */
-  transform: rotate(-0.48deg);
+  /* translateX: Priestacy's opening swash reaches further left than its
+     tail reaches right, so the ink sits ~0.06em left of its own box —
+     nudged back so the visible name is centered. */
+  transform: translateX(0.06em) rotate(-0.48deg);
 }
 
 

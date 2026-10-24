@@ -70,8 +70,8 @@
 /* The links row is exactly as wide as the homepage portrait
    (--portrait-size), with the first link starting at its left edge and
    the last ending at its right — space-between spreads what's left
-   between them. The font size is what makes the four labels fit that
-   width with comfortable gaps; change it together with --portrait-size. */
+   between them. --portrait-size is set to these labels' natural width at
+   this font size (with the original 22px gaps); change the two together. */
 .nav__links {
   display: flex;
   align-items: center;
@@ -79,7 +79,7 @@
   justify-self: center;
   width: var(--portrait-size);
   gap: 6px;
-  font-size: 11px;
+  font-size: 12.5px;
   letter-spacing: var(--tracking-wide);
 }
 .nav__links a {
@@ -184,18 +184,16 @@ padding-top: 0;
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
-/* Portrait shrinks to 160px at this width (components.css), so the
-   links row does too. */
-@media (max-width: 900px) {
-  .nav__links { font-size: 9px; }
-}
-
 @media (max-width: 768px) {
   .container,
   .container-wide,
   .hero__inner { padding: 0 var(--gutter-mobile); }
 
   .nav { padding: 14px var(--gutter-mobile); }
+  /* Links drop to 11px here, so the portrait (and the links row with it)
+     narrows to their natural width at that size. */
+  :root { --portrait-size: 204px; }
+  .nav__links { font-size: 11px; }
 
   .hero { padding: 5rem 0 4.5rem; }
   .section { padding: 4.5rem 0; }

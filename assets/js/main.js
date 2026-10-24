@@ -318,7 +318,7 @@
   // real circle-vs-circle collision instead (resolveCircle below).
   const CIRCLE_SELECTOR = ".hero__avatar-frame";
 
-  const CURSOR_RADIUS = 7;
+  const CURSOR_RADIUS = 6.5;
   const PARTICLE_RADIUS = 3.5;
   const GRAVITY = 0.42;
   const AIR_DRAG = 0.992;
@@ -345,10 +345,11 @@
   const cursor = document.createElement("div");
   cursor.className = "custom-cursor";
   cursor.setAttribute("aria-hidden", "true");
-  // A plain dot, always — see components.css; a click pops it slightly
-  // and flings the debris, but the resting shape never changes.
+  // The exact star from the nav's explosions toggle (#debris-toggle), at
+  // that icon's exact 13px size — see components.css; a click pops it
+  // slightly and flings the debris, but the resting shape never changes.
   cursor.innerHTML =
-    '<svg width="22" height="22" viewBox="0 0 22 22"><circle class="custom-cursor__shape" cx="11" cy="11" r="5"></circle></svg>';
+    '<svg width="13" height="13" viewBox="0 0 22 22"><path class="custom-cursor__shape" d="M11.0,0.5 L12.65,7.03 L18.42,3.58 L14.97,9.35 L21.5,11.0 L14.97,12.65 L18.42,18.42 L12.65,14.97 L11.0,21.5 L9.35,14.97 L3.58,18.42 L7.03,12.65 L0.5,11.0 L7.03,9.35 L3.58,3.58 L9.35,7.03 Z"></path></svg>';
 
   document.body.appendChild(cursor);
   document.documentElement.classList.add("has-custom-cursor");
@@ -772,7 +773,7 @@
   });
 
   const tick = () => {
-    cursor.style.transform = "translate3d(" + (clientX - 11) + "px, " + (clientY - 11) + "px, 0)";
+    cursor.style.transform = "translate3d(" + (clientX - 6.5) + "px, " + (clientY - 6.5) + "px, 0)";
 
     if (particles.length) {
       const cursorDocX = clientX + window.scrollX;

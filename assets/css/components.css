@@ -278,17 +278,6 @@
     letter-spacing: var(--tracking-widest);
   }
 }
-@media (max-width: 600px) {
-  /* The desktop clamp's floor (3.75rem) doesn't shrink further at phone
-     widths, so the name wrapped to two tightly-stacked lines whose tall
-     ascenders/descenders crowded into each other. One clean line reads
-     better than a cramped wrap. (.signature-text.hero__name, not just
-     .hero__name, to outrank .signature-text's own font-size — same
-     specificity, but .signature-text is later in the cascade.) */
-  .signature-text.hero__name {
-    font-size: 2.4rem;
-  }
-}
 
 
 
@@ -647,6 +636,31 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
 
 
 /* 29. SIGNATURE TEXT (hand-written name, homepage hero) -------------------- */
+/* The name is sized off the bio paragraph under it: the bio is at most
+   660px wide (index.html) and otherwise the viewport minus the 24px
+   mobile gutters, and Autography's ink runs 7.74x its font-size wide
+   (measured on the rendered page, swashes included), so
+   these factors keep the name's ink at ~94% of the bio's longest line at
+   every width. --name-width is that ink width, which the Recent Updates
+   block reuses so it starts exactly where the name does. Change the
+   font and the 7.74 has to be re-measured. */
+:root {
+  --name-size: min(80px, calc((100vw - 48px) * 0.1145));
+  --name-width: calc(var(--name-size) * 7.74);
+}
+.name-width {
+  width: min(100%, var(--name-width));
+  margin-left: auto;
+  margin-right: auto;
+}
+/* At the name's width a short update fits beside its date but a long one
+   wraps underneath it, so the list looked uneven — stack date over text
+   for every item instead (the same layout phones already got). */
+.name-width .timeline__item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
 /* Self-hosted (personal-use licensed) — not a Google Fonts import. */
 @font-face {
   font-family: "Autography";
@@ -675,7 +689,7 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   font-style: normal;
   color: var(--color-accent);
   /* No left offset: plain text-align:center (.hero__name) centers it. */
-  font-size: clamp(3.75rem, 7.5vw, 6rem);
+  font-size: var(--name-size);
   line-height: 1.1;
   /* A connected script has to keep its own spacing — the tight tracking
      h1 inherits from base.css squeezed the letters together and broke

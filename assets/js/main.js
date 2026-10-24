@@ -319,7 +319,7 @@
   const CIRCLE_SELECTOR = ".hero__avatar-frame";
 
   const CURSOR_RADIUS = 6.5;
-  const PARTICLE_RADIUS = 1.75;
+  const PARTICLE_RADIUS = 2.5;
   const GRAVITY = 0.42;
   const AIR_DRAG = 0.992;
   const OBSTACLE_RESTITUTION = 0.4;
@@ -466,7 +466,8 @@
   const createParticleEl = () => {
     const el = document.createElement("div");
     el.className = "cursor-particle";
-    el.innerHTML = '<svg width="3.5" height="3.5" viewBox="0 0 7 7"><circle cx="3.5" cy="3.5" r="3"></circle></svg>';
+    // A tiny copy of the cursor's star (same path as the nav toggle icon).
+    el.innerHTML = '<svg width="5" height="5" viewBox="0 0 22 22"><path d="M11.0,0.5 L12.65,7.03 L18.42,3.58 L14.97,9.35 L21.5,11.0 L14.97,12.65 L18.42,18.42 L12.65,14.97 L11.0,21.5 L9.35,14.97 L3.58,18.42 L7.03,12.65 L0.5,11.0 L7.03,9.35 L3.58,3.58 L9.35,7.03 Z"></path></svg>';
     document.body.appendChild(el);
     return el;
   };

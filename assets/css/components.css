@@ -758,14 +758,12 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   position: absolute;
   top: 0;
   left: 0;
-  width: 3.5px;
-  height: 3.5px;
+  width: 5px;
+  height: 5px;
   pointer-events: none;
   z-index: var(--z-cursor);
   will-change: transform;
 }
-.cursor-particle svg circle {
-  fill: var(--color-cursor);
-  stroke: #0d0e10;
-  stroke-width: 0.5;
+.cursor-particle svg path {
+  fill: var(--color-cursor);  /* no outline, same as the cursor star */
 }

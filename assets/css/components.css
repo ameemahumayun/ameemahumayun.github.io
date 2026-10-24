@@ -219,7 +219,7 @@
   margin: var(--space-3) auto 5.5rem;
   object-fit: cover;
   object-position: 50% 12%;
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-accent);  /* the theme's signature color: maroon in rose */
 }
 .hero__avatar {
   width: 282px;

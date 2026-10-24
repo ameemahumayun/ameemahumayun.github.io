@@ -197,6 +197,11 @@
   gap: 0.875rem;
 }
 .hero--profile .hero__text { flex: 1 1 auto; min-width: 0; }
+/* No portrait (see the commented-out block in index.html): center the
+   bio column under the centered name instead of leaving it flush left. */
+.hero--profile .hero__row--solo { justify-content: center; }
+.hero--profile .hero__row--solo .hero__text { text-align: center; }
+.hero--profile .hero__row--solo .lead { margin-left: auto; margin-right: auto; }
 .hero--profile .eyebrow-rule {
   white-space: nowrap;
   font-size: 10px;

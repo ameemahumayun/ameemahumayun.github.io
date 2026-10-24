@@ -15,14 +15,14 @@
    4. Carousel. One .carousel__panel at a time (image slides or a plain
       text/HTML block) with prev/next controls and a counter. Works for
       any number of panels on any page with a .carousel element.
-   5. Theme toggle. Cycles the data-theme attribute on <html> through
-      dark -> rose -> dark (light is pulled from the
-      rotation for now — see the toggle's own IIFE), persists the choice
-      to localStorage, and keeps the nav button's icon/label in sync. The
-      actual color swap is pure CSS (see tokens.css's
-      [data-theme="rose"] block) — this just flips
-      the attribute. A matching inline script in head.html applies the
-      stored choice before first paint so there's no flash.
+   5. Theme toggle. The site follows the OS setting (light -> rose,
+      dark -> dark), live, including when the OS setting changes while
+      the page is open. The nav button flips between the two by hand;
+      that pick lasts for the tab's session (sessionStorage) until the
+      OS setting next changes. The actual color swap is pure CSS (see
+      tokens.css's [data-theme="rose"] block) — this just flips the
+      attribute. A matching inline script in head.html applies it before
+      first paint so there's no flash.
    6. Custom cursor. Builds the star-shaped pointer as a DOM element (so
       it can be animated) in place of the plain cursor:url() from
       base.css, which stays as the fallback on touch devices and for
@@ -239,17 +239,38 @@
 
   applyState(currentTheme());
 
-  toggle.addEventListener("click", () => {
-    const next = ORDER[(ORDER.indexOf(currentTheme()) + 1) % ORDER.length];
-    if (next === "dark") {
+  const setTheme = (theme) => {
+    if (theme === "dark") {
       root.removeAttribute("data-theme");
     } else {
-      root.setAttribute("data-theme", next);
+      root.setAttribute("data-theme", theme);
     }
+    applyState(theme);
+  };
+
+  // The OS setting changing is a fresh signal of what the visitor wants
+  // right now, so it wins over an earlier manual pick from the toggle.
+  if (window.matchMedia) {
+    const lightQuery = window.matchMedia("(prefers-color-scheme: light)");
+    const followSystem = () => {
+      try {
+        sessionStorage.removeItem("theme");
+      } catch (e) {}
+      setTheme(lightQuery.matches ? "rose" : "dark");
+    };
+    if (lightQuery.addEventListener) {
+      lightQuery.addEventListener("change", followSystem);
+    } else if (lightQuery.addListener) {
+      lightQuery.addListener(followSystem);
+    }
+  }
+
+  toggle.addEventListener("click", () => {
+    const next = ORDER[(ORDER.indexOf(currentTheme()) + 1) % ORDER.length];
+    setTheme(next);
     try {
-      localStorage.setItem("theme", next);
+      sessionStorage.setItem("theme", next);
     } catch (e) {}
-    applyState(next);
   });
 })();
 

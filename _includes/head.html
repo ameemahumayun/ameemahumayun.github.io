@@ -4,17 +4,20 @@
        of flashing the default and then correcting a moment later once
        main.js runs (deferred, so it only executes after the DOM — and
        this button — exist). Mirrors the toggle logic in assets/js/main.js
-       (dark -> rose) — keep the two in sync. Light
-       is pulled from the rotation for now (tokens.css still has it, just
-       nothing sets it anymore) — rose is this site's light theme these
-       days, so a first-time visitor with no stored choice who prefers a
-       light OS lands on rose instead of dark; a stale stored "light"
-       from before falls into that same OS-preference check rather than
-       straight to dark. -->
+       — keep the two in sync. Every visit lands on the theme matching the
+       OS setting: light -> rose, dark -> dark. A manual pick from the nav
+       toggle is kept in sessionStorage, so it holds while browsing this
+       tab but the next visit follows the OS again (main.js also drops it
+       the moment the OS setting itself changes). -->
   <script>
     (function () {
       try {
-        var stored = localStorage.getItem("theme");
+        // Older builds kept the manual pick in localStorage, which would
+        // pin a returning visitor to it forever — clear it out.
+        localStorage.removeItem("theme");
+      } catch (e) {}
+      try {
+        var stored = sessionStorage.getItem("theme");
         var theme;
         if (stored === "rose" || stored === "dark") {
           theme = stored;

@@ -29,43 +29,20 @@
   padding: 18px var(--gutter-nav);
 }
 
-/* Three columns: name left, page links centered across the whole bar
-   (equal 1fr side columns keep them on the true center regardless of how
-   wide the name or the toggle buttons are), toggle buttons right. */
+/* Three columns: an empty one left, page links centered across the whole
+   bar (equal 1fr side columns keep them on the true center regardless of
+   how wide the toggle buttons are), toggle buttons right. */
 .nav__inner {
   max-width: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  grid-template-areas: "brand links icons";
+  grid-template-areas: ". links icons";
   align-items: center;
   gap: var(--space-3);
 }
-.nav__brand { grid-area: brand; }
 .nav__links { grid-area: links; }
 .nav__icons { grid-area: icons; justify-self: end; }
-
-/* Brand: the NAME is the home link and behaves like "home". */
-.nav__brand {
-  font-size: 0.65rem;
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  font-weight: var(--weight-semibold);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.nav__home {
-  color: var(--color-text-strong);
-  font-weight: var(--weight-bold);
-  padding-bottom: 2px;
-  border-bottom: 1px solid transparent;
-  transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
-}
-.nav__home:hover {
-  color: var(--color-accent);
-  border-bottom-color: var(--color-accent);
-}
 
 .nav__links {
   display: flex;
@@ -192,13 +169,14 @@ padding-top: 0;
 @media (max-width: 480px) {
   /* Keep the four short links visible on phones; let them wrap/shrink
      rather than hiding them. Stack name + links if needed. */
-  /* Name and toggles share the top row; links get a centered row of
-     their own underneath. */
+  /* Too narrow to fit the links and the toggles on one centered row:
+     stack them, both centered — links on top, toggles underneath. */
   .nav__inner {
-    grid-template-columns: 1fr auto;
-    grid-template-areas: "brand icons" "links links";
-    gap: 10px 14px;
+    grid-template-columns: 1fr;
+    grid-template-areas: "links" "icons";
+    gap: 10px;
   }
+  .nav__icons { justify-self: center; }
   .nav__links { gap: 14px; flex-wrap: wrap; justify-content: center; }
   .nav__links a { font-size: 11px; letter-spacing: 0.06em; }
 }

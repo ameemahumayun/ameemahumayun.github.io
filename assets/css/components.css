@@ -210,11 +210,43 @@
 /* Square portrait, centered above the name. The photo is portrait-
    oriented, so the square crop keeps its full width and anchors near the
    top to keep the face and shoulders in frame. */
-.hero__portrait {
-  display: block;
+/* The frame carries the portrait's size and position, plus a pair of thin
+   horizontal lines in the border color: centered on the photo, running
+   behind it across the full screen width. Each line is 1.5x the photo's
+   2px border (3px), with half a line (1.5px) between them. */
+.hero__portrait-frame {
+  --portrait-line: 3px;
+  --portrait-line-gap: 1.5px;
+  position: relative;
   width: var(--portrait-size);
   height: var(--portrait-size);
   margin: 0.3rem auto 0;
+}
+.hero__portrait-frame::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  /* box-sizing is border-box site-wide, so the height has to include both
+     lines for the gap between them to survive. */
+  height: calc(2 * var(--portrait-line) + var(--portrait-line-gap));
+  border-top: var(--portrait-line) solid var(--color-accent);
+  border-bottom: var(--portrait-line) solid var(--color-accent);
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+}
+/* 100vw counts the scrollbar too, so the lines would poke past the page
+   edge and add a sideways scroll — clip them at the hero's edges. */
+.hero--profile { overflow-x: clip; }
+.hero__portrait {
+  position: relative;  /* sits above the lines */
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   object-fit: cover;
   object-position: 50% 12%;
   border: 2px solid var(--color-accent);  /* the theme's signature color: maroon in rose */
@@ -264,7 +296,7 @@
   .hero--profile .hero__row { flex-direction: column; align-items: center; gap: var(--space-4); }
   .hero--profile .hero__text { text-align: center; }
   .hero__avatar-frame { order: -1; width: 220px; transform: none; }
-  .hero__portrait { margin-top: 0; }
+  .hero__portrait-frame { margin-top: 0; }
   .hero--profile .eyebrow-rule {
     white-space: normal;
     font-size: 11.5px;

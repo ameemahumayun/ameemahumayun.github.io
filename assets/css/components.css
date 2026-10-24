@@ -661,6 +661,11 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   align-items: flex-start;
   gap: 4px;
 }
+/* Dots and line shifted right so each dot's left edge sits exactly on
+   the Recent Updates highlight's left edge (the block's left edge),
+   instead of poking 4px out past it; the line stays on the dots' center. */
+.name-width .timeline__item::before { left: calc(-1 * var(--space-4)); }
+.name-width .timeline__item::after { left: calc(-1 * var(--space-4) + 3px); }
 /* Self-hosted (personal-use licensed) — not a Google Fonts import. */
 @font-face {
   font-family: "Autography";

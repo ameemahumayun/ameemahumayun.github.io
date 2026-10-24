@@ -214,7 +214,7 @@
   display: block;
   width: 200px;
   height: 200px;
-  margin: var(--space-3) auto 1.75rem;
+  margin: 0.3rem auto 1.75rem;
   object-fit: cover;
   object-position: 50% 12%;
   border: 2px solid var(--color-accent);  /* the theme's signature color: maroon in rose */
@@ -264,7 +264,7 @@
   .hero--profile .hero__row { flex-direction: column; align-items: center; gap: var(--space-4); }
   .hero--profile .hero__text { text-align: center; }
   .hero__avatar-frame { order: -1; width: 220px; transform: none; }
-  .hero__portrait { width: 160px; height: 160px; margin-top: var(--space-2); margin-bottom: 1.25rem; }
+  .hero__portrait { width: 160px; height: 160px; margin-top: 0; margin-bottom: 1.25rem; }
   /* index.html sets the name's desktop margins inline (tuned against the
      two-column row, which doesn't exist in this stacked layout) — override
      with !important since nothing less specific beats an inline style. */

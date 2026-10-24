@@ -67,11 +67,19 @@
   border-bottom-color: var(--color-accent);
 }
 
+/* The links row is exactly as wide as the homepage portrait
+   (--portrait-size), with the first link starting at its left edge and
+   the last ending at its right — space-between spreads what's left
+   between them. The font size is what makes the four labels fit that
+   width with comfortable gaps; change it together with --portrait-size. */
 .nav__links {
   display: flex;
   align-items: center;
-  gap: 1.375rem;
-  font-size: 12.5px;
+  justify-content: space-between;
+  justify-self: center;
+  width: var(--portrait-size);
+  gap: 6px;
+  font-size: 11px;
   letter-spacing: var(--tracking-wide);
 }
 .nav__links a {
@@ -176,14 +184,18 @@ padding-top: 0;
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
+/* Portrait shrinks to 160px at this width (components.css), so the
+   links row does too. */
+@media (max-width: 900px) {
+  .nav__links { font-size: 9px; }
+}
+
 @media (max-width: 768px) {
   .container,
   .container-wide,
   .hero__inner { padding: 0 var(--gutter-mobile); }
 
   .nav { padding: 14px var(--gutter-mobile); }
-  .nav__links { gap: 18px; }
-  .nav__links a { font-size: 11px; }
 
   .hero { padding: 5rem 0 4.5rem; }
   .section { padding: 4.5rem 0; }
@@ -199,6 +211,5 @@ padding-top: 0;
     grid-template-areas: "brand icons" "links links";
     gap: 10px 14px;
   }
-  .nav__links { gap: 14px; flex-wrap: wrap; justify-content: center; }
-  .nav__links a { font-size: 11px; letter-spacing: 0.06em; }
+
 }

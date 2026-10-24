@@ -192,7 +192,7 @@ padding-top: 0;
   .nav { padding: 14px var(--gutter-mobile); }
   /* Links drop to 11px here, so the portrait (and the links row with it)
      narrows to their natural width at that size. */
-  :root { --portrait-size: 204px; }
+  :root { --portrait-size: 201px; }
   .nav__links { font-size: 11px; }
 
   .hero { padding: 5rem 0 4.5rem; }

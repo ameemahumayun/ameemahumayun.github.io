@@ -104,7 +104,7 @@
   --gutter-nav:       56px;   /* nav sits closer to viewport edges */
   --gutter-mobile:    24px;
   --nav-height:       64px;
-  --portrait-size:    236px;  /* homepage portrait = the nav links' natural width at 12.5px (204px at <=768px, layout.css) */
+  --portrait-size:    233px;  /* homepage portrait = the nav links' natural width at 12.5px (201px at <=768px, layout.css) */
 
 
   /* ----- BORDERS & RADII ------------------------------------------------- */

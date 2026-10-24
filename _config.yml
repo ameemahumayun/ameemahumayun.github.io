@@ -31,7 +31,7 @@ nav_links:
   - label: cv
     url: /cv/
     key: cv
-  - label: contact me!
+  - label: contact me
     url: /contact/
     key: contact
 

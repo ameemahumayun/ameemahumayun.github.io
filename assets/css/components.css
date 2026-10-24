@@ -270,7 +270,7 @@
      with !important since nothing less specific beats an inline style. */
   .hero__name {
     margin-top: 0.5rem !important;
-    margin-bottom: 2rem !important;  /* clears the y's descender */
+    margin-bottom: 0.5rem !important;
   }
   .hero--profile .eyebrow-rule {
     white-space: normal;
@@ -286,7 +286,7 @@
      .hero__name, to outrank .signature-text's own font-size — same
      specificity, but .signature-text is later in the cascade.) */
   .signature-text.hero__name {
-    font-size: 2.75rem;
+    font-size: 2.4rem;
   }
 }
 
@@ -649,6 +649,13 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
 /* 29. SIGNATURE TEXT (hand-written name, homepage hero) -------------------- */
 /* Self-hosted (personal-use licensed) — not a Google Fonts import. */
 @font-face {
+  font-family: "Autography";
+  src: url("/assets/fonts/autography.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
   font-family: "Priestacy";
   src: url("/assets/fonts/priestacy.woff2") format("woff2");
   font-weight: 400;
@@ -663,7 +670,7 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   font-display: swap;
 }
 .signature-text {
-  font-family: "Priestacy", "Sacramento", cursive;
+  font-family: "Autography", "Priestacy", "Sacramento", cursive;
   font-weight: 400;
   font-style: normal;
   color: var(--color-accent);
@@ -682,10 +689,9 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   pointer-events: none;
   /* Slight upward slant: left edge sits ~3px lower, right edge ~3px
      higher, like a handwritten signature drifting upward. */
-  /* translateX: Priestacy's opening swash reaches further left than its
-     tail reaches right, so the ink sits ~0.06em left of its own box —
-     nudged back so the visible name is centered. */
-  transform: translateX(0.06em) rotate(-0.48deg);
+  /* Autography's ink sits evenly on its own advance box, so no
+     horizontal nudge is needed for the name to read centered. */
+  transform: rotate(-0.48deg);
 }
 
 

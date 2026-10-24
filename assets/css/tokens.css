@@ -184,14 +184,12 @@
   --color-border-soft:  #f3e6e9;
   --color-rule:         #ddc2c8;
 
-  --color-accent:       #6b0f1c;  /* deep maroon, in place of butter yellow */
-  --color-accent-deep:  #520a14;
-  --color-accent-light: #8c1f2b;
-
-  --color-link:         #7a1620;  /* a step brighter than the #6b0f1c accent */
+  --color-accent:       #8c1f2b;  /* dark red, in place of butter yellow */
+  --color-accent-deep:  #6e1620;
+  --color-accent-light: #b03a46;
 
   --color-selection-bg: #f6c6cf;
   --color-selection-fg: #2b1214;
 
-  --color-cursor: #5e0c17;  /* maroon, in place of the usual orange */
+  --color-cursor: #7a1620;  /* maroon, in place of the usual orange */
 }

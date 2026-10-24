@@ -212,11 +212,11 @@
    top to keep the face and shoulders in frame. */
 /* The frame carries the portrait's size and position, plus a pair of thin
    horizontal lines in the border color: centered on the photo, running
-   behind it across the full screen width. Each line is 1.5x the photo's
-   2px border (3px), with half a line (1.5px) between them. */
+   behind it across the full screen width. Each line matches the photo's
+   2px border, with 3px between them. */
 .hero__portrait-frame {
-  --portrait-line: 3px;
-  --portrait-line-gap: 1.5px;
+  --portrait-line: 2px;
+  --portrait-line-gap: 3px;
   position: relative;
   width: var(--portrait-size);
   height: var(--portrait-size);

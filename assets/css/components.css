@@ -680,6 +680,10 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
      box, so plain text-align:center (.hero__name) centers it. */
   font-size: clamp(2.5rem, 8.3vw, 6.25rem);
   line-height: 1.1;
+  /* A connected script has to keep its own spacing — the tight tracking
+     h1 inherits from base.css squeezed the letters together and broke
+     the joins between them. */
+  letter-spacing: normal;
   /* Purely decorative — its tall ascender swash visually overflows
      into the publication links above it. Without this, that ink is
      still hit-tested and silently steals clicks/hover meant for the

@@ -169,7 +169,7 @@
    pre-paint script and assets/js/main.js's three-way toggle.
    ========================================================================== */
 :root[data-theme="rose"] {
-  --color-bg:           #fee8ec;  /* soft pink, a touch lighter than #fedee4 */
+  --color-bg:           #feeef1;  /* halfway between #fee8ec and the original near-white #fdf4f6 */
   --color-bg-lift:      #fffafb;
   --color-bg-card:      #fffafb;
   --color-bg-card-deep: #f6e3e8;

@@ -5,6 +5,9 @@
 {%- endcomment -%}
 <nav class="nav">
   <div class="nav__inner">
+    <div class="nav__brand">
+      <a class="nav__home" href="{{ '/' | relative_url }}">Ameemah Humayun</a>
+    </div>
     <ul class="nav__links">
       {%- for link in site.nav_links %}
       <li><a href="{{ link.url | relative_url }}"{% if page.active == link.key %} aria-current="page"{% endif %}>{{ link.label }}</a></li>

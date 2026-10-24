@@ -184,21 +184,9 @@
   max-width: var(--container-wide);
 }
 /* Name centered across the full hero width, above the two-column row. */
-/* Same look the nav's corner name used to have: body font, bold,
-   uppercase, wide tracking, strong text color — just at heading size.
-   letter-spacing also adds space after the last letter, so an equal
-   padding-left keeps the visible letters truly centered. */
 .hero__name {
   text-align: center;
   margin-left: 0;
-  font-family: var(--font-body);
-  font-weight: var(--weight-bold);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-  padding-left: var(--tracking-wider);
-  color: var(--color-text-strong);
-  font-size: clamp(1.5rem, 3.2vw, 2.25rem);
-  line-height: var(--leading-tight);
 }
 /* Text column + circular portrait, side by side — top of the portrait
    lines up with the top of the paragraph, bottom with "See all work"
@@ -282,12 +270,23 @@
      with !important since nothing less specific beats an inline style. */
   .hero__name {
     margin-top: 0.5rem !important;
-    margin-bottom: 0.75rem !important;
+    margin-bottom: 1.25rem !important;  /* clears the y's descender */
   }
   .hero--profile .eyebrow-rule {
     white-space: normal;
     font-size: 11.5px;
     letter-spacing: var(--tracking-widest);
+  }
+}
+@media (max-width: 600px) {
+  /* The desktop clamp's floor (3.75rem) doesn't shrink further at phone
+     widths, so the name wrapped to two tightly-stacked lines whose tall
+     ascenders/descenders crowded into each other. One clean line reads
+     better than a cramped wrap. (.signature-text.hero__name, not just
+     .hero__name, to outrank .signature-text's own font-size — same
+     specificity, but .signature-text is later in the cascade.) */
+  .signature-text.hero__name {
+    font-size: 11vw;
   }
 }
 

@@ -12,22 +12,22 @@
       {%- for link in site.nav_links %}
       <li><a href="{{ link.url | relative_url }}"{% if page.active == link.key %} aria-current="page"{% endif %}>{{ link.label }}</a></li>
       {%- endfor %}
-      <li class="nav__icons">
-        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to rose theme" aria-pressed="false">
-          <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-          </svg>
-          <svg class="theme-toggle__icon theme-toggle__icon--rose" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true" hidden>
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-          </svg>
-        </button>
-        <button type="button" id="debris-toggle" class="theme-toggle" aria-label="Turn off click explosions" aria-pressed="false">
-          <svg viewBox="0 0 22 22" width="13" height="13" fill="currentColor" aria-hidden="true">
-            <path d="M11.0,0.5 L12.65,7.03 L18.42,3.58 L14.97,9.35 L21.5,11.0 L14.97,12.65 L18.42,18.42 L12.65,14.97 L11.0,21.5 L9.35,14.97 L3.58,18.42 L7.03,12.65 L0.5,11.0 L7.03,9.35 L3.58,3.58 L9.35,7.03 Z"/>
-            <line class="debris-toggle__slash" x1="2" y1="2" x2="20" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </li>
     </ul>
+    <div class="nav__icons">
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to rose theme" aria-pressed="false">
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--rose" viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true" hidden>
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+      <button type="button" id="debris-toggle" class="theme-toggle" aria-label="Turn off click explosions" aria-pressed="false">
+        <svg viewBox="0 0 22 22" width="13" height="13" fill="currentColor" aria-hidden="true">
+          <path d="M11.0,0.5 L12.65,7.03 L18.42,3.58 L14.97,9.35 L21.5,11.0 L14.97,12.65 L18.42,18.42 L12.65,14.97 L11.0,21.5 L9.35,14.97 L3.58,18.42 L7.03,12.65 L0.5,11.0 L7.03,9.35 L3.58,3.58 L9.35,7.03 Z"/>
+          <line class="debris-toggle__slash" x1="2" y1="2" x2="20" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
   </div>
 </nav>

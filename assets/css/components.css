@@ -214,9 +214,7 @@
   display: block;
   width: 200px;
   height: 200px;
-  /* Bottom margin clears the name's tall swashes, which the signature's
-     own translateY lifts above its line box. */
-  margin: var(--space-3) auto 5.5rem;
+  margin: var(--space-3) auto 1.75rem;
   object-fit: cover;
   object-position: 50% 12%;
   border: 2px solid var(--color-accent);  /* the theme's signature color: maroon in rose */
@@ -266,17 +264,13 @@
   .hero--profile .hero__row { flex-direction: column; align-items: center; gap: var(--space-4); }
   .hero--profile .hero__text { text-align: center; }
   .hero__avatar-frame { order: -1; width: 220px; transform: none; }
-  .hero__portrait { width: 160px; height: 160px; margin-top: var(--space-2); margin-bottom: 4.5rem; }
+  .hero__portrait { width: 160px; height: 160px; margin-top: var(--space-2); margin-bottom: 1.25rem; }
   /* index.html sets the name's desktop margins inline (tuned against the
      two-column row, which doesn't exist in this stacked layout) — override
-     with !important since nothing less specific beats an inline style.
-     The signature's own translateY(-24.5px) (base.css) shifts it up
-     visually without shrinking the flow space reserved below it, so the
-     gap this margin alone implies always reads larger than the number
-     suggests; cut further to actually close it on a small screen. */
+     with !important since nothing less specific beats an inline style. */
   .hero__name {
     margin-top: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
+    margin-bottom: 1.25rem !important;  /* clears the y's descender */
   }
   .hero--profile .eyebrow-rule {
     white-space: normal;
@@ -292,8 +286,7 @@
      .hero__name, to outrank .signature-text's own font-size — same
      specificity, but .signature-text is later in the cascade.) */
   .signature-text.hero__name {
-    font-size: 6.2vw;
-    margin-left: 0;
+    font-size: 11vw;
   }
 }
 
@@ -656,8 +649,8 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
 /* 29. SIGNATURE TEXT (hand-written name, homepage hero) -------------------- */
 /* Self-hosted (personal-use licensed) — not a Google Fonts import. */
 @font-face {
-  font-family: "Just Signature";
-  src: url("/assets/fonts/just-signature.woff2") format("woff2");
+  font-family: "Darlington";
+  src: url("/assets/fonts/darlington.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -677,15 +670,16 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   font-display: swap;
 }
 .signature-text {
-  font-family: "Just Signature", "Priestacy", "Sacramento", cursive;
+  font-family: "Darlington", "Priestacy", "Sacramento", cursive;
   font-weight: 400;
   font-style: normal;
   color: var(--color-accent);
-  /* Just Signature runs ~1.8x wider than Priestacy at the same size —
-     scaled down so the name stays on one line. */
-  font-size: clamp(1.5rem, 5vw, 3.6rem);
+  /* Darlington is compact — its ink is only ~4.3x its font-size wide —
+     so it needs a larger size than the earlier scripts to read at a
+     similar scale. No left offset: its ink sits exactly on its advance
+     box, so plain text-align:center (.hero__name) centers it. */
+  font-size: clamp(2.5rem, 8.3vw, 6.25rem);
   line-height: 1.1;
-  margin-left: -1.8125rem;
   /* Purely decorative — its tall ascender swash visually overflows
      into the publication links above it. Without this, that ink is
      still hit-tested and silently steals clicks/hover meant for the
@@ -694,7 +688,7 @@ details[open] .accordion__icon::after { opacity: 0; }                          /
   pointer-events: none;
   /* Slight upward slant: left edge sits ~3px lower, right edge ~3px
      higher, like a handwritten signature drifting upward. */
-  transform: translateY(-24.5px) rotate(-0.48deg);
+  transform: rotate(-0.48deg);
 }
 
 

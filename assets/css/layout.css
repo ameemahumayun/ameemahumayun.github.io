@@ -29,18 +29,25 @@
   padding: 18px var(--gutter-nav);
 }
 
+/* Three columns: name left, page links centered across the whole bar
+   (equal 1fr side columns keep them on the true center regardless of how
+   wide the name or the toggle buttons are), toggle buttons right. */
 .nav__inner {
   max-width: 100%;
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas: "brand links icons";
   align-items: center;
   gap: var(--space-3);
 }
+.nav__brand { grid-area: brand; }
+.nav__links { grid-area: links; }
+.nav__icons { grid-area: icons; justify-self: end; }
 
 /* Brand: the NAME is the home link and behaves like "home". */
 .nav__brand {
-  font-size: var(--text-xs);
+  font-size: 0.65rem;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   font-weight: var(--weight-semibold);
@@ -185,7 +192,13 @@ padding-top: 0;
 @media (max-width: 480px) {
   /* Keep the four short links visible on phones; let them wrap/shrink
      rather than hiding them. Stack name + links if needed. */
-  .nav__inner { flex-wrap: wrap; gap: 4px 14px; }
-  .nav__links { gap: 14px; flex-wrap: wrap; }
+  /* Name and toggles share the top row; links get a centered row of
+     their own underneath. */
+  .nav__inner {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "brand icons" "links links";
+    gap: 10px 14px;
+  }
+  .nav__links { gap: 14px; flex-wrap: wrap; justify-content: center; }
   .nav__links a { font-size: 11px; letter-spacing: 0.06em; }
 }

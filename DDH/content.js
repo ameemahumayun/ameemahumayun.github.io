@@ -195,58 +195,6 @@ window.CLINIC = (function () {
       refs: [] },
   ];
 
-  /* The TB-Screen worked example as a full set of answers, so a lecturer can
-     fill their in-class preview with it in one click. Same shape as a
-     student's saved state (see app.js). */
-  function workedState() {
-    const rows = [
-      ["r1", "Radiographer", "Trained in X-ray; one per shift; ageing machine; frequent power cuts", "Capture and upload the X-ray", true],
-      ["r2", "Medical officer", "About 150 patients a day, about 3 minutes each; trusts own reading of films", "Decide who needs a sputum test", true],
-      ["r3", "Medical officer", "Same person, same conditions", "Explain the referral to the patient and relative", false],
-      ["r4", "Lab technician", "Two staff; fixed cartridge supply", "Run GeneXpert on referred samples", true],
-      ["r5", "Patient", "Often rural; many cannot read; may come with a relative who speaks for them", "Go for the test and return for the result", true],
-    ];
-    const s = {
-      profile: { name: "", email: "", group: "", tool: "TB-Screen" },
-      ex1: { order: rows.map(function (r) { return r[0]; }), rows: {} },
-      ex2: { byRow: {
-        r1: { feature: "upload screen", indTech: "New upload screen on an old machine; needs a stable connection", taskTech: "Adds an upload step after every X-ray" },
-        r2: { feature: "TB score 0–100", indTech: "A score from 0 to 100, for an MO used to reading films", taskTech: "The score must arrive before the referral decision" },
-        r4: { feature: "referral threshold of 50", indTech: "Does not use the tool directly", taskTech: "The tool's threshold sets how many samples arrive" },
-        r5: { feature: "referral from the score", indTech: "Does not use the tool; relies on staff to explain the result", taskTech: "Referral depends on the score being ready while the patient is still there" },
-      } },
-      ex3: {
-        byRow: { r1: { stage: "input" }, r2: { stage: "interpret" }, r4: { stage: "action" }, r5: { stage: "action" } },
-        order: ["c1", "c2", "c3", "c4", "c5"],
-        items: {
-          c1: { rid: "r1", challenge: "Poor environmental conditions", meaning: "Old machine and power cuts: unreadable images, failed uploads" },
-          c2: { rid: "r2", challenge: "Hidden predictors", meaning: "MOs weigh weight loss and contact history; the model sees neither" },
-          c3: { rid: "r2", challenge: "Decision-point disconnect", meaning: "The score arrives after the patient has left the room" },
-          c4: { rid: "r4", challenge: "Value conflicts", meaning: "The programme wants more cases found; the lab wants a manageable load" },
-          c5: { rid: "r5", challenge: "Additional labour", meaning: "Patients who leave before the score must be traced and called back" },
-        },
-      },
-      ex4: { byItem: {
-        c3: { handled: "No", changeKind: "Tool", change: "score printed on the OPD token slip", test: "silent", measure: "% of decisions with the score ready beforehand", compared: "Time of the MO's decision, observed", gate: "Score ready before at least 80% of decisions" },
-        c1: { handled: "Partly", changeKind: "Tool", change: "flags unreadable images so they're retaken at once", test: "technical", measure: "% of real local X-rays the tool can read", compared: "A radiologist's read of the same films", gate: "Fails on fewer than 10% of local X-rays" },
-        c4: { handled: "No", changeKind: "Conditions", change: "lab and programme set the threshold together", test: "accuracy", measure: "PPV at the agreed threshold; referrals a day", compared: "GeneXpert result (reference standard)", gate: "Referrals stay within lab capacity; PPV above the floor the lab and programme set" },
-      } },
-      ex5: {
-        item: "c3",
-        who: "For the medical officer deciding who needs a sputum test using the TB score,",
-        where: "at the interpreting-outputs stage, decision-point disconnect means the score arrives after the patient has left.",
-        how: "We will print the score on the OPD token slip and run a silent trial, going on only if the score is ready before at least 80% of decisions.",
-        canClaim: "the score reaches the decision in a busy OPD",
-        cannotClaim: "whether more TB is treated",
-        rethink: "Looking back, our first plan was a silent trial of accuracy alone. Timing was the bigger risk, so timed observation now comes first.",
-      },
-    };
-    rows.forEach(function (r) {
-      s.ex1.rows[r[0]] = { individual: r[1], conditions: r[2], task: r[3], follow: r[4] };
-    });
-    return s;
-  }
-
   return { STAGES: STAGES, CHALLENGES: CHALLENGES, TESTS: TESTS, CHANGE_KINDS: CHANGE_KINDS,
-           REF: REF, EXAMPLES: EXAMPLES, EXERCISES: EXERCISES, workedState: workedState };
+           REF: REF, EXAMPLES: EXAMPLES, EXERCISES: EXERCISES };
 })();

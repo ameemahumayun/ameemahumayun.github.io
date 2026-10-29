@@ -1,38 +1,18 @@
 /* ==========================================================================
-   EVALUATION CLINIC — app
-   One script for both pages, picked by <body data-mode>:
-   - lecturer (/DDH/): tabs "Student site" + Exercise 1–5. Each exercise has
-     a Publish switch (what students can open) and "Show activity here",
-     which expands a working copy of the activity for teaching.
-   - student (/DDH/student/): tabs Exercise 1–5, each showing the activity
-     once published (or "Unpublished"), plus name/email/group and PDF export.
-
-   Saving: every answer is written to localStorage as it's typed, so a
-   refresh or closed tab loses nothing. Student answers and the lecturer's
-   preview answers are kept apart.
-
-   Publishing: the switches live in /DDH/published.json in the site's own
-   GitHub repo. Students fetch it (cache-busted) every 15s. A lecturer
-   flips a switch by updating that file through the GitHub API with a
-   personal access token kept only in their own browser; GitHub Pages
-   republishes it in about a minute.
+   EVALUATION CLINIC — app (/DDH/)
+   One page for students: name/email/group/tool, a share card with this
+   page's link and QR code, and tabs for Exercises 1–5. Every answer is
+   written to localStorage as it's typed, so a refresh or closed tab loses
+   nothing; PDF export covers one activity or all of them.
    ========================================================================== */
 (function () {
   "use strict";
 
   const C = window.CLINIC;
-  const MODE = document.body.dataset.mode === "lecturer" ? "lecturer" : "student";
-  const REPO = "ameemahumayun/ameemahumayun.github.io";
-  const PUB_PATH = "DDH/published.json";
-  const PUB_URL = "/DDH/published.json";
-  const STUDENT_URL = location.origin + "/DDH/student/";
+  const PAGE_URL = location.origin + "/DDH/";
   const KEYS = {
     student: "ddhClinic.student.v1",
-    preview: "ddhClinic.preview.v1",
-    published: "ddhClinic.published.v1",
-    token: "ddhClinic.githubToken",
-    tab: "ddhClinic.tab." + MODE,
-    open: "ddhClinic.openActivities",
+    tab: "ddhClinic.tab.student",
   };
   const NUMS = [1, 2, 3, 4, 5];
 
@@ -73,10 +53,7 @@
     ["profile", "ex1", "ex2", "ex3", "ex4", "ex5"].forEach((k) => { out[k] = Object.assign(blank()[k], s[k] || {}); });
     return out;
   }
-  const spaces = {
-    student: normalise(store.get(KEYS.student)),
-    preview: normalise(store.get(KEYS.preview)),
-  };
+  const spaces = { student: normalise(store.get(KEYS.student)) };
   const saveTimers = {};
   let saveFailed = false;
   function save(space, now) {
@@ -88,9 +65,9 @@
     };
     if (now) write(); else saveTimers[space] = setTimeout(write, 250);
   }
-  window.addEventListener("beforeunload", () => { save("student", true); save("preview", true); });
+  window.addEventListener("beforeunload", () => save("student", true));
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") { save("student", true); save("preview", true); }
+    if (document.visibilityState === "hidden") save("student", true);
   });
 
   function setPath(obj, path, value) {
@@ -121,116 +98,9 @@
       .filter((it) => it.rid && live.has(it.rid) && (S.ex3.byRow[it.rid] || {}).stage);
   }
 
-  /* ----- publish state ---------------------------------------------------- */
-  let published = Object.assign({ 1: false, 2: false, 3: false, 4: false, 5: false }, store.get(KEYS.published, {}));
-  let pubSha = null;
-  const pending = {};           // n -> true while GitHub Pages catches up
-  let pubError = "";
-  let pubLoaded = false;
-
-  function token() { return store.get(KEYS.token, ""); }
-  function ghHeaders() {
-    return { "Authorization": "Bearer " + token(), "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" };
-  }
-  function fromB64(b) { return decodeURIComponent(escape(atob(b.replace(/\n/g, "")))); }
-  function toB64(s) { return btoa(unescape(encodeURIComponent(s))); }
-
-  async function fetchPagesPublished() {
-    const res = await fetch(PUB_URL + "?t=" + Date.now(), { cache: "no-store" });
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    return await res.json();
-  }
-  async function fetchApiPublished() {
-    const res = await fetch("https://api.github.com/repos/" + REPO + "/contents/" + PUB_PATH + "?ref=main&t=" + Date.now(), { headers: ghHeaders(), cache: "no-store" });
-    if (res.status === 401) throw new Error("GitHub didn't accept the access key (it may have expired or been mistyped).");
-    if (res.status === 403 || res.status === 404) throw new Error("The access key can't see this repository. Check it was made for " + REPO + " with Contents: Read and write.");
-    if (!res.ok) throw new Error("GitHub answered HTTP " + res.status + ".");
-    const j = await res.json();
-    pubSha = j.sha;
-    return JSON.parse(fromB64(j.content));
-  }
-  function applyPublished(p) {
-    const next = {};
-    NUMS.forEach((n) => { next[n] = !!(p && p[n]); });
-    const changed = NUMS.some((n) => next[n] !== published[n]);
-    published = next;
-    store.set(KEYS.published, published);
-    pubLoaded = true;
-    return changed;
-  }
-
-  async function refreshPublished() {
-    try {
-      const p = (MODE === "lecturer" && token()) ? await fetchApiPublished() : await fetchPagesPublished();
-      pubError = "";
-      if (applyPublished(p) || MODE === "lecturer") render();
-    } catch (e) {
-      pubError = e.message || String(e);
-      if (MODE === "lecturer") render();
-    }
-  }
-
-  async function setPublished(n, on) {
-    if (!token()) {
-      activeTab = "site";
-      flash = { kind: "warn", text: "Add your GitHub access key below first — it's what lets this page publish activities." };
-      render();
-      const f = document.getElementById("token-input");
-      if (f) f.focus();
-      return;
-    }
-    const want = Object.assign({}, published, { [n]: on });
-    pending[n] = "saving";
-    render();
-    const put = async () => {
-      if (!pubSha) await fetchApiPublished();
-      const body = {
-        message: (on ? "Evaluation Clinic: publish Exercise " : "Evaluation Clinic: unpublish Exercise ") + n,
-        content: toB64(JSON.stringify(want, null, 2) + "\n"),
-        sha: pubSha,
-        branch: "main",
-      };
-      return fetch("https://api.github.com/repos/" + REPO + "/contents/" + PUB_PATH, { method: "PUT", headers: ghHeaders(), body: JSON.stringify(body) });
-    };
-    try {
-      let res = await put();
-      if (res.status === 409 || res.status === 422) {
-        // Someone (or another tab) changed the file since we read it.
-        const latest = await fetchApiPublished();
-        Object.assign(want, latest, { [n]: on });
-        res = await put();
-      }
-      if (!res.ok) throw new Error(res.status === 401 ? "GitHub didn't accept the access key." : res.status === 403 || res.status === 404 ? "The access key isn't allowed to change this repository." : "GitHub answered HTTP " + res.status + ".");
-      const j = await res.json();
-      pubSha = j.content && j.content.sha;
-      applyPublished(want);
-      pending[n] = "propagating";
-      pubError = "";
-      render();
-      waitForPages(n, on);
-    } catch (e) {
-      delete pending[n];
-      pubError = e.message || String(e);
-      render();
-    }
-  }
-  function waitForPages(n, on) {
-    const started = Date.now();
-    const tick = async () => {
-      try {
-        const p = await fetchPagesPublished();
-        if (!!p[n] === on) { delete pending[n]; render(); return; }
-      } catch (e) {}
-      if (Date.now() - started > 5 * 60 * 1000) { delete pending[n]; render(); return; }
-      setTimeout(tick, 6000);
-    };
-    setTimeout(tick, 6000);
-  }
-
   /* ----- UI state ----------------------------------------------------------- */
-  let activeTab = store.get(KEYS.tab, MODE === "lecturer" ? "site" : "1");
-  let openActs = store.get(KEYS.open, {});      // lecturer: which activities are expanded
-  let flash = null;                              // one-off notice on the lecturer's site tab
+  let activeTab = store.get(KEYS.tab, "1");
+  let qrBig = false;                             // QR enlarged for projecting
   let picked = null;                             // tap-to-move selection {type, id, space}
 
   /* ----- rendering: shared pieces ------------------------------------------ */
@@ -426,12 +296,7 @@
   function activity(n, sp) {
     const ex = C.EXERCISES[n - 1];
     const S = spaces[sp];
-    const tools = sp === "preview"
-      ? '<div class="toolbar"><button type="button" class="btn btn--ghost" data-action="fill-example" data-space="preview">Fill with the TB-Screen example</button>' +
-        '<button type="button" class="btn btn--ghost" data-action="clear-preview" data-space="preview">Clear this preview</button>' +
-        '<button type="button" class="btn btn--ghost" data-action="export" data-space="preview" data-n="' + n + '">Export as PDF</button>' +
-        '<span class="muted">Preview answers are saved on this device only, separately from any student’s.</span></div>'
-      : '<div class="toolbar"><button type="button" class="btn" data-action="export" data-space="student" data-n="' + n + '">Export this activity (PDF)</button></div>';
+    const tools = '<div class="toolbar"><button type="button" class="btn" data-action="export" data-space="student" data-n="' + n + '">Export this activity (PDF)</button></div>';
     return '<div class="activity" data-ex="' + n + '" data-space="' + sp + '">' +
       tools +
       '<div class="refs">' + ex.refs.map(refTable).join("") + exampleBlock(n) + "</div>" +
@@ -449,75 +314,35 @@
   function tabs(list) {
     return '<nav class="tabs" role="tablist"><div class="wrap tabs__row">' + list.map((t) =>
       '<button type="button" role="tab" class="tab' + (activeTab === t.id ? " is-active" : "") + '" aria-selected="' + (activeTab === t.id) + '" data-action="tab" data-id="' + t.id + '">' +
-        esc(t.label) + (t.dot ? '<span class="dot dot--' + t.dot + '" aria-hidden="true"></span>' : "") + "</button>").join("") +
+        esc(t.label) + "</button>").join("") +
       "</div></nav>";
   }
-  function statusText(n) {
-    if (pending[n] === "saving") return "Saving…";
-    if (pending[n] === "propagating") return published[n] ? "Published — reaching students (about a minute)…" : "Unpublished — disappearing for students (about a minute)…";
-    return published[n] ? "Live on the student site" : "Hidden from students";
-  }
-
-  function lecturerSite() {
-    let qr = "";
+  function qrSvg() {
     try {
       const q = window.qrcode(0, "M");
-      q.addData(STUDENT_URL);
+      q.addData(PAGE_URL);
       q.make();
-      qr = q.createSvgTag({ cellSize: 8, margin: 2, scalable: true, alt: "QR code for " + STUDENT_URL });
-    } catch (e) { qr = '<p class="mini">QR code unavailable.</p>'; }
-    const tok = token();
-    return '<section class="panel wrap">' +
-      '<h2 class="ex-title"><span class="text-highlight">Student site</span></h2>' +
-      '<div class="share">' +
-        '<div class="card share__link"><p class="label">Link for students</p>' +
-          '<div class="link-row"><input id="student-link" type="text" readonly value="' + esc(STUDENT_URL) + '" aria-label="Student site link">' +
-          '<button type="button" class="btn" data-action="copy-link">Copy</button>' +
-          '<a class="btn btn--ghost" href="' + esc(STUDENT_URL) + '" target="_blank" rel="noopener">Open</a></div>' +
-          '<p class="mini">Students see only the activities you publish. Their answers save on their own device as they type, and they export a PDF when done.</p>' +
-          '<p class="label" style="margin-top:1.25rem">Published right now</p><ul class="pub-list">' +
-          NUMS.map((n) => '<li><span class="dot dot--' + (pending[n] ? "pending" : published[n] ? "live" : "off") + '"></span>Exercise ' + n + " · " + esc(C.EXERCISES[n - 1].title) + ' <span class="muted">— ' + esc(statusText(n)) + "</span></li>").join("") +
-          "</ul></div>" +
-        '<div class="card share__qr"><div class="qr">' + qr + '</div><p class="mini">Scan to open the student site</p></div>' +
-      "</div>" +
-      (flash ? '<p class="notice notice--' + flash.kind + '">' + esc(flash.text) + "</p>" : "") +
-      (pubError ? '<p class="notice notice--warn">' + esc(pubError) + "</p>" : "") +
-      '<details class="card setup"' + (tok ? "" : " open") + "><summary>Publishing setup " + (tok ? '<span class="tag tag--input">Key saved on this device</span>' : '<span class="tag tag--action">Needed to publish</span>') + "</summary>" +
-        "<p>The Publish switches update a small file in your website’s GitHub repository. That needs a GitHub access key, made once and kept only in this browser:</p>" +
-        "<ol class=\"howto\">" +
-          '<li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → New fine-grained token</a>.</li>' +
-          "<li>Name it (e.g. “Evaluation Clinic”) and pick an expiry.</li>" +
-          "<li>Repository access: <b>Only select repositories</b> → <b>" + esc(REPO) + "</b>.</li>" +
-          "<li>Permissions → Repository permissions → <b>Contents: Read and write</b>.</li>" +
-          "<li>Generate it, copy it, and paste it here.</li>" +
-        "</ol>" +
-        '<div class="link-row"><input id="token-input" type="password" autocomplete="off" placeholder="github_pat_…" aria-label="GitHub access key">' +
-          '<button type="button" class="btn" data-action="save-token">Save key</button>' +
-          (tok ? '<button type="button" class="btn btn--ghost" data-action="forget-token">Forget key</button>' : "") + "</div>" +
-        '<p class="mini">Use this only on your own computer. Anyone with the key can change files in that repository; “Forget key” removes it from this browser.</p>' +
-      "</details></section>";
+      return q.createSvgTag({ cellSize: 8, margin: 2, scalable: true, alt: "QR code for " + PAGE_URL });
+    } catch (e) { return '<p class="mini">QR code unavailable.</p>'; }
   }
-
-  function lecturerExercise(n) {
-    const ex = C.EXERCISES[n - 1];
-    const on = !!published[n];
-    const busy = !!pending[n];
-    const open = !!openActs[n];
-    return '<section class="panel wrap">' + intro(ex) +
-      '<div class="controls card">' +
-        '<div class="switch-row"><button type="button" class="switch' + (on ? " is-on" : "") + '" role="switch" aria-checked="' + on + '" data-action="publish" data-n="' + n + '"' + (busy ? " disabled" : "") + '><span class="switch__knob"></span></button>' +
-          '<div><p class="switch__label">Publish activity on the student site</p><p class="mini">' + esc(statusText(n)) + "</p></div></div>" +
-        '<button type="button" class="btn" data-action="toggle-open" data-n="' + n + '" aria-expanded="' + open + '">' + (open ? "Hide activity" : "Show activity here") + "</button>" +
-      "</div>" +
-      (pubError ? '<p class="notice notice--warn">' + esc(pubError) + "</p>" : "") +
-      (open ? activity(n, "preview") : "") +
-      "</section>";
+  function shareCard() {
+    return '<div class="card share">' +
+      '<button type="button" class="qr" data-action="qr-zoom" aria-label="Enlarge QR code">' + qrSvg() + "</button>" +
+      '<div class="share__body"><p class="label">Share this page</p>' +
+        '<div class="link-row"><input id="page-link" type="text" readonly value="' + esc(PAGE_URL) + '" aria-label="Link to this page">' +
+        '<button type="button" class="btn" data-action="copy-link">Copy</button></div>' +
+        '<p class="mini">Scan the code or open the link. Tap the code to show it full-screen for a projector.</p>' +
+      "</div></div>";
+  }
+  function qrOverlay() {
+    return qrBig ? '<div class="qr-overlay" data-action="qr-zoom" role="dialog" aria-label="QR code, full screen">' +
+      '<div class="qr qr--big">' + qrSvg() + '</div><p class="qr-overlay__url">' + esc(PAGE_URL) + '</p><p class="mini">Tap anywhere to close</p></div>' : "";
   }
 
   function studentHead() {
     const S = spaces.student;
     const sp = "student";
-    return '<section class="wrap"><div class="you card">' +
+    return '<section class="wrap head-grid"><div class="you card">' +
       '<p class="label">Your details</p><div class="grid-4">' +
         field("Name", sp, "profile.name", S.profile.name, { auto: "name" }) +
         field("Email", sp, "profile.email", S.profile.email, { type: "email", auto: "email" }) +
@@ -525,17 +350,11 @@
         field("Your tool", sp, "profile.tool", S.profile.tool, { ph: "The tool your group is evaluating" }) +
       "</div>" +
       '<div class="you__foot"><span class="save-status" id="save-status"></span>' +
-        '<button type="button" class="btn" data-action="export" data-space="student" data-n="all">Export all published activities (PDF)</button></div>' +
-      "</div></section>";
+        '<button type="button" class="btn" data-action="export" data-space="student" data-n="all">Export all activities (PDF)</button></div>' +
+      "</div>" + shareCard() + "</section>";
   }
   function studentExercise(n) {
     const ex = C.EXERCISES[n - 1];
-    if (!published[n]) {
-      return '<section class="panel wrap"><div class="locked card"><p class="eyebrow">Exercise ' + n + "</p>" +
-        '<h2 class="ex-title">' + esc(ex.title) + "</h2>" +
-        '<p class="locked__state">Unpublished</p>' +
-        "<p>Your lecturer hasn’t opened this activity yet. It will appear here on its own when they do — no need to refresh.</p></div></section>";
-    }
     return '<section class="panel wrap">' + intro(ex) + activity(n, "student") + "</section>";
   }
 
@@ -545,17 +364,10 @@
     const a = document.activeElement;
     const keep = a && a.dataset && a.dataset.path ? { space: a.dataset.space, path: a.dataset.path, s: a.selectionStart, e: a.selectionEnd } : null;
     const y = window.scrollY;
-    if (MODE === "lecturer") {
-      if (activeTab !== "site" && !NUMS.includes(Number(activeTab))) activeTab = "site";
-      app.innerHTML = header("Lecturer view") +
-        tabs([{ id: "site", label: "Student site" }].concat(NUMS.map((n) => ({ id: String(n), label: "Exercise " + n, dot: pending[n] ? "pending" : published[n] ? "live" : "" })))) +
-        '<main id="main">' + (activeTab === "site" ? lecturerSite() : lecturerExercise(Number(activeTab))) + "</main>";
-    } else {
-      if (!NUMS.includes(Number(activeTab))) activeTab = "1";
-      app.innerHTML = header("Student activities") + studentHead() +
-        tabs(NUMS.map((n) => ({ id: String(n), label: "Exercise " + n, dot: published[n] ? "live" : "off" }))) +
-        '<main id="main">' + studentExercise(Number(activeTab)) + "</main>";
-    }
+    if (!NUMS.includes(Number(activeTab))) activeTab = "1";
+    app.innerHTML = header("DDH") + studentHead() +
+      tabs(NUMS.map((n) => ({ id: String(n), label: "Exercise " + n }))) +
+      '<main id="main">' + studentExercise(Number(activeTab)) + "</main>" + qrOverlay();
     if (keep) {
       const el = app.querySelector('[data-space="' + keep.space + '"][data-path="' + CSS.escape(keep.path) + '"]');
       if (el) { el.focus({ preventScroll: true }); try { el.setSelectionRange(keep.s, keep.e); } catch (e) {} }
@@ -613,7 +425,7 @@
     const id = b.dataset.id;
     switch (b.dataset.action) {
       case "tab":
-        activeTab = b.dataset.id; store.set(KEYS.tab, activeTab); flash = null; picked = null; render();
+        activeTab = b.dataset.id; store.set(KEYS.tab, activeTab); picked = null; render();
         window.scrollTo(0, 0);
         break;
       case "add-row": {
@@ -651,44 +463,25 @@
       case "clear-test":
         setPath(S, "ex4.byItem." + id + ".test", ""); save(sp); render(); break;
       case "draft5": draft5(S); save(sp); render(); break;
-      case "fill-example":
-        if (!confirm("Replace this preview’s answers (all five exercises) with the TB-Screen worked example?")) return;
-        spaces.preview = normalise(C.workedState()); save("preview", true); render(); break;
-      case "clear-preview":
-        if (!confirm("Clear every answer in this preview (all five exercises)?")) return;
-        spaces.preview = blank(); save("preview", true); render(); break;
       case "export": exportPdf(sp, b.dataset.n); break;
-      case "toggle-open":
-        openActs[b.dataset.n] = !openActs[b.dataset.n]; store.set(KEYS.open, openActs); render(); break;
-      case "publish":
-        setPublished(Number(b.dataset.n), !published[b.dataset.n]); break;
+      case "qr-zoom":
+        qrBig = !qrBig; render(); break;
       case "copy-link": {
-        const inp = document.getElementById("student-link");
+        const inp = document.getElementById("page-link");
         const done = () => { b.textContent = "Copied"; setTimeout(() => { b.textContent = "Copy"; }, 1500); };
-        if (navigator.clipboard) navigator.clipboard.writeText(STUDENT_URL).then(done, () => { inp.select(); document.execCommand("copy"); done(); });
+        if (navigator.clipboard) navigator.clipboard.writeText(PAGE_URL).then(done, () => { inp.select(); document.execCommand("copy"); done(); });
         else { inp.select(); document.execCommand("copy"); done(); }
         break;
       }
-      case "save-token": {
-        const v = (document.getElementById("token-input").value || "").trim();
-        if (!v) return;
-        store.set(KEYS.token, v); flash = { kind: "ok", text: "Checking the key with GitHub…" }; render();
-        fetchApiPublished().then((p) => { applyPublished(p); pubError = ""; flash = { kind: "ok", text: "Key works. The Publish switches are ready." }; render(); })
-          .catch((err) => {
-            // Don't keep a key GitHub rejected: it would hide this setup box
-            // (it collapses once a key is saved) and every switch would fail.
-            store.del(KEYS.token); pubSha = null;
-            flash = { kind: "warn", text: err.message }; render();
-          });
-        break;
-      }
-      case "forget-token":
-        store.del(KEYS.token); pubSha = null; flash = { kind: "ok", text: "Key removed from this browser." }; render(); break;
     }
   });
   app.addEventListener("keydown", (e) => {
     const d = e.target.closest && e.target.closest("[data-drag]");
     if (d && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); pick(d); }
+  });
+  // On the document, not #app: after opening the QR, focus sits on <body>.
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && qrBig) { qrBig = false; render(); }
   });
 
   function draft5(S) {
@@ -798,13 +591,12 @@
   }
   function exportPdf(sp, which) {
     const S = spaces[sp];
-    const nums = which === "all" ? NUMS.filter((n) => sp === "preview" || published[n]) : [Number(which)];
-    if (sp === "student" && !(S.profile.name || "").trim()) {
+    const nums = which === "all" ? NUMS : [Number(which)];
+    if (!(S.profile.name || "").trim()) {
       alert("Please add your name (and email and group number) under “Your details” first, so your PDF is labelled.");
       const f = app.querySelector('[data-path="profile.name"]'); if (f) f.focus();
       return;
     }
-    if (!nums.length) { alert("No activities are published yet, so there’s nothing to export."); return; }
     if (!window.jspdf || !window.jspdf.jsPDF) { alert("The PDF tool didn’t load. Check your connection and refresh — your answers are saved."); return; }
     const doc = new window.jspdf.jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
     const W = doc.internal.pageSize.getWidth();
@@ -817,7 +609,7 @@
     const p = S.profile;
     const who = [["Name", p.name], ["Email", p.email], ["Group", p.group], ["Tool", p.tool]].filter((x) => (x[1] || "").trim()).map((x) => x[0] + ": " + x[1]).join("    ");
     if (who) { doc.text(doc.splitTextToSize(who, W - 2 * M), M, y); y += 16; }
-    doc.text("Exported " + new Date().toLocaleString() + (sp === "preview" ? " · lecturer preview" : ""), M, y); y += 18;
+    doc.text("Exported " + new Date().toLocaleString(), M, y); y += 18;
     nums.forEach((n, i) => {
       const ex = C.EXERCISES[n - 1];
       if (i > 0) { doc.addPage(); y = M; }
@@ -846,20 +638,12 @@
 
   /* ----- start ------------------------------------------------------------------------ */
   render();
-  refreshPublished();
-  if (MODE === "student") {
-    setInterval(() => { if (document.visibilityState === "visible") refreshPublished(); }, 15000);
-    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refreshPublished(); });
-  }
-  // Another tab of the same page saved answers: pick them up instead of
+  // Another tab of this page saved answers: pick them up instead of
   // overwriting them later with stale data.
   window.addEventListener("storage", (e) => {
-    if (e.key === KEYS.student || e.key === KEYS.preview) {
-      const sp = e.key === KEYS.student ? "student" : "preview";
-      if (document.activeElement && document.activeElement.dataset && document.activeElement.dataset.space === sp) return;
-      spaces[sp] = normalise(store.get(e.key));
-      render();
-    }
-    if (e.key === KEYS.published && MODE === "student") { published = Object.assign(published, store.get(KEYS.published, {})); render(); }
+    if (e.key !== KEYS.student) return;
+    if (document.activeElement && document.activeElement.dataset && document.activeElement.dataset.space === "student") return;
+    spaces.student = normalise(store.get(e.key));
+    render();
   });
 })();

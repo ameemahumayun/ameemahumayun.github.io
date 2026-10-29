@@ -4,23 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>Evaluation Clinic · Lecturer</title>
-  <!-- Same theme rule as the main site: light system setting -> rose,
-       dark -> dark. Set before paint so there's no flash. -->
-  <script>
-    try {
-      if (!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-        document.documentElement.setAttribute("data-theme", "rose");
-      }
-    } catch (e) {}
-  </script>
+  <title>DDH Evaluation Clinic</title>
+  <!-- Always the main site's dark theme (near-black with butter yellow):
+       no data-theme attribute, so tokens.css's base :root palette applies. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/tokens.css">
   <link rel="stylesheet" href="/DDH/app.css">
 </head>
-<body data-mode="lecturer">
+<body>
   <div id="app"></div>
   <script src="/DDH/vendor/qrcode.js"></script>
   <script src="/DDH/vendor/jspdf.umd.min.js"></script>

@@ -2,27 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>Evaluation Clinic</title>
-  <script>
-    try {
-      if (!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-        document.documentElement.setAttribute("data-theme", "rose");
-      }
-    } catch (e) {}
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/tokens.css">
-  <link rel="stylesheet" href="/DDH/app.css">
+  <title>DDH Evaluation Clinic</title>
+  <!-- The clinic moved from /DDH/student/ to /DDH/; send old links and QR
+       scans there. Answers carry over (same site, same saved data). -->
+  <meta http-equiv="refresh" content="0; url=/DDH/">
+  <link rel="canonical" href="/DDH/">
+  <script>location.replace("/DDH/");</script>
 </head>
-<body data-mode="student">
-  <div id="app"></div>
-  <script src="/DDH/vendor/jspdf.umd.min.js"></script>
-  <script src="/DDH/vendor/jspdf.plugin.autotable.min.js"></script>
-  <script src="/DDH/content.js"></script>
-  <script src="/DDH/app.js"></script>
+<body>
+  <p><a href="/DDH/">Go to the DDH Evaluation Clinic</a></p>
 </body>
 </html>

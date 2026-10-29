@@ -284,6 +284,12 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
   border-bottom: 1px solid var(--color-border);
 }
 .palette .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.row-card__btns { margin-left: auto; display: inline-flex; gap: 8px; align-items: center; }
+.row-card__btns .icon-btn { margin-left: 0; }
+.btn--sm { padding: 6px 12px; font-size: 13px; }
+.row-card--overall { border-color: var(--color-accent); }
+.stmt-edit { display: grid; gap: 10px; }
+.grid-2--tight { gap: 12px; }
 .sub { border-top: 1px solid var(--color-border); padding-top: 10px; display: grid; gap: 8px; }
 .sub__title { font-weight: 700; color: var(--color-text-strong); }
 .sub__def { font-weight: 400; color: var(--color-text-soft); font-size: 14px; }
@@ -303,7 +309,6 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
 .slot__val { font-weight: 700; color: var(--color-text-strong); }
 
 /* exercise 5 statement */
-.ex5-preview { display: grid; gap: 12px; position: sticky; top: 64px; }
 .stmt { background: var(--color-bg-lift); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 4px 18px; }
 .stmt--rethink { background: color-mix(in srgb, var(--warn) 12%, var(--color-bg-lift)); border-color: transparent; }
 .stmt__row { display: grid; grid-template-columns: 82px 1fr; gap: 12px; padding: 11px 0; }
@@ -346,7 +351,6 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
   .board { grid-template-columns: 1fr; }
   .palette .chips { grid-template-columns: 1fr; }
   .board .zone { min-height: 110px; }
-  .ex5-preview { position: static; }
 }
 @media (max-width: 520px) {
   .wrap { padding: 0 16px; }

@@ -42,7 +42,10 @@
       ex2: { byRow: {} },
       ex3: { byRow: {}, order: [], items: {} },
       ex4: { byItem: {} },
-      ex5: { item: "", who: "", where: "", how: "", canClaim: "", cannotClaim: "", rethink: "" },
+      // byItem: one statement per Ex 3 relationship–challenge (lines 1–3 are
+      // drafted live from Ex 1–4 unless edited); custom: statements a student
+      // adds by hand; overall: the plan as a whole.
+      ex5: { byItem: {}, custom: { order: [], items: {} }, overall: { canClaim: "", cannotClaim: "", rethink: "" } },
       savedAt: 0,
     };
   }
@@ -51,6 +54,20 @@
     if (!s || typeof s !== "object") return b;
     const out = Object.assign(b, s);
     ["profile", "ex1", "ex2", "ex3", "ex4", "ex5"].forEach((k) => { out[k] = Object.assign(blank()[k], s[k] || {}); });
+    // Older saves had a single Ex 5 statement: keep it as that item's
+    // (edited) statement, and its rethink as the overall rethink.
+    const old = s.ex5 || {};
+    if (old.who != null || old.item != null) {
+      const e = blank().ex5;
+      if (old.item) e.byItem[old.item] = { edited: true, who: old.who || "", where: old.where || "", how: old.how || "", canClaim: old.canClaim || "", cannotClaim: old.cannotClaim || "" };
+      else if (old.who || old.where || old.how || old.canClaim || old.cannotClaim) {
+        e.custom.order.push("u0"); e.custom.items.u0 = { who: old.who || "", where: old.where || "", how: old.how || "", canClaim: old.canClaim || "", cannotClaim: old.cannotClaim || "" };
+      }
+      e.overall.rethink = old.rethink || "";
+      out.ex5 = e;
+    }
+    out.ex5.custom = Object.assign({ order: [], items: {} }, out.ex5.custom);
+    out.ex5.overall = Object.assign({ canClaim: "", cannotClaim: "", rethink: "" }, out.ex5.overall);
     return out;
   }
   const spaces = { student: normalise(store.get(KEYS.student)) };
@@ -274,37 +291,86 @@
     return palette + cards;
   }
 
-  function ex5Preview(S) {
-    const e = S.ex5;
-    const claim = (e.canClaim || e.cannotClaim)
-      ? "This will let us claim " + esc(e.canClaim || "…") + ". It will not show <em>" + esc(e.cannotClaim || "…") + "</em>."
-      : "…";
-    const line = (k, v, raw) => '<div class="stmt__row"><span class="stmt__k">' + k + '</span><span class="stmt__v">' + (raw ? v : esc(v)) + "</span></div>";
-    return '<div class="stmt">' +
-      line("Ex. 1–2", e.who || "…") + line("Ex. 3", e.where || "…") + line("Ex. 4", e.how || "…") +
-      line("Claim", claim, true) +
-      "</div>" + '<div class="stmt stmt--rethink">' + line("Rethink", e.rethink || "…") + "</div>";
+  // Lines 1–3 of a statement, drafted from what the student wrote in Ex 1–4.
+  function drafted(S, it) {
+    const r = S.ex1.rows[it.rid] || {};
+    const f = (S.ex2.byRow[it.rid] || {}).feature;
+    const stage = stageOf(S.ex3.byRow[it.rid].stage);
+    const d = S.ex4.byItem[it.cid] || {};
+    const t = testOf(d.test);
+    let how = d.handled === "Yes" ? "Our design already handles this" : d.change ? "We will " + (d.changeKind ? "change the " + d.changeKind.toLowerCase() + ": " : "") + lcFirst(d.change) : "We will …";
+    how += t ? " and run a " + lcFirst(t.name) : " and run …";
+    how += d.gate ? ", going on only if " + lcFirst(endDot(d.gate)) : ", going on only if …";
+    return {
+      who: "For the " + lcFirst(r.individual || "user") + (r.task ? " (" + lcFirst(r.task) + ")" : "") + (f ? ", using the " + lcFirst(f) : "") + ",",
+      where: "at the " + stage.label.toLowerCase() + " stage, " + lcFirst(it.challenge) + (it.meaning ? " means " + lcFirst(endDot(it.meaning)) : "."),
+      how: how,
+    };
+  }
+  // Every statement as { key, title, who, where, how, canClaim, cannotClaim,
+  // rethink?, path, kind } — drafted items, then custom ones, then overall.
+  function statements(S) {
+    const out = ex3Items(S).map((it) => {
+      const st = S.ex5.byItem[it.cid] || {};
+      const lines = st.edited ? st : drafted(S, it);
+      return { key: it.cid, kind: "item", title: relLabel(S, it.rid) + " — " + it.challenge, path: "ex5.byItem." + it.cid,
+        edited: !!st.edited, who: lines.who || "", where: lines.where || "", how: lines.how || "", canClaim: st.canClaim || "", cannotClaim: st.cannotClaim || "" };
+    });
+    S.ex5.custom.order.forEach((id, i) => {
+      const st = S.ex5.custom.items[id] || {};
+      out.push({ key: id, kind: "custom", title: "Your own statement " + (i + 1), path: "ex5.custom.items." + id,
+        who: st.who || "", where: st.where || "", how: st.how || "", canClaim: st.canClaim || "", cannotClaim: st.cannotClaim || "" });
+    });
+    return out;
+  }
+  // "This will let us claim A. It will not show B." with either half left
+  // out while it's still empty.
+  const claimParts = (a, b) => [a ? "This will let us claim " + endDot(a) : "", b ? "It will not show " + endDot(b) : ""].filter(Boolean);
+  const claimText = (a, b) => claimParts((a || "").trim(), (b || "").trim()).join(" ");
+  function stmtPreview(st) {
+    const line = (k, v, raw) => '<div class="stmt__row"><span class="stmt__k">' + k + '</span><span class="stmt__v">' + (raw ? v : esc(v || "…")) + "</span></div>";
+    const a = (st.canClaim || "").trim(), b = (st.cannotClaim || "").trim();
+    const claim = (a || b)
+      ? [a ? "This will let us claim " + esc(endDot(a)) : "", b ? "It will not show <em>" + esc(endDot(b)) + "</em>" : ""].filter(Boolean).join(" ") : "…";
+    return '<div class="stmt">' + line("Ex. 1–2", st.who) + line("Ex. 3", st.where) + line("Ex. 4", st.how) + line("Claim", claim, true) + "</div>";
+  }
+  let openEdits = {};                            // Ex 5 statements with "Edit wording" open
+  function stmtCard(S, sp, st) {
+    const open = st.kind === "custom" || openEdits[st.key];
+    const edits = open
+      ? '<div class="stmt-edit">' +
+          field("Who and what (Ex. 1–2)", sp, st.path + ".who", st.who, { area: true, ph: "For the medical officer deciding who needs a sputum test using the TB score," }) +
+          field("Where it can fail (Ex. 3)", sp, st.path + ".where", st.where, { area: true, ph: "at the interpreting-outputs stage, decision-point disconnect means…" }) +
+          field("How you'll know (Ex. 4)", sp, st.path + ".how", st.how, { area: true, ph: "We will … and run a …, going on only if …" }) +
+        "</div>"
+      : "";
+    const btns = st.kind === "custom"
+      ? '<button type="button" class="icon-btn" data-action="del-stmt" data-space="' + sp + '" data-id="' + st.key + '" aria-label="Remove this statement">✕</button>'
+      : '<button type="button" class="btn btn--ghost btn--sm" data-action="edit-stmt" data-space="' + sp + '" data-id="' + st.key + '" aria-expanded="' + !!open + '">' + (open ? "Done editing" : "Edit wording") + "</button>" +
+        (st.edited ? '<button type="button" class="btn btn--ghost btn--sm" data-action="reset-stmt" data-space="' + sp + '" data-id="' + st.key + '">Use drafted wording</button>' : "");
+    return '<div class="row-card">' +
+      '<div class="row-card__head"><span class="pair">' + esc(st.title) + "</span>" + (st.kind === "item" && !st.edited ? '<span class="tag">Drafted from Ex. 1–4</span>' : "") + '<span class="row-card__btns">' + btns + "</span></div>" +
+      '<div class="stmt-preview" data-stmt="' + st.key + '">' + stmtPreview(st) + "</div>" +
+      edits +
+      '<div class="grid-2 grid-2--tight">' +
+        field("This will let us claim…", sp, st.path + ".canClaim", st.canClaim, { ph: "the score reaches the decision in a busy OPD" }) +
+        field("It will not show…", sp, st.path + ".cannotClaim", st.cannotClaim, { ph: "whether more TB is treated" }) +
+      "</div></div>";
   }
   function act5(S, sp) {
-    const items = ex3Items(S);
-    const e = S.ex5;
-    const opts = ['<option value="">Choose one…</option>'].concat(items.map((it) =>
-      '<option value="' + it.cid + '"' + (e.item === it.cid ? " selected" : "") + ">" + esc(relLabel(S, it.rid) + " — " + it.challenge) + "</option>")).join("");
-    return '<div class="card card--list">' +
-      '<label class="field"><span>Which relationship and challenge is your statement about?</span><select data-space="' + sp + '" data-path="ex5.item">' + opts + "</select></label>" +
-      '<button type="button" class="btn" data-action="draft5" data-space="' + sp + '"' + (items.length ? "" : " disabled") + ">Draft lines 1–3 from my Exercises 1–4</button>" +
-      (items.length ? "" : '<p class="mini">Complete Exercises 1–3 to draft from them, or write the statement yourself below.</p>') +
-      "</div>" +
-      '<div class="grid-2">' +
-        "<div>" +
-          field("Who and what (Ex. 1–2)", sp, "ex5.who", e.who, { area: true, ph: "For the medical officer deciding who needs a sputum test using the TB score," }) +
-          field("Where it can fail (Ex. 3)", sp, "ex5.where", e.where, { area: true, ph: "at the interpreting-outputs stage, decision-point disconnect means…" }) +
-          field("How you'll know (Ex. 4)", sp, "ex5.how", e.how, { area: true, ph: "We will … and run a …, going on only if …" }) +
-          field("This will let us claim…", sp, "ex5.canClaim", e.canClaim, { ph: "the score reaches the decision in a busy OPD" }) +
-          field("It will not show…", sp, "ex5.cannotClaim", e.cannotClaim, { ph: "whether more TB is treated" }) +
-          field("Rethink: what your plan missed, and what you'll change", sp, "ex5.rethink", e.rethink, { area: true, rows: 3 }) +
+    const list = statements(S);
+    const o = S.ex5.overall;
+    return '<p class="hint">One evidence statement for each relationship and challenge from Exercises 3–4, drafted from what you wrote there. Add what each lets you claim and what it can\u2019t show, then sum up the whole plan in the overall statement.</p>' +
+      (list.length ? "" : empty("Your statements appear here once you\u2019ve placed relationships and picked challenges in Exercise 3. You can also add one of your own below.")) +
+      list.map((st) => stmtCard(S, sp, st)).join("") +
+      '<button type="button" class="btn btn--ghost" data-action="add-stmt" data-space="' + sp + '">+ Add a statement of your own</button>' +
+      '<div class="row-card row-card--overall"><div class="row-card__head"><span class="pair">Overall</span></div>' +
+        '<p class="mini">The plan as a whole: what it lets you claim, what it can\u2019t show, and what you\u2019d rethink.</p>' +
+        '<div class="grid-2 grid-2--tight">' +
+          field("Overall, this plan will let us claim…", sp, "ex5.overall.canClaim", o.canClaim, { area: true, ph: "the score reaches the decision in a busy OPD, and unreadable X-rays are caught before upload" }) +
+          field("It will not show…", sp, "ex5.overall.cannotClaim", o.cannotClaim, { area: true, ph: "whether more TB is treated" }) +
         "</div>" +
-        '<div><p class="label">Your evidence statement</p><div class="ex5-preview" data-preview="' + sp + '">' + ex5Preview(S) + "</div></div>" +
+        field("Rethink: what your plan missed, and what you\u2019ll change", sp, "ex5.overall.rethink", o.rethink, { area: true, rows: 3, ph: "Looking back, our first plan was a silent trial of accuracy alone. Timing was the bigger risk, so timed observation now comes first." }) +
       "</div>";
   }
   const ACTS = { 1: act1, 2: act2, 3: act3, 4: act4, 5: act5 };
@@ -436,8 +502,10 @@
       if (rl) rl.innerHTML = relListItems(S);
     }
     if (el.dataset.path.indexOf("ex5.") === 0) {
-      const pv = app.querySelector('[data-preview="' + sp + '"]');
-      if (pv) pv.innerHTML = ex5Preview(S);
+      statements(S).forEach((st) => {
+        const pv = app.querySelector('[data-stmt="' + st.key + '"]');
+        if (pv) pv.innerHTML = stmtPreview(st);
+      });
     }
   });
   app.addEventListener("change", (e) => {
@@ -509,7 +577,40 @@
         setPath(S, "ex4.byItem." + id + ".handled", b.dataset.val); save(sp); render(); break;
       case "clear-test":
         setPath(S, "ex4.byItem." + id + ".test", ""); save(sp); render(); break;
-      case "draft5": draft5(S); save(sp); render(); break;
+      case "edit-stmt": {
+        if (!openEdits[id]) {
+          // Opening the editor starts from the drafted wording.
+          const st = S.ex5.byItem[id] || {};
+          if (!st.edited) {
+            const it = ex3Items(S).find((x) => x.cid === id);
+            if (it) S.ex5.byItem[id] = Object.assign(st, drafted(S, it), { edited: true });
+            save(sp);
+          }
+        }
+        openEdits[id] = !openEdits[id]; render();
+        break;
+      }
+      case "reset-stmt": {
+        const st = S.ex5.byItem[id];
+        if (st) { st.edited = false; delete st.who; delete st.where; delete st.how; }
+        openEdits[id] = false; save(sp); render();
+        break;
+      }
+      case "add-stmt": {
+        const nid = uid("u");
+        S.ex5.custom.order.push(nid); S.ex5.custom.items[nid] = { who: "", where: "", how: "", canClaim: "", cannotClaim: "" };
+        save(sp); render();
+        const f = app.querySelector('[data-path="ex5.custom.items.' + nid + '.who"]'); if (f) f.focus();
+        break;
+      }
+      case "del-stmt": {
+        const st = S.ex5.custom.items[id] || {};
+        if ((st.who || st.where || st.how || st.canClaim || st.cannotClaim) && !confirm("Remove this statement?")) return;
+        S.ex5.custom.order = S.ex5.custom.order.filter((x) => x !== id);
+        delete S.ex5.custom.items[id];
+        save(sp); render();
+        break;
+      }
       case "export": exportPdf("student"); break;
       case "export-sheet": exportSheet("student", b); break;
       case "qr-zoom":
@@ -531,23 +632,6 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && qrBig) { qrBig = false; render(); }
   });
-
-  function draft5(S) {
-    const it = ex3Items(S).find((x) => x.cid === S.ex5.item) || ex3Items(S)[0];
-    if (!it) return;
-    S.ex5.item = it.cid;
-    const r = S.ex1.rows[it.rid] || {};
-    const f = (S.ex2.byRow[it.rid] || {}).feature;
-    const stage = stageOf(S.ex3.byRow[it.rid].stage);
-    const d = S.ex4.byItem[it.cid] || {};
-    const t = testOf(d.test);
-    S.ex5.who = "For the " + lcFirst(r.individual || "user") + (r.task ? " (" + lcFirst(r.task) + ")" : "") + (f ? ", using the " + lcFirst(f) : "") + ",";
-    S.ex5.where = "at the " + stage.label.toLowerCase() + " stage, " + lcFirst(it.challenge) + (it.meaning ? " means " + lcFirst(endDot(it.meaning)) : ".");
-    let how = d.handled === "Yes" ? "Our design already handles this" : d.change ? "We will " + (d.changeKind ? "change the " + d.changeKind.toLowerCase() + ": " : "") + lcFirst(d.change) : "We will …";
-    how += t ? " and run a " + lcFirst(t.name) : " and run …";
-    how += d.gate ? ", going on only if " + lcFirst(endDot(d.gate)) : ", going on only if …";
-    S.ex5.how = how;
-  }
 
   /* ----- drag and drop (mouse, pen and touch) -------------------------------------------- */
   let drag = null;
@@ -630,12 +714,11 @@
     if (n === 4) return { head: [["Relationship", "Challenge", "Handled?", "What changes", "Test", "Measure", "Compared with", "Go on only if"]],
       body: ex3Items(S).map((it) => { const d = S.ex4.byItem[it.cid] || {}; const t = testOf(d.test);
         return [relLabel(S, it.rid), it.challenge, d.handled || "", (d.changeKind ? d.changeKind + ": " : "") + (d.change || ""), t ? t.name : "", d.measure || "", d.compared || "", d.gate || ""]; }) };
-    const e = S.ex5;
-    return { head: [["", "Evidence statement"]], body: [
-      ["Ex. 1–2", e.who || ""], ["Ex. 3", e.where || ""], ["Ex. 4", e.how || ""],
-      ["Claim", (e.canClaim || e.cannotClaim) ? "This will let us claim " + (e.canClaim || "…") + ". It will not show " + (e.cannotClaim || "…") + "." : ""],
-      ["Rethink", e.rethink || ""],
-    ] };
+    const o = S.ex5.overall;
+    return { head: [["Statement", "Ex. 1–2 · who and what", "Ex. 3 · where it can fail", "Ex. 4 · how you'll know", "Claim", "Rethink"]], body:
+      statements(S).filter((st) => st.kind !== "custom" || st.who || st.where || st.how || st.canClaim || st.cannotClaim)
+        .map((st) => [st.title, st.who, st.where, st.how, claimText(st.canClaim, st.cannotClaim), ""])
+        .concat((o.canClaim || o.cannotClaim || o.rethink) ? [["Overall", "", "", "", claimText(o.canClaim, o.cannotClaim), o.rethink || ""]] : []) };
   }
   // Exports every exercise, however much of it is filled in: empty parts
   // show as "Nothing written yet", and missing details as "not given".
@@ -671,7 +754,7 @@
         startY: y, head: t.head, body: body, margin: { left: M, right: M },
         styles: { font: "helvetica", fontSize: 9, cellPadding: 5, overflow: "linebreak", textColor: [35, 35, 35], lineColor: [220, 210, 213], lineWidth: 0.5 },
         headStyles: { fillColor: [246, 227, 232], textColor: [30, 30, 30], fontStyle: "bold" },
-        columnStyles: n === 5 ? { 0: { cellWidth: 70, fontStyle: "bold", textColor: accent } } : {},
+        columnStyles: n === 5 ? { 0: { cellWidth: 120, fontStyle: "bold", textColor: accent } } : {},
         theme: "grid",
       });
       y = doc.lastAutoTable.finalY + 20;
@@ -718,7 +801,7 @@
       NUMS.forEach((n) => {
         const t = exportRows(S, n);
         const head = t.head[0].map((h) => h || "Part");
-        add("Ex" + n + " " + C.EXERCISES[n - 1].title, [head].concat(t.body), head.map((h, i) => (n === 5 && i === 0) ? 12 : i === 0 ? 40 : 34));
+        add("Ex" + n + " " + C.EXERCISES[n - 1].title, [head].concat(t.body), head.map((h, i) => i === 0 ? 40 : 34));
       });
       X.writeFile(wb, fileBase(S) + ".xlsx");
     } catch (e) {

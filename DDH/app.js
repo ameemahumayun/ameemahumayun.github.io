@@ -448,7 +448,17 @@
     switch (b.dataset.action) {
       case "tab":
         activeTab = b.dataset.id; store.set(KEYS.tab, activeTab); picked = null; render();
-        window.scrollTo(0, 0);
+        // Don't jump back to the top of the page: if you were already down
+        // in an exercise, start the new one just under the tab bar; if the
+        // tabs were still below you, stay where you are.
+        {
+          // The tab bar is sticky, so measure where it sits in the page from
+          // the section above it, not from the bar itself.
+          const nav = app.querySelector(".tabs");
+          const above = nav && nav.previousElementSibling;
+          const navTop = above ? above.getBoundingClientRect().bottom + parseFloat(getComputedStyle(above).marginBottom) + window.scrollY : 0;
+          if (window.scrollY > navTop) window.scrollTo(0, navTop);
+        }
         break;
       case "add-row": {
         const nid = uid("r");

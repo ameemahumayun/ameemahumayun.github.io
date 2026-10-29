@@ -147,8 +147,8 @@
   // Purpose, outcome and steps in a single box.
   function intro(ex) {
     return '<div class="intro">' +
-      '<p class="eyebrow">' + esc(ex.eyebrow) + "</p>" +
-      '<h2 class="ex-title"><span class="text-highlight">Exercise ' + ex.n + " · " + esc(ex.title) + "</span></h2>" +
+      '<p class="eyebrow">Exercise ' + ex.n + "</p>" +
+      '<h2 class="ex-title ex-title--one-line"><span class="text-highlight">' + esc(ex.title) + "</span></h2>" +
       '<div class="card info">' +
         '<div class="info__row"><p class="label">Purpose</p><p>' + esc(ex.purpose) + "</p></div>" +
         '<div class="info__row"><p class="label">Outcome</p><p>' + esc(ex.outcome) + "</p></div>" +
@@ -428,7 +428,7 @@
     const S = spaces.student;
     const sp = "student";
     return '<section class="wrap head-stack">' +
-      '<h2 class="ex-title"><span class="text-highlight">Instructions</span></h2>' +
+      '<h2 class="ex-title ex-title--one-line"><span class="text-highlight">Instructions</span></h2>' +
       '<p class="hint">Fill in your details, then work through Exercises 1\u20135 using the tabs above. Each exercise builds on the one before.</p>' +
       '<div class="card save-box">' +
         '<div class="save-box__text"><p class="label">Your work saves automatically</p>' +
@@ -742,9 +742,9 @@
       const ex = C.EXERCISES[n - 1];
       if (i > 0) { doc.addPage(); y = M; }
       doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.setTextColor(accent[0], accent[1], accent[2]);
-      doc.text(ex.eyebrow.toUpperCase(), M, y + 4); y += 18;
+      doc.text("EXERCISE " + n, M, y + 4); y += 18;
       doc.setFontSize(15); doc.setTextColor(30, 30, 30);
-      doc.text("Exercise " + n + " · " + ex.title, M, y + 4); y += 18;
+      doc.text(ex.title, M, y + 4); y += 18;
       doc.setFont("helvetica", "normal"); doc.setFontSize(9.5); doc.setTextColor(90, 90, 90);
       const pl = doc.splitTextToSize("Purpose: " + ex.purpose, W - 2 * M);
       doc.text(pl, M, y + 4); y += pl.length * 12 + 6;

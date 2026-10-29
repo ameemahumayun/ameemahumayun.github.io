@@ -358,6 +358,9 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
   .top { padding-top: 28px; }
   .palette { top: 46px; }
   .stmt__row { grid-template-columns: 1fr; gap: 2px; }
+  /* Every page title on one line: scale with the screen, never wrap. The
+     longest ("Relationships on the Pathway") fits down to 320px wide. */
+  .ex-title--one-line { white-space: nowrap; font-size: clamp(1rem, 5.4vw, 1.5rem); }
   .save-box__actions { grid-auto-flow: row; justify-content: stretch; }
   .defs dl { grid-template-columns: 1fr; gap: 2px; }
   .defs dd { margin-bottom: 8px; }

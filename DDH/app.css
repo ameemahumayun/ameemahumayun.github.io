@@ -210,6 +210,15 @@ main { padding: 30px 0 80px; }
   display: grid; gap: 12px;
 }
 .row-card.is-set-aside { opacity: 0.55; }
+.row-card.is-solid { border-color: color-mix(in srgb, var(--ok) 55%, var(--color-border)); }
+.row-status {
+  font-size: 11.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: var(--radius-pill); white-space: nowrap;
+  background: var(--tint); color: var(--color-text-mute);
+}
+.row-status--thin { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); }
+.row-status--done { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+.solid-count { display: inline-block; margin-left: 4px; font-weight: 700; color: var(--color-text-strong); }
 .row-card__head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .row-num {
   width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;

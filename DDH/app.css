@@ -181,9 +181,18 @@ main { padding: 30px 0 80px; }
 .ref > summary::-webkit-details-marker { display: none; }
 .ref > summary::before { content: "+"; color: var(--color-accent); font-weight: 800; width: 12px; }
 .ref[open] > summary::before { content: "\2013"; }
-.ref__sec { padding: 4px 0 6px; }
-.ref__sec + .ref__sec { border-top: 1px solid var(--color-border); padding-top: 14px; }
-.ref__h { font-size: 14px; font-weight: 800; color: var(--color-accent); margin: 0 0 8px; letter-spacing: 0.01em; }
+.ref__sec { border-top: 1px solid var(--color-border); }
+.ref__sec:last-child { margin-bottom: 8px; }
+.ref__h {
+  cursor: pointer; list-style: none; display: flex; gap: 8px; align-items: center;
+  padding: 10px 0 10px 14px; font-size: 14px; font-weight: 700; color: var(--color-text-strong);
+}
+.ref__h::-webkit-details-marker { display: none; }
+.ref__h::before { content: "+"; color: var(--color-accent); font-weight: 800; width: 12px; }
+.ref__sec[open] > .ref__h::before { content: "\2013"; }
+.ref__h:hover { color: var(--color-accent); }
+.ref__sec > :not(summary) { margin-left: 14px; }
+.ref__sec[open] { padding-bottom: 6px; }
 .ref__note { color: var(--color-text-soft); font-size: 14px; margin: 0 0 10px; }
 .ref__cite { color: var(--color-text-mute); font-size: 12.5px; margin: 8px 0 12px; }
 .table-wrap { overflow-x: auto; margin-bottom: 12px; }

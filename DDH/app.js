@@ -106,24 +106,24 @@
   /* ----- rendering: shared pieces ------------------------------------------ */
   function refSection(key) {
     const r = C.REF[key];
-    return '<section class="ref__sec"><h3 class="ref__h">' + esc(r.title) + "</h3>" +
+    return '<details class="ref__sec"><summary class="ref__h">' + esc(r.title) + "</summary>" +
       (r.note ? '<p class="ref__note">' + esc(r.note) + "</p>" : "") +
       table(r.head, r.rows) +
-      (r.cite ? '<p class="ref__cite">' + esc(r.cite) + "</p>" : "") + "</section>";
+      (r.cite ? '<p class="ref__cite">' + esc(r.cite) + "</p>" : "") + "</details>";
   }
   function table(head, rows) {
     return '<div class="table-wrap"><table class="tbl"><thead><tr>' + head.map((h) => "<th>" + esc(h) + "</th>").join("") +
       "</tr></thead><tbody>" + rows.map((row) => "<tr>" + row.map((c, i) => "<td" + (i === 0 ? ' class="tbl__key"' : "") + ">" + esc(c) + "</td>").join("") + "</tr>").join("") +
       "</tbody></table></div>";
   }
-  // Every framework table and the worked example for an exercise, in one
-  // fold-out instead of a separate one each.
+  // Every framework table and the worked example for an exercise, under one
+  // "Definitions and Examples" fold-out, each as its own closed category.
   function refsBlock(ex) {
     const exm = C.EXAMPLES[ex.n];
     const parts = ex.refs.map(refSection);
     if (exm) {
-      parts.push('<section class="ref__sec"><h3 class="ref__h">Example: TB-Screen</h3>' + table(exm.head, exm.rows) +
-        (exm.note ? '<p class="ref__note">' + esc(exm.note) + "</p>" : "") + "</section>");
+      parts.push('<details class="ref__sec"><summary class="ref__h">Example: TB-Screen</summary>' + table(exm.head, exm.rows) +
+        (exm.note ? '<p class="ref__note">' + esc(exm.note) + "</p>" : "") + "</details>");
     }
     return parts.length ? '<details class="ref"><summary>Definitions and Examples</summary>' + parts.join("") + "</details>" : "";
   }

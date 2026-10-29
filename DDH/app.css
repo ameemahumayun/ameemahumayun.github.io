@@ -219,6 +219,7 @@ main { padding: 30px 0 80px; }
 .row-status--thin { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); }
 .row-status--done { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
 .solid-count { display: inline-block; margin-left: 4px; font-weight: 700; color: var(--color-text-strong); }
+.solid-count.is-met { color: var(--ok); }
 .row-card__head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .row-num {
   width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;

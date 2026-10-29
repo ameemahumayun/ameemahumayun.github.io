@@ -184,10 +184,15 @@
     return { k: "done", t: "Solid" };
   }
   const statusBadge = (st, key) => '<span class="row-status row-status--' + st.k + '" data-status="' + key + '">' + (st.k === "done" ? "✓ " : "") + esc(st.t) + "</span>";
+  // Target: at least this many followed pairs carried through. Guidance
+  // only — nothing is blocked, and partial work still exports.
+  const TARGET = 8;
   function solidCount(S, ex) {
     const ids = ex === 1 ? S.ex1.order.filter((id) => (S.ex1.rows[id] || {}).follow !== false) : followedRows(S).map((r) => r.id);
     const done = ids.filter((id) => rowStatus(ex, ex === 1 ? S.ex1.rows[id] : S.ex2.byRow[id]).k === "done").length;
-    return '<span class="solid-count" data-count="ex' + ex + '">' + done + " of " + ids.length + (ex === 1 ? " pairs" : " relationships") + " solid</span>";
+    const met = done >= TARGET;
+    return '<span class="solid-count' + (met ? " is-met" : "") + '" data-count="ex' + ex + '">' +
+      (met ? "✓ " + done + " solid — target met" : done + " solid · aim for at least " + TARGET) + "</span>";
   }
   function refreshStatus(S, ex, id) {
     const st = rowStatus(ex, ex === 1 ? S.ex1.rows[id] : S.ex2.byRow[id]);
@@ -222,7 +227,7 @@
           field("Task", sp, "ex1.rows." + id + ".task", r.task, { area: true, ph: "e.g. Capture and upload the X-ray" }) +
         "</div></div>";
     }).join("");
-    return '<p class="hint">One row per individual–task pair. The same person can appear twice with two different tasks; untick a pair to set it aside. ' + solidCount(S, 1) + "</p>" +
+    return '<p class="hint">One row per individual–task pair \u2014 aim for at least ' + TARGET + '. Pairs can share people and tasks: the same person can appear with two different tasks, and the same task can appear with two different people (say, a patient and the relative who speaks for them). Untick a pair to set it aside. ' + solidCount(S, 1) + "</p>" +
       rows + '<button type="button" class="btn btn--ghost" data-action="add-row" data-space="' + sp + '">+ Add an individual–task pair</button>';
   }
 
@@ -466,7 +471,7 @@
     const sp = "student";
     return '<section class="wrap head-stack">' +
       '<h2 class="ex-title ex-title--one-line"><span class="text-highlight">Instructions</span></h2>' +
-      '<p class="hint">Fill in your details, then work through Exercises 1\u20135 using the tabs above. Each exercise builds on the one before.</p>' +
+      '<p class="hint">Fill in your details, then work through Exercises 1\u20135 using the tabs above. Each exercise builds on the one before: aim to carry at least ' + TARGET + ' individual\u2013task pairs through. It\u2019s fine to leave parts unfinished \u2014 everything exports as it stands.</p>' +
       '<div class="card save-box">' +
         '<div class="save-box__text"><p class="label">Your work saves automatically</p>' +
           "<p>Everything you type is saved on this device as you go, so refreshing or closing the page loses nothing. " +
@@ -483,7 +488,7 @@
         field("Name", sp, "profile.name", S.profile.name, { auto: "name" }) +
         field("Email", sp, "profile.email", S.profile.email, { type: "email", auto: "email" }) +
         field("Group number", sp, "profile.group", S.profile.group, { ph: "e.g. 3" }) +
-        field("Your tool", sp, "profile.tool", S.profile.tool, { ph: "The tool your group is evaluating" }) +
+        field("Your tool", sp, "profile.tool", S.profile.tool, { ph: "The tool you\u2019re evaluating" }) +
       "</div>" +
       "</div>" + shareCard() + "</section>";
   }

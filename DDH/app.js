@@ -175,17 +175,19 @@
     const rows = followedRows(S);
     if (!rows.length) return empty("Add individuals and tasks in Exercise 1 first — each pair you follow appears here.");
     return '<p class="hint">For each pair from Exercise 1, name the tool feature they meet, then describe both technology relationships.</p>' +
+      '<div class="card defs"><p class="label">What to write in each box</p><dl>' +
+        "<dt>Tool feature they meet</dt><dd>The part of the tool this person and task run into.</dd>" +
+        "<dt>Individual–technology</dt><dd>How this person meets the tool: what they bring to it (skills, language, device, habits, trust) and what the tool asks of them in return.</dd>" +
+        "<dt>Task–technology</dt><dd>How the tool changes this task: which steps it adds, removes or reorders, when its output has to arrive, and what the task now depends on.</dd>" +
+      "</dl></div>" +
       rows.map((r) => {
         const d = S.ex2.byRow[r.id] || {};
         return '<div class="row-card"><div class="row-card__head"><span class="pair">' + esc(relLabel(S, r.id, false)) + "</span></div>" +
           '<div class="grid-3">' +
-            field("Tool feature they meet", sp, "ex2.byRow." + r.id + ".feature", d.feature, { area: true, rows: 3,
-              help: "Name the part of the tool this person and task run into.", ph: "e.g. upload screen, TB score 0–100" }) +
+            field("Tool feature they meet", sp, "ex2.byRow." + r.id + ".feature", d.feature, { area: true, rows: 3, ph: "e.g. upload screen, TB score 0–100" }) +
             field("Individual–technology", sp, "ex2.byRow." + r.id + ".indTech", d.indTech, { area: true, rows: 3,
-              help: "Describe how this person meets the tool: what they bring to it (skills, language, device, habits, trust) and what the tool asks of them in return.",
               ph: "e.g. New upload screen on an old machine; needs a stable connection, which the X-ray room often lacks" }) +
             field("Task–technology", sp, "ex2.byRow." + r.id + ".taskTech", d.taskTech, { area: true, rows: 3,
-              help: "Describe how the tool changes this task: which steps it adds, removes or reorders, when its output has to arrive, and what the task now depends on.",
               ph: "e.g. The score must arrive before the referral decision, while the patient is still in the room" }) +
           "</div></div>";
       }).join("") +

@@ -325,14 +325,19 @@
       return q.createSvgTag({ cellSize: 8, margin: 2, scalable: true, alt: "QR code for " + PAGE_URL });
     } catch (e) { return '<p class="mini">QR code unavailable.</p>'; }
   }
+  // Same layout the old lecturer "Student site" tab had: a link card with
+  // Copy and Open, next to a large QR card (tap it to go full-screen).
   function shareCard() {
-    return '<div class="card share">' +
-      '<button type="button" class="qr" data-action="qr-zoom" aria-label="Enlarge QR code">' + qrSvg() + "</button>" +
-      '<div class="share__body"><p class="label">Share this page</p>' +
+    return '<div class="share">' +
+      '<div class="card share__link"><p class="label">Link to this page</p>' +
         '<div class="link-row"><input id="page-link" type="text" readonly value="' + esc(PAGE_URL) + '" aria-label="Link to this page">' +
-        '<button type="button" class="btn" data-action="copy-link">Copy</button></div>' +
-        '<p class="mini">Scan the code or open the link. Tap the code to show it full-screen for a projector.</p>' +
-      "</div></div>";
+        '<button type="button" class="btn" data-action="copy-link">Copy</button>' +
+        '<a class="btn btn--ghost" href="' + esc(PAGE_URL) + '" target="_blank" rel="noopener">Open</a></div>' +
+        '<p class="mini">Share this link or the QR code. Answers save on each person\u2019s own device as they type, and each person exports a PDF when done.</p>' +
+      "</div>" +
+      '<div class="card share__qr"><button type="button" class="qr" data-action="qr-zoom" aria-label="Show QR code full-screen">' + qrSvg() + "</button>" +
+        '<p class="mini">Scan to open this page \u00B7 tap to show full-screen</p></div>' +
+      "</div>";
   }
   function qrOverlay() {
     return qrBig ? '<div class="qr-overlay" data-action="qr-zoom" role="dialog" aria-label="QR code, full screen">' +
@@ -342,7 +347,7 @@
   function studentHead() {
     const S = spaces.student;
     const sp = "student";
-    return '<section class="wrap head-grid"><div class="you card">' +
+    return '<section class="wrap head-stack"><div class="you card">' +
       '<p class="label">Your details</p><div class="grid-4">' +
         field("Name", sp, "profile.name", S.profile.name, { auto: "name" }) +
         field("Email", sp, "profile.email", S.profile.email, { type: "email", auto: "email" }) +

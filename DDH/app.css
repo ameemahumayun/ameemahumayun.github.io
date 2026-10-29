@@ -291,13 +291,14 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
 .stmt__v em { color: var(--warn); font-style: normal; }
 
 /* ----- share card (link + QR) ----- */
-.head-grid { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; margin-bottom: 18px; }
-.head-grid .you { margin-bottom: 0; align-content: start; }
-.share { display: grid; justify-items: center; align-content: start; gap: 10px; width: 260px; }
-.share__body { display: grid; gap: 8px; width: 100%; }
-.link-row { display: flex; gap: 8px; }
-.link-row input { flex: 1 1 auto; min-width: 0; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; }
-.qr { display: block; width: 168px; background: #fff; padding: 6px; border-radius: var(--radius-md); border: 0; cursor: zoom-in; }
+.head-stack { display: grid; gap: 16px; margin-bottom: 18px; }
+.head-stack .you { margin-bottom: 0; }
+.share { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; align-items: stretch; }
+.share__link { display: grid; gap: 10px; align-content: start; }
+.share__qr { display: grid; justify-items: center; align-content: center; gap: 8px; text-align: center; }
+.link-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.link-row input { flex: 1 1 220px; min-width: 0; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 14px; }
+.qr { display: block; width: min(100%, 300px); background: #fff; padding: 8px; border-radius: var(--radius-md); border: 0; cursor: zoom-in; }
 .qr svg { display: block; width: 100%; height: auto; }
 .qr-overlay {
   position: fixed; inset: 0; z-index: 2000; cursor: zoom-out;
@@ -309,9 +310,7 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
 
 /* ----- small screens ----- */
 @media (max-width: 860px) {
-  .grid-3, .grid-4, .grid-2, .po, .head-grid { grid-template-columns: 1fr; }
-  .share { width: auto; grid-template-columns: auto 1fr; justify-items: start; align-items: center; }
-  .share .qr { width: 120px; }
+  .grid-3, .grid-4, .grid-2, .po, .share { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: 1fr 1fr; }
   .board { grid-template-columns: 1fr; }
   .palette .chips { grid-template-columns: 1fr; }
@@ -324,5 +323,4 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
   .top { padding-top: 28px; }
   .palette { top: 46px; }
   .stmt__row { grid-template-columns: 1fr; gap: 2px; }
-  .share { grid-template-columns: 1fr; justify-items: center; }
 }

@@ -126,6 +126,16 @@ main { padding: 30px 0 80px; }
 .field { display: grid; gap: 5px; margin: 0; align-content: start; }
 .field > span { font-size: 12.5px; font-weight: 700; color: var(--color-text-soft); letter-spacing: 0.02em; }
 .field__help { font-size: 13px; line-height: 1.45; color: var(--color-text-mute); margin-top: -2px; }
+.field__help:empty { display: none; }
+/* Side-by-side fields share rows (label / help / box) through subgrid, so
+   every box in a row starts at the same height and is the same size, even
+   when one label or helper text runs longer than its neighbours'. */
+.grid-3, .grid-4, .grid-change { grid-template-rows: auto auto 1fr; row-gap: 0; }
+.grid-3 > .field, .grid-4 > .field, .grid-change > .field { grid-row: span 3; grid-template-rows: subgrid; gap: 0; }
+.grid-3 > .field > .field__help, .grid-4 > .field > .field__help, .grid-change > .field > .field__help { display: block; margin: 3px 0 6px; }
+.grid-3 > .field > .field__help:empty, .grid-4 > .field > .field__help:empty, .grid-change > .field > .field__help:empty { margin: 0 0 5px; }
+.grid-3 > .field > span, .grid-4 > .field > span, .grid-change > .field > span { margin-bottom: 2px; }
+.grid-3 > .field > :is(input, textarea, select), .grid-4 > .field > :is(input, textarea, select), .grid-change > .field > :is(input, textarea, select) { height: 100%; min-height: 42px; }
 .field input, .field textarea, .field select, .link-row input {
   width: 100%;
   background: var(--color-bg);
@@ -312,6 +322,11 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
 /* ----- small screens ----- */
 @media (max-width: 860px) {
   .grid-3, .grid-4, .grid-2, .po, .share { grid-template-columns: 1fr; }
+  /* Stacked one per line: no shared rows needed, keep normal spacing. */
+  .grid-3, .grid-4, .grid-change { grid-template-rows: none; row-gap: 12px; }
+  .grid-3 > .field, .grid-4 > .field, .grid-change > .field { grid-row: auto; grid-template-rows: none; gap: 5px; }
+  .grid-3 > .field > .field__help:empty, .grid-4 > .field > .field__help:empty, .grid-change > .field > .field__help:empty { display: none; }
+  .grid-3 > .field > .field__help, .grid-4 > .field > .field__help, .grid-change > .field > .field__help { margin: 0; }
   .grid-4 { grid-template-columns: 1fr 1fr; }
   .board { grid-template-columns: 1fr; }
   .palette .chips { grid-template-columns: 1fr; }

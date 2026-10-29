@@ -140,7 +140,7 @@
       ? '<textarea id="' + id + '" rows="' + (opts.rows || 2) + '" data-space="' + space + '" data-path="' + esc(path) + '" placeholder="' + esc(opts.ph || "") + '">' + esc(value) + "</textarea>"
       : '<input id="' + id + '" type="' + (opts.type || "text") + '" data-space="' + space + '" data-path="' + esc(path) + '" value="' + esc(value) + '" placeholder="' + esc(opts.ph || "") + '"' + (opts.auto ? ' autocomplete="' + opts.auto + '"' : "") + ">";
     return '<label class="field' + (opts.cls ? " " + opts.cls : "") + '" for="' + id + '"><span>' + esc(label) + "</span>" +
-      (opts.help ? '<small class="field__help">' + esc(opts.help) + "</small>" : "") + ctl + "</label>";
+      '<small class="field__help">' + esc(opts.help || "") + "</small>" + ctl + "</label>";
   };
   const empty = (text) => '<div class="empty">' + esc(text) + "</div>";
 
@@ -159,9 +159,9 @@
           '<button type="button" class="icon-btn" data-action="del-row" data-space="' + sp + '" data-id="' + id + '" aria-label="Remove row ' + (i + 1) + '">✕</button>' +
         "</div>" +
         '<div class="grid-3">' +
-          field("Individual", sp, "ex1.rows." + id + ".individual", r.individual, { ph: "e.g. Radiographer" }) +
+          field("Individual", sp, "ex1.rows." + id + ".individual", r.individual, { area: true, ph: "e.g. Radiographer" }) +
           field("Characteristics and working conditions", sp, "ex1.rows." + id + ".conditions", r.conditions, { area: true, ph: "Role, skills, language, workload, time available" }) +
-          field("Task", sp, "ex1.rows." + id + ".task", r.task, { ph: "e.g. Capture and upload the X-ray" }) +
+          field("Task", sp, "ex1.rows." + id + ".task", r.task, { area: true, ph: "e.g. Capture and upload the X-ray" }) +
         "</div></div>";
     }).join("");
     return '<p class="hint">One row per individual–task pair. The same person can appear twice with two different tasks; untick a pair to set it aside.</p>' +
@@ -179,7 +179,8 @@
         const d = S.ex2.byRow[r.id] || {};
         return '<div class="row-card"><div class="row-card__head"><span class="pair">' + esc(relLabel(S, r.id, false)) + "</span></div>" +
           '<div class="grid-3">' +
-            field("Tool feature they meet", sp, "ex2.byRow." + r.id + ".feature", d.feature, { ph: "e.g. upload screen, TB score 0–100" }) +
+            field("Tool feature they meet", sp, "ex2.byRow." + r.id + ".feature", d.feature, { area: true, rows: 3,
+              help: "Name the part of the tool this person and task run into.", ph: "e.g. upload screen, TB score 0–100" }) +
             field("Individual–technology", sp, "ex2.byRow." + r.id + ".indTech", d.indTech, { area: true, rows: 3,
               help: "Describe how this person meets the tool: what they bring to it (skills, language, device, habits, trust) and what the tool asks of them in return.",
               ph: "e.g. New upload screen on an old machine; needs a stable connection, which the X-ray room often lacks" }) +
@@ -250,7 +251,7 @@
           ["Yes", "Partly", "No"].map((v) => '<button type="button" class="seg__btn' + (d.handled === v ? " is-on" : "") + '" data-action="handled" data-space="' + sp + '" data-id="' + it.cid + '" data-val="' + v + '" aria-pressed="' + (d.handled === v) + '">' + v + "</button>").join("") +
         "</div></div>" +
         '<div class="step"><p class="step__label"><b>2</b> Change · What changes (or which conditions you scope)?</p><div class="grid-change">' +
-          '<label class="field"><span>Part that changes</span><select data-space="' + sp + '" data-path="' + p + 'changeKind">' + ['<option value="">Choose…</option>'].concat(C.CHANGE_KINDS.map((k) => '<option' + (d.changeKind === k ? " selected" : "") + ">" + k + "</option>")).join("") + "</select></label>" +
+          '<label class="field"><span>Part that changes</span><small class="field__help"></small><select data-space="' + sp + '" data-path="' + p + 'changeKind">' + ['<option value="">Choose…</option>'].concat(C.CHANGE_KINDS.map((k) => '<option' + (d.changeKind === k ? " selected" : "") + ">" + k + "</option>")).join("") + "</select></label>" +
           field("What changes", sp, p + "change", d.change, { ph: d.handled === "Yes" ? "Already handled — note how, or leave blank" : "e.g. score printed on the OPD token slip" }) +
         "</div></div>" +
         '<div class="step"><p class="step__label"><b>3</b> Pick the test' + (suggested ? ' <span class="muted">(fits this stage: ' + esc(suggested) + ")</span>" : "") + '</p>' +

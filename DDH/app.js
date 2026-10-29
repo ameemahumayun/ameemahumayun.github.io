@@ -99,7 +99,7 @@
   }
 
   /* ----- UI state ----------------------------------------------------------- */
-  let activeTab = store.get(KEYS.tab, "1");
+  let activeTab = store.get(KEYS.tab, "start");
   let qrBig = false;                             // QR enlarged for projecting
   let picked = null;                             // tap-to-move selection {type, id, space}
 
@@ -347,7 +347,7 @@
         '<div class="link-row"><input id="page-link" type="text" readonly value="' + esc(PAGE_URL) + '" aria-label="Link to this page">' +
         '<button type="button" class="btn" data-action="copy-link">Copy</button>' +
         '<a class="btn btn--ghost" href="' + esc(PAGE_URL) + '" target="_blank" rel="noopener">Open</a></div>' +
-        '<p class="mini">Share this link or the QR code. Answers save on each person\u2019s own device as they type, and each person exports a PDF when done.</p>' +
+        '<p class="mini">Share this link or the QR code. Answers save on each person\u2019s own device as they type, and each person exports their own work when done.</p>' +
       "</div>" +
       '<div class="card share__qr"><button type="button" class="qr" data-action="qr-zoom" aria-label="Show QR code full-screen">' + qrSvg() + "</button>" +
         '<p class="mini">Scan to open this page \u00B7 tap to show full-screen</p></div>' +
@@ -361,15 +361,27 @@
   function studentHead() {
     const S = spaces.student;
     const sp = "student";
-    return '<section class="wrap head-stack"><div class="you card">' +
+    return '<section class="wrap head-stack">' +
+      '<h2 class="ex-title"><span class="text-highlight">Instructions</span></h2>' +
+      '<p class="hint">Fill in your details, then work through Exercises 1\u20135 using the tabs above. Each exercise builds on the one before.</p>' +
+      '<div class="card save-box">' +
+        '<div class="save-box__text"><p class="label">Your work saves automatically</p>' +
+          "<p>Everything you type is saved on this device as you go, so refreshing or closing the page loses nothing. " +
+          "It stays only in this browser: it isn\u2019t sent anywhere and won\u2019t follow you to another device. " +
+          "When you\u2019re done, export your work to hand it in. Half-finished exercises export fine.</p>" +
+          '<p class="save-status" id="save-status"></p></div>' +
+        '<div class="save-box__actions">' +
+          '<button type="button" class="btn" data-action="export">Export as PDF</button>' +
+          '<button type="button" class="btn btn--ghost" data-action="export-sheet">Export as spreadsheet</button>' +
+        "</div>" +
+      "</div>" +
+      '<div class="you card">' +
       '<p class="label">Your details</p><div class="grid-4">' +
         field("Name", sp, "profile.name", S.profile.name, { auto: "name" }) +
         field("Email", sp, "profile.email", S.profile.email, { type: "email", auto: "email" }) +
         field("Group number", sp, "profile.group", S.profile.group, { ph: "e.g. 3" }) +
         field("Your tool", sp, "profile.tool", S.profile.tool, { ph: "The tool your group is evaluating" }) +
       "</div>" +
-      '<div class="you__foot"><span class="save-status" id="save-status"></span>' +
-        '<button type="button" class="btn" data-action="export" data-space="student" data-n="all">Export all activities (PDF)</button></div>' +
       "</div>" + shareCard() + "</section>";
   }
   function studentExercise(n) {
@@ -383,10 +395,10 @@
     const a = document.activeElement;
     const keep = a && a.dataset && a.dataset.path ? { space: a.dataset.space, path: a.dataset.path, s: a.selectionStart, e: a.selectionEnd } : null;
     const y = window.scrollY;
-    if (!NUMS.includes(Number(activeTab))) activeTab = "1";
-    app.innerHTML = header("DDH") + studentHead() +
-      tabs(NUMS.map((n) => ({ id: String(n), label: "Exercise " + n }))) +
-      '<main id="main">' + studentExercise(Number(activeTab)) + "</main>" + qrOverlay();
+    if (activeTab !== "start" && !NUMS.includes(Number(activeTab))) activeTab = "start";
+    app.innerHTML = header("DDH") +
+      tabs([{ id: "start", label: "Instructions" }].concat(NUMS.map((n) => ({ id: String(n), label: "Exercise " + n })))) +
+      '<main id="main">' + (activeTab === "start" ? studentHead() : studentExercise(Number(activeTab))) + "</main>" + qrOverlay();
     if (keep) {
       const el = app.querySelector('[data-space="' + keep.space + '"][data-path="' + CSS.escape(keep.path) + '"]');
       if (el) { el.focus({ preventScroll: true }); try { el.setSelectionRange(keep.s, keep.e); } catch (e) {} }
@@ -399,8 +411,8 @@
     const el = document.getElementById("save-status");
     if (!el) return;
     const t = spaces.student.savedAt;
-    el.textContent = saveFailed ? "Couldn’t save on this device (private browsing?) — export a PDF before leaving."
-      : t ? "Saved on this device · " + new Date(t).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "Answers save on this device as you type.";
+    el.textContent = saveFailed ? "Couldn’t save on this device (private browsing?) — export your work before leaving."
+      : t ? "Last saved " + new Date(t).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "Nothing typed yet.";
     el.classList.toggle("is-warn", saveFailed);
   }
   function rerenderActivity(sp) {
@@ -499,6 +511,7 @@
         setPath(S, "ex4.byItem." + id + ".test", ""); save(sp); render(); break;
       case "draft5": draft5(S); save(sp); render(); break;
       case "export": exportPdf("student"); break;
+      case "export-sheet": exportSheet("student", b); break;
       case "qr-zoom":
         qrBig = !qrBig; render(); break;
       case "copy-link": {
@@ -663,9 +676,56 @@
       });
       y = doc.lastAutoTable.finalY + 20;
     });
+    doc.save(fileBase(S) + ".pdf");
+  }
+  function fileBase(S) {
     const safe = (s) => String(s || "").trim().replace(/[^\w\-]+/g, "-").replace(/^-+|-+$/g, "");
-    const name = ["Evaluation-Clinic", p.group ? "Group-" + safe(p.group) : "", safe(p.name)].filter(Boolean).join("_");
-    doc.save(name + ".pdf");
+    const p = S.profile;
+    return ["Evaluation-Clinic", p.group ? "Group-" + safe(p.group) : "", safe(p.name)].filter(Boolean).join("_");
+  }
+
+  // Spreadsheet: one sheet for the student's details, then one per
+  // exercise with the same columns as the PDF. The SheetJS library is
+  // only fetched the first time someone asks for a spreadsheet.
+  let xlsxLoading = null;
+  function loadXlsx() {
+    if (window.XLSX) return Promise.resolve(window.XLSX);
+    if (!xlsxLoading) {
+      xlsxLoading = new Promise((resolve, reject) => {
+        const sc = document.createElement("script");
+        sc.src = "/DDH/vendor/xlsx.mini.min.js";
+        sc.onload = () => resolve(window.XLSX);
+        sc.onerror = () => { xlsxLoading = null; reject(new Error("load failed")); };
+        document.head.appendChild(sc);
+      });
+    }
+    return xlsxLoading;
+  }
+  async function exportSheet(sp, btn) {
+    const S = spaces[sp];
+    const label = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Preparing\u2026"; }
+    try {
+      const X = await loadXlsx();
+      const wb = X.utils.book_new();
+      const p = S.profile;
+      const add = (name, aoa, widths) => {
+        const ws = X.utils.aoa_to_sheet(aoa);
+        ws["!cols"] = widths.map((w) => ({ wch: w }));
+        X.utils.book_append_sheet(wb, ws, name.slice(0, 31));
+      };
+      add("Details", [["Field", "Value"], ["Name", p.name || ""], ["Email", p.email || ""], ["Group", p.group || ""], ["Tool", p.tool || ""], ["Exported", new Date().toLocaleString()]], [12, 40]);
+      NUMS.forEach((n) => {
+        const t = exportRows(S, n);
+        const head = t.head[0].map((h) => h || "Part");
+        add("Ex" + n + " " + C.EXERCISES[n - 1].title, [head].concat(t.body), head.map((h, i) => (n === 5 && i === 0) ? 12 : i === 0 ? 40 : 34));
+      });
+      X.writeFile(wb, fileBase(S) + ".xlsx");
+    } catch (e) {
+      alert("The spreadsheet tool didn\u2019t load. Check your connection and try again \u2014 your answers are saved.");
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = label; }
+    }
   }
 
   /* ----- start ------------------------------------------------------------------------ */

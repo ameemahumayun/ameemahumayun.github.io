@@ -159,8 +159,11 @@ main { padding: 30px 0 80px; }
 
 /* ----- your details (student) ----- */
 .you { display: grid; gap: 12px; margin-bottom: 18px; }
-.you__foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
 .save-status { font-size: 13px; color: var(--color-text-mute); }
+.save-box { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; }
+.save-box__text { display: grid; gap: 6px; }
+.save-box__text p:not(.label):not(.save-status) { color: var(--color-text-strong); max-width: 70ch; }
+.save-box__actions { display: grid; gap: 8px; }
 .save-status.is-warn { color: var(--warn); font-weight: 700; }
 
 /* ----- activity ----- */
@@ -302,7 +305,8 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
 .stmt__v em { color: var(--warn); font-style: normal; }
 
 /* ----- share card (link + QR) ----- */
-.head-stack { display: grid; gap: 16px; margin-bottom: 18px; }
+.head-stack { display: grid; gap: 16px; }
+.head-stack .hint { margin: -6px 0 0; }
 .head-stack .you { margin-bottom: 0; }
 .share { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; align-items: stretch; }
 .share__link { display: grid; gap: 10px; align-content: start; }
@@ -321,7 +325,8 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
 
 /* ----- small screens ----- */
 @media (max-width: 860px) {
-  .grid-3, .grid-4, .grid-2, .share { grid-template-columns: 1fr; }
+  .grid-3, .grid-4, .grid-2, .share, .save-box { grid-template-columns: 1fr; }
+  .save-box__actions { grid-auto-flow: column; justify-content: start; }
   .info__row { grid-template-columns: 1fr; gap: 2px; }
   /* Stacked one per line: no shared rows needed, keep normal spacing. */
   .grid-3, .grid-4, .grid-change { grid-template-rows: none; row-gap: 12px; }
@@ -340,6 +345,7 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
   .top { padding-top: 28px; }
   .palette { top: 46px; }
   .stmt__row { grid-template-columns: 1fr; gap: 2px; }
+  .save-box__actions { grid-auto-flow: row; justify-content: stretch; }
   .defs dl { grid-template-columns: 1fr; gap: 2px; }
   .defs dd { margin-bottom: 8px; }
 }

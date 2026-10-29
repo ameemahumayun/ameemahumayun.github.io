@@ -15,21 +15,6 @@ exclude:
   - prototypes/README.md
   - _templates/
   - "*.zip"
-  - Gemfile
-  - Gemfile.lock
-  # --- PORTFOLIO PARKED (temporary) --------------------------------------
-  # The site currently publishes only the one-page "DDH Evaluation Clinic"
-  # index.html. To bring the portfolio back: delete the lines from here to
-  # the END marker, delete the root index.html, and move
-  # _parked/index.html back to the root.
-  - 404.html
-  - assets/
-  - contact/
-  - cv/
-  - prototypes/
-  - studio/
-  - work/
-  # --- END PORTFOLIO PARKED ----------------------------------------------
 
 # Cleaner permalinks (folder/ instead of folder.html)
 permalink: pretty

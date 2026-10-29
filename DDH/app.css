@@ -210,16 +210,21 @@ main { padding: 30px 0 80px; }
   display: grid; gap: 12px;
 }
 .row-card.is-set-aside { opacity: 0.55; }
-.row-card.is-solid { border-color: color-mix(in srgb, var(--ok) 55%, var(--color-border)); }
-.row-status {
-  font-size: 11.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
-  padding: 3px 9px; border-radius: var(--radius-pill); white-space: nowrap;
-  background: var(--tint); color: var(--color-text-mute);
+/* A finished ("Done") row: a compact summary in a quieter style; the whole
+   summary is a button that reopens the row for editing. */
+.row-card.is-done { background: transparent; border-style: dashed; gap: 8px; padding-top: 10px; padding-bottom: 10px; }
+.done-sum {
+  display: grid; gap: 3px; width: 100%; text-align: left; cursor: pointer;
+  background: none; border: 0; padding: 2px 0; color: var(--color-text-soft); font-size: 14.5px; line-height: 1.5;
 }
-.row-status--thin { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); }
-.row-status--done { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
-.solid-count { display: inline-block; margin-left: 4px; font-weight: 700; color: var(--color-text-strong); }
-.solid-count.is-met { color: var(--ok); }
+.done-sum__title { display: flex; gap: 8px; align-items: baseline; font-weight: 700; color: var(--color-text-strong); }
+.done-sum__tick { color: var(--ok); }
+.done-sum__line { padding-left: 20px; }
+.done-sum__line b { color: var(--color-text-strong); font-weight: 700; }
+.done-sum__edit { padding-left: 20px; font-size: 12.5px; color: var(--color-text-mute); }
+.done-sum:hover .done-sum__edit, .done-sum:focus-visible .done-sum__edit { color: var(--color-accent); }
+.done-sum:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; border-radius: var(--radius-sm); }
+.done-btn:disabled { background: transparent; color: var(--color-text-mute); border-color: var(--color-border); }
 .row-card__head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .row-num {
   width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;

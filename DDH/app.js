@@ -167,44 +167,26 @@
   const empty = (text) => '<div class="empty">' + esc(text) + "</div>";
 
   /* ----- activities ------------------------------------------------------------ */
-  /* Live feedback on a row: "Solid" once every box is filled with enough
-     to work with, a nudge when a description is only a word or two, and
-     "In progress" until then. Word minimums are deliberately low — they
-     catch one-word placeholders, not judge quality. */
-  const words = (t) => String(t || "").trim().split(/\s+/).filter(Boolean).length;
-  function rowStatus(ex, d) {
+  /* "Done" rows. Once every box in a row is filled, its ✓ Done button
+     unlocks; pressing it folds the row into a short read-only summary in a
+     different style. Clicking the summary opens it for editing again. The
+     folded state is saved with the answers. */
+  const TARGET = 8;                              // suggested pairs to carry through (hint text only)
+  const filled = (v) => !!String(v || "").trim();
+  function canDone(ex, d) {
     d = d || {};
-    if (ex === 1) {
-      if (!words(d.individual) || !words(d.conditions) || !words(d.task)) return { k: "partial", t: "In progress" };
-      if (words(d.conditions) < 4) return { k: "thin", t: "Add more on their conditions" };
-      return { k: "done", t: "Solid" };
-    }
-    if (!words(d.feature) || !words(d.indTech) || !words(d.taskTech)) return { k: "partial", t: "In progress" };
-    if (words(d.indTech) < 5 || words(d.taskTech) < 5) return { k: "thin", t: "Describe both relationships a bit more" };
-    return { k: "done", t: "Solid" };
+    if (ex === 1) return filled(d.individual) && filled(d.conditions) && filled(d.task);
+    if (ex === 2) return filled(d.feature) && filled(d.indTech) && filled(d.taskTech);
+    return filled(d.handled) && filled(d.test) && filled(d.measure) && filled(d.compared) && filled(d.gate) && (d.handled === "Yes" || filled(d.change));
   }
-  const statusBadge = (st, key) => '<span class="row-status row-status--' + st.k + '" data-status="' + key + '">' + (st.k === "done" ? "✓ " : "") + esc(st.t) + "</span>";
-  // Target: at least this many followed pairs carried through. Guidance
-  // only — nothing is blocked, and partial work still exports.
-  const TARGET = 8;
-  function solidCount(S, ex) {
-    const ids = ex === 1 ? S.ex1.order.filter((id) => (S.ex1.rows[id] || {}).follow !== false) : followedRows(S).map((r) => r.id);
-    const done = ids.filter((id) => rowStatus(ex, ex === 1 ? S.ex1.rows[id] : S.ex2.byRow[id]).k === "done").length;
-    const met = done >= TARGET;
-    return '<span class="solid-count' + (met ? " is-met" : "") + '" data-count="ex' + ex + '">' +
-      (met ? "✓ " + done + " solid — target met" : done + " solid · aim for at least " + TARGET) + "</span>";
-  }
-  function refreshStatus(S, ex, id) {
-    const st = rowStatus(ex, ex === 1 ? S.ex1.rows[id] : S.ex2.byRow[id]);
-    const b = app.querySelector('[data-status="ex' + ex + "-" + id + '"]');
-    if (b) {
-      b.className = "row-status row-status--" + st.k;
-      b.textContent = (st.k === "done" ? "✓ " : "") + st.t;
-      const card = b.closest(".row-card");
-      if (card) card.classList.toggle("is-solid", st.k === "done");
-    }
-    const c = app.querySelector('[data-count="ex' + ex + '"]');
-    if (c) c.outerHTML = solidCount(S, ex);
+  const doneBtn = (ex, sp, id, d) =>
+    '<button type="button" class="btn btn--sm done-btn" data-action="done" data-ex="' + ex + '" data-space="' + sp + '" data-id="' + id + '" data-done-for="ex' + ex + "-" + id + '"' +
+    (canDone(ex, d) ? "" : " disabled") + ' title="Fill in every box to finish this row">✓ Done</button>';
+  function doneSummary(ex, sp, id, title, lines) {
+    return '<button type="button" class="done-sum" data-action="undone" data-ex="' + ex + '" data-space="' + sp + '" data-id="' + id + '" aria-label="Edit: ' + esc(title) + '">' +
+      '<span class="done-sum__title"><span class="done-sum__tick" aria-hidden="true">✓</span>' + esc(title) + "</span>" +
+      lines.filter((l) => filled(l[1])).map((l) => '<span class="done-sum__line">' + (l[0] ? "<b>" + esc(l[0]) + "</b> " : "") + esc(l[1]) + "</span>").join("") +
+      '<span class="done-sum__edit">Click to edit</span></button>';
   }
 
   function act1(S, sp) {
@@ -215,19 +197,24 @@
     }
     const rows = S.ex1.order.map((id, i) => {
       const r = S.ex1.rows[id] || {};
-      const st = rowStatus(1, r);
-      return '<div class="row-card' + (r.follow === false ? " is-set-aside" : "") + (st.k === "done" ? " is-solid" : "") + '">' +
-        '<div class="row-card__head"><span class="row-num">' + (i + 1) + "</span>" + statusBadge(st, "ex1-" + id) +
+      const isDone = r.done && canDone(1, r);
+      const head = '<div class="row-card__head"><span class="row-num">' + (i + 1) + "</span>" +
           '<label class="check"><input type="checkbox" data-space="' + sp + '" data-path="ex1.rows.' + id + '.follow"' + (r.follow === false ? "" : " checked") + "> Follow this pair into Exercise 2</label>" +
-          '<button type="button" class="icon-btn" data-action="del-row" data-space="' + sp + '" data-id="' + id + '" aria-label="Remove row ' + (i + 1) + '">✕</button>' +
-        "</div>" +
+          '<span class="row-card__btns">' + (isDone ? "" : doneBtn(1, sp, id, r)) +
+          '<button type="button" class="icon-btn" data-action="del-row" data-space="' + sp + '" data-id="' + id + '" aria-label="Remove row ' + (i + 1) + '">✕</button></span>' +
+        "</div>";
+      if (isDone) {
+        return '<div class="row-card is-done' + (r.follow === false ? " is-set-aside" : "") + '">' + head +
+          doneSummary(1, sp, id, r.individual.trim() + " · " + r.task.trim(), [["", r.conditions]]) + "</div>";
+      }
+      return '<div class="row-card' + (r.follow === false ? " is-set-aside" : "") + '">' + head +
         '<div class="grid-3">' +
           field("Individual", sp, "ex1.rows." + id + ".individual", r.individual, { area: true, ph: "e.g. Radiographer" }) +
           field("Characteristics and working conditions", sp, "ex1.rows." + id + ".conditions", r.conditions, { area: true, ph: "Role, skills, language, workload, time available" }) +
           field("Task", sp, "ex1.rows." + id + ".task", r.task, { area: true, ph: "e.g. Capture and upload the X-ray" }) +
         "</div></div>";
     }).join("");
-    return '<p class="hint">One row per individual–task pair \u2014 aim for at least ' + TARGET + '. Pairs can share people and tasks: the same person can appear with two different tasks, and the same task can appear with two different people (say, a patient and the relative who speaks for them). Untick a pair to set it aside. ' + solidCount(S, 1) + "</p>" +
+    return '<p class="hint">One row per individual–task pair \u2014 aim for at least ' + TARGET + '. Pairs can share people and tasks: the same person can appear with two different tasks, and the same task can appear with two different people (say, a patient and the relative who speaks for them). Untick a pair to set it aside, and press \u2713 Done when a row is finished.</p>' +
       rows + '<button type="button" class="btn btn--ghost" data-action="add-row" data-space="' + sp + '">+ Add an individual–task pair</button>';
   }
 
@@ -237,7 +224,7 @@
   function act2(S, sp) {
     const rows = followedRows(S);
     if (!rows.length) return empty("Add individuals and tasks in Exercise 1 first — each pair you follow appears here.");
-    return '<p class="hint">For each pair from Exercise 1, name the tool feature they meet, then describe both technology relationships. ' + solidCount(S, 2) + "</p>" +
+    return '<p class="hint">For each pair from Exercise 1, name the tool feature they meet, then describe both technology relationships.</p>' +
       '<div class="card defs"><p class="label">What to write in each box</p><dl>' +
         "<dt>Tool feature they meet</dt><dd>The part of the tool this person and task run into.</dd>" +
         "<dt>Individual–technology</dt><dd>How this person meets the tool: what they bring to it (skills, language, device, habits, trust) and what the tool asks of them in return.</dd>" +
@@ -245,8 +232,11 @@
       "</dl></div>" +
       rows.map((r) => {
         const d = S.ex2.byRow[r.id] || {};
-        const st = rowStatus(2, d);
-        return '<div class="row-card' + (st.k === "done" ? " is-solid" : "") + '"><div class="row-card__head"><span class="pair">' + esc(relLabel(S, r.id, false)) + "</span>" + statusBadge(st, "ex2-" + r.id) + "</div>" +
+        if (d.done && canDone(2, d)) {
+          return '<div class="row-card is-done"><div class="row-card__head"><span class="pair">' + esc(relLabel(S, r.id, false)) + "</span></div>" +
+            doneSummary(2, sp, r.id, d.feature.trim(), [["Individual–technology:", d.indTech], ["Task–technology:", d.taskTech]]) + "</div>";
+        }
+        return '<div class="row-card"><div class="row-card__head"><span class="pair">' + esc(relLabel(S, r.id, false)) + '</span><span class="row-card__btns">' + doneBtn(2, sp, r.id, d) + "</span></div>" +
           '<div class="grid-3">' +
             field("Tool feature they meet", sp, "ex2.byRow." + r.id + ".feature", d.feature, { area: true, rows: 3, ph: "e.g. upload screen, TB score 0–100" }) +
             field("Individual–technology", sp, "ex2.byRow." + r.id + ".indTech", d.indTech, { area: true, rows: 3,
@@ -310,8 +300,18 @@
       const t = testOf(d.test);
       const suggested = C.TESTS.filter((x) => x.stage === stage.id).map((x) => x.name).join(" or ");
       const p = "ex4.byItem." + it.cid + ".";
+      const head4 = '<div class="row-card__head"><span class="pair">' + esc(relLabel(S, it.rid)) + '</span><span class="tag tag--' + stage.id + '">' + esc(stage.label) + "</span>";
+      if (d.done && canDone(4, d)) {
+        return '<div class="row-card is-done">' + head4 + "</div>" +
+          doneSummary(4, sp, it.cid, it.challenge, [
+            ["Handled?", d.handled],
+            ["Change:", (d.changeKind ? d.changeKind + ": " : "") + (d.change || "")],
+            ["Test:", t ? t.name : ""],
+            ["Gate:", d.measure + ", compared with " + lcFirst(d.compared) + " \u2014 go on only if " + lcFirst(d.gate)],
+          ]) + "</div>";
+      }
       return '<div class="row-card">' +
-        '<div class="row-card__head"><span class="pair">' + esc(relLabel(S, it.rid)) + '</span><span class="tag tag--' + stage.id + '">' + esc(stage.label) + "</span></div>" +
+        head4 + '<span class="row-card__btns">' + doneBtn(4, sp, it.cid, d) + "</span></div>" +
         '<p class="mini"><b>Challenge:</b> ' + esc(it.challenge) + (it.meaning ? " — " + esc(it.meaning) : "") + "</p>" +
         '<div class="step"><p class="step__label"><b>1</b> Check · Is it already handled by your design?</p><div class="seg" role="group">' +
           ["Yes", "Partly", "No"].map((v) => '<button type="button" class="seg__btn' + (d.handled === v ? " is-on" : "") + '" data-action="handled" data-space="' + sp + '" data-id="' + it.cid + '" data-val="' + v + '" aria-pressed="' + (d.handled === v) + '">' + v + "</button>").join("") +
@@ -539,9 +539,14 @@
     save(sp);
     // Exercise 2's "relationships in full" list repeats the feature names:
     // keep it in step while they're typed, without re-rendering the inputs.
-    // Row feedback (Exercises 1–2) as you type.
-    const rm = /^ex([12])\.(?:rows|byRow)\.([^.]+)\./.exec(el.dataset.path);
-    if (rm && el.type !== "checkbox") refreshStatus(S, Number(rm[1]), rm[2]);
+    // Unlock a row's ✓ Done button as soon as its last box is filled.
+    const rm = /^ex([124])\.(?:rows|byRow|byItem)\.([^.]+)\./.exec(el.dataset.path);
+    if (rm) {
+      const ex = Number(rm[1]);
+      const d = ex === 1 ? S.ex1.rows[rm[2]] : ex === 2 ? S.ex2.byRow[rm[2]] : S.ex4.byItem[rm[2]];
+      const btn = app.querySelector('[data-done-for="ex' + ex + "-" + rm[2] + '"]');
+      if (btn) btn.disabled = !canDone(ex, d);
+    }
     if (/^ex2\.byRow\.[^.]+\.feature$/.test(el.dataset.path)) {
       const rl = app.querySelector('[data-rel-list="' + sp + '"]');
       if (rl) rl.innerHTML = relListItems(S);
@@ -616,6 +621,18 @@
           S.ex3.order.push(nid);
         }
         save(sp); render();
+        break;
+      }
+      case "done":
+      case "undone": {
+        const ex = Number(b.dataset.ex);
+        const base = ex === 1 ? "ex1.rows." : ex === 2 ? "ex2.byRow." : "ex4.byItem.";
+        setPath(S, base + id + ".done", b.dataset.action === "done");
+        save(sp); render();
+        if (b.dataset.action === "undone") {
+          const f = app.querySelector('[data-path^="' + base + id + '."]:not([type="checkbox"])');
+          if (f) f.focus({ preventScroll: true });
+        }
         break;
       }
       case "handled":

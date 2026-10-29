@@ -66,14 +66,27 @@
       pending: true
       suffix: "· soon"
 
+- meta: "Health AI Evaluation · Teaching Tool · Interactive Web App"
+  title: "DDH Evaluation Clinic"
+  type: design
+  desc: "An interactive classroom tool for the Evaluation Clinic session, co-led with Ayesha Mirza (Awaaz-e-Sehat Researchers). Students plan how to evaluate a health AI tool through five exercises that build on each other: FITT individuals, tasks and technology; ISO 9241-11 definitions in context; dragging each relationship onto Reinmund's care-pathway stages and challenges; choosing tests and go/no-go gates; and drafting an evidence statement. Answers save on the device as they're typed and export as a PDF or spreadsheet."
+  links:
+    - label: "Open the Clinic"
+      url: "/DDH/"
+      primary: true
+
 - meta: "Maternal Health · UX Design · Interactive Prototype"
   title: "TBA Helper"
   type: design
   desc: "A low-literacy maternal-health prototype for Traditional Birth Attendants (TBAs), led in collaboration with Aga Khan University and VITAL Pakistan. Synthesized official TBA curricula, WHO guidance, and focus-group findings from frontline TBAs into the prototype's information architecture, content structure, and interaction flows, iteratively refined around information overload, literacy constraints, usability, and referral needs in Pakistan."
   links:
+    # Temporarily unavailable (prototype under work): inert button, and the
+    # pages are excluded in _config.yml. To restore: put back
+    #   url: "/work/tba-maternal-health/"  and  primary: true
+    # here, and remove the two TBA lines from _config.yml's exclude list.
     - label: "View Prototype"
-      url: "/work/tba-maternal-health/"
-      primary: true
+      pending: true
+      suffix: "· under work"
 
 - meta: "Product &amp; Visual Design · On the Job"
   title: "Odds &amp; Ends"

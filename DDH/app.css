@@ -91,17 +91,14 @@ main { padding: 30px 0 80px; }
   -webkit-box-decoration-break: clone; box-decoration-break: clone;
 }
 .intro { display: grid; gap: 14px; }
-.po { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.po p:not(.label) { color: var(--color-text-strong); }
-.steps { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
-.steps li {
-  flex: 1 1 180px;
-  background: var(--color-bg-lift);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 10px 14px; font-size: 14.5px;
-}
-.steps b { color: var(--color-accent); margin-right: 4px; }
+/* purpose / outcome / steps, one box */
+.info { display: grid; gap: 12px; }
+.info__row { display: grid; grid-template-columns: 96px 1fr; gap: 14px; align-items: baseline; }
+.info__row + .info__row { border-top: 1px solid var(--color-border); padding-top: 12px; }
+.info__row .label { margin: 0; }
+.info__row p:not(.label) { color: var(--color-text-strong); }
+.info__steps { margin: 0; padding-left: 20px; display: grid; gap: 4px; color: var(--color-text-strong); }
+.info__steps li::marker { color: var(--color-accent); font-weight: 700; }
 .sec-title { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 1.3rem; margin: 18px 0 6px; color: var(--color-text-strong); }
 
 /* ----- buttons ----- */
@@ -123,7 +120,6 @@ main { padding: 30px 0 80px; }
   color: var(--color-text-soft); cursor: pointer; flex: 0 0 auto;
 }
 .icon-btn:hover { color: var(--color-accent); border-color: var(--color-accent); }
-.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 4px; }
 
 /* ----- form fields ----- */
 .field { display: grid; gap: 5px; margin: 0; align-content: start; }
@@ -169,7 +165,6 @@ main { padding: 30px 0 80px; }
 
 /* ----- activity ----- */
 .activity { display: grid; gap: 16px; border-top: 1px solid var(--color-border); padding-top: 18px; }
-.refs { display: grid; gap: 8px; }
 .ref {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -183,7 +178,9 @@ main { padding: 30px 0 80px; }
 .ref > summary::-webkit-details-marker { display: none; }
 .ref > summary::before { content: "+"; color: var(--color-accent); font-weight: 800; width: 12px; }
 .ref[open] > summary::before { content: "\2013"; }
-.ref--example > summary { color: var(--color-accent); }
+.ref__sec { padding: 4px 0 6px; }
+.ref__sec + .ref__sec { border-top: 1px solid var(--color-border); padding-top: 14px; }
+.ref__h { font-size: 14px; font-weight: 800; color: var(--color-accent); margin: 0 0 8px; letter-spacing: 0.01em; }
 .ref__note { color: var(--color-text-soft); font-size: 14px; margin: 0 0 10px; }
 .ref__cite { color: var(--color-text-mute); font-size: 12.5px; margin: 8px 0 12px; }
 .table-wrap { overflow-x: auto; margin-bottom: 12px; }
@@ -324,7 +321,8 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
 
 /* ----- small screens ----- */
 @media (max-width: 860px) {
-  .grid-3, .grid-4, .grid-2, .po, .share { grid-template-columns: 1fr; }
+  .grid-3, .grid-4, .grid-2, .share { grid-template-columns: 1fr; }
+  .info__row { grid-template-columns: 1fr; gap: 2px; }
   /* Stacked one per line: no shared rows needed, keep normal spacing. */
   .grid-3, .grid-4, .grid-change { grid-template-rows: none; row-gap: 12px; }
   .grid-3 > .field, .grid-4 > .field, .grid-change > .field { grid-row: auto; grid-template-rows: none; gap: 5px; }

@@ -104,34 +104,39 @@
   let picked = null;                             // tap-to-move selection {type, id, space}
 
   /* ----- rendering: shared pieces ------------------------------------------ */
-  function refTable(key) {
+  function refSection(key) {
     const r = C.REF[key];
-    return '<details class="ref"><summary>' + esc(r.title) + "</summary>" +
+    return '<section class="ref__sec"><h3 class="ref__h">' + esc(r.title) + "</h3>" +
       (r.note ? '<p class="ref__note">' + esc(r.note) + "</p>" : "") +
       table(r.head, r.rows) +
-      (r.cite ? '<p class="ref__cite">' + esc(r.cite) + "</p>" : "") + "</details>";
+      (r.cite ? '<p class="ref__cite">' + esc(r.cite) + "</p>" : "") + "</section>";
   }
   function table(head, rows) {
     return '<div class="table-wrap"><table class="tbl"><thead><tr>' + head.map((h) => "<th>" + esc(h) + "</th>").join("") +
       "</tr></thead><tbody>" + rows.map((row) => "<tr>" + row.map((c, i) => "<td" + (i === 0 ? ' class="tbl__key"' : "") + ">" + esc(c) + "</td>").join("") + "</tr>").join("") +
       "</tbody></table></div>";
   }
-  function exampleBlock(n) {
-    const ex = C.EXAMPLES[n];
-    if (!ex) return "";
-    return '<details class="ref ref--example"><summary>See the TB-Screen example</summary>' + table(ex.head, ex.rows) +
-      (ex.note ? '<p class="ref__note">' + esc(ex.note) + "</p>" : "") + "</details>";
+  // Every framework table and the worked example for an exercise, in one
+  // fold-out instead of a separate one each.
+  function refsBlock(ex) {
+    const exm = C.EXAMPLES[ex.n];
+    const parts = ex.refs.map(refSection);
+    if (exm) {
+      parts.push('<section class="ref__sec"><h3 class="ref__h">Example: TB-Screen</h3>' + table(exm.head, exm.rows) +
+        (exm.note ? '<p class="ref__note">' + esc(exm.note) + "</p>" : "") + "</section>");
+    }
+    return parts.length ? '<details class="ref"><summary>Definitions and Examples</summary>' + parts.join("") + "</details>" : "";
   }
+  // Purpose, outcome and steps in a single box.
   function intro(ex) {
     return '<div class="intro">' +
       '<p class="eyebrow">' + esc(ex.eyebrow) + "</p>" +
       '<h2 class="ex-title"><span class="text-highlight">Exercise ' + ex.n + " · " + esc(ex.title) + "</span></h2>" +
-      '<div class="po">' +
-        '<div class="card"><p class="label">Purpose</p><p>' + esc(ex.purpose) + "</p></div>" +
-        '<div class="card card--tint"><p class="label">Outcome</p><p>' + esc(ex.outcome) + "</p></div>" +
-      "</div>" +
-      '<ol class="steps">' + ex.steps.map((s, i) => "<li><b>" + (i + 1) + "</b> " + esc(s) + "</li>").join("") + "</ol>" +
-      "</div>";
+      '<div class="card info">' +
+        '<div class="info__row"><p class="label">Purpose</p><p>' + esc(ex.purpose) + "</p></div>" +
+        '<div class="info__row"><p class="label">Outcome</p><p>' + esc(ex.outcome) + "</p></div>" +
+        '<div class="info__row"><p class="label">Steps</p><ol class="info__steps">' + ex.steps.map((st) => "<li>" + esc(st) + "</li>").join("") + "</ol></div>" +
+      "</div></div>";
   }
   const field = (label, space, path, value, opts) => {
     opts = opts || {};
@@ -307,10 +312,8 @@
   function activity(n, sp) {
     const ex = C.EXERCISES[n - 1];
     const S = spaces[sp];
-    const tools = '<div class="toolbar"><button type="button" class="btn" data-action="export" data-space="student" data-n="' + n + '">Export this activity (PDF)</button></div>';
     return '<div class="activity" data-ex="' + n + '" data-space="' + sp + '">' +
-      tools +
-      '<div class="refs">' + ex.refs.map(refTable).join("") + exampleBlock(n) + "</div>" +
+      refsBlock(ex) +
       '<div class="work">' + ACTS[n](S, sp) + "</div></div>";
   }
 
@@ -495,7 +498,7 @@
       case "clear-test":
         setPath(S, "ex4.byItem." + id + ".test", ""); save(sp); render(); break;
       case "draft5": draft5(S); save(sp); render(); break;
-      case "export": exportPdf(sp, b.dataset.n); break;
+      case "export": exportPdf("student"); break;
       case "qr-zoom":
         qrBig = !qrBig; render(); break;
       case "copy-link": {
@@ -621,14 +624,11 @@
       ["Rethink", e.rethink || ""],
     ] };
   }
-  function exportPdf(sp, which) {
+  // Exports every exercise, however much of it is filled in: empty parts
+  // show as "Nothing written yet", and missing details as "not given".
+  function exportPdf(sp) {
     const S = spaces[sp];
-    const nums = which === "all" ? NUMS : [Number(which)];
-    if (!(S.profile.name || "").trim()) {
-      alert("Please add your name (and email and group number) under “Your details” first, so your PDF is labelled.");
-      const f = app.querySelector('[data-path="profile.name"]'); if (f) f.focus();
-      return;
-    }
+    const nums = NUMS;
     if (!window.jspdf || !window.jspdf.jsPDF) { alert("The PDF tool didn’t load. Check your connection and refresh — your answers are saved."); return; }
     const doc = new window.jspdf.jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
     const W = doc.internal.pageSize.getWidth();
@@ -639,8 +639,8 @@
     doc.text("Evaluation Clinic", M, y + 6); y += 28;
     doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor(90, 90, 90);
     const p = S.profile;
-    const who = [["Name", p.name], ["Email", p.email], ["Group", p.group], ["Tool", p.tool]].filter((x) => (x[1] || "").trim()).map((x) => x[0] + ": " + x[1]).join("    ");
-    if (who) { doc.text(doc.splitTextToSize(who, W - 2 * M), M, y); y += 16; }
+    const who = [["Name", p.name], ["Email", p.email], ["Group", p.group], ["Tool", p.tool]].map((x) => x[0] + ": " + ((x[1] || "").trim() || "not given")).join("    ");
+    doc.text(doc.splitTextToSize(who, W - 2 * M), M, y); y += 16;
     doc.text("Exported " + new Date().toLocaleString(), M, y); y += 18;
     nums.forEach((n, i) => {
       const ex = C.EXERCISES[n - 1];
@@ -664,7 +664,7 @@
       y = doc.lastAutoTable.finalY + 20;
     });
     const safe = (s) => String(s || "").trim().replace(/[^\w\-]+/g, "-").replace(/^-+|-+$/g, "");
-    const name = ["Evaluation-Clinic", which === "all" ? "" : "Exercise-" + which, p.group ? "Group-" + safe(p.group) : "", safe(p.name)].filter(Boolean).join("_");
+    const name = ["Evaluation-Clinic", p.group ? "Group-" + safe(p.group) : "", safe(p.name)].filter(Boolean).join("_");
     doc.save(name + ".pdf");
   }
 

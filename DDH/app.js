@@ -139,7 +139,8 @@
     const ctl = opts.area
       ? '<textarea id="' + id + '" rows="' + (opts.rows || 2) + '" data-space="' + space + '" data-path="' + esc(path) + '" placeholder="' + esc(opts.ph || "") + '">' + esc(value) + "</textarea>"
       : '<input id="' + id + '" type="' + (opts.type || "text") + '" data-space="' + space + '" data-path="' + esc(path) + '" value="' + esc(value) + '" placeholder="' + esc(opts.ph || "") + '"' + (opts.auto ? ' autocomplete="' + opts.auto + '"' : "") + ">";
-    return '<label class="field' + (opts.cls ? " " + opts.cls : "") + '" for="' + id + '"><span>' + esc(label) + "</span>" + ctl + "</label>";
+    return '<label class="field' + (opts.cls ? " " + opts.cls : "") + '" for="' + id + '"><span>' + esc(label) + "</span>" +
+      (opts.help ? '<small class="field__help">' + esc(opts.help) + "</small>" : "") + ctl + "</label>";
   };
   const empty = (text) => '<div class="empty">' + esc(text) + "</div>";
 
@@ -167,6 +168,9 @@
       rows + '<button type="button" class="btn btn--ghost" data-action="add-row" data-space="' + sp + '">+ Add an individual–task pair</button>';
   }
 
+  function relListItems(S) {
+    return followedRows(S).map((r) => "<li>" + esc(relLabel(S, r.id)) + "</li>").join("");
+  }
   function act2(S, sp) {
     const rows = followedRows(S);
     if (!rows.length) return empty("Add individuals and tasks in Exercise 1 first — each pair you follow appears here.");
@@ -176,12 +180,16 @@
         return '<div class="row-card"><div class="row-card__head"><span class="pair">' + esc(relLabel(S, r.id, false)) + "</span></div>" +
           '<div class="grid-3">' +
             field("Tool feature they meet", sp, "ex2.byRow." + r.id + ".feature", d.feature, { ph: "e.g. upload screen, TB score 0–100" }) +
-            field("Individual–technology", sp, "ex2.byRow." + r.id + ".indTech", d.indTech, { area: true, ph: "Does the tool suit this person: skills, language, device, expectations?" }) +
-            field("Task–technology", sp, "ex2.byRow." + r.id + ".taskTech", d.taskTech, { area: true, ph: "Does the tool support this task: its steps, timing, what it requires?" }) +
+            field("Individual–technology", sp, "ex2.byRow." + r.id + ".indTech", d.indTech, { area: true, rows: 3,
+              help: "Describe how this person meets the tool: what they bring to it (skills, language, device, habits, trust) and what the tool asks of them in return.",
+              ph: "e.g. New upload screen on an old machine; needs a stable connection, which the X-ray room often lacks" }) +
+            field("Task–technology", sp, "ex2.byRow." + r.id + ".taskTech", d.taskTech, { area: true, rows: 3,
+              help: "Describe how the tool changes this task: which steps it adds, removes or reorders, when its output has to arrive, and what the task now depends on.",
+              ph: "e.g. The score must arrive before the referral decision, while the patient is still in the room" }) +
           "</div></div>";
       }).join("") +
-      '<div class="card card--list"><p class="label">Step 3 · Your relationships in full</p><ul class="rel-list">' +
-        rows.map((r) => "<li>" + esc(relLabel(S, r.id)) + "</li>").join("") + "</ul></div>";
+      '<div class="card card--list"><p class="label">Step 3 · Your relationships in full</p><ul class="rel-list" data-rel-list="' + sp + '">' +
+        relListItems(S) + "</ul></div>";
   }
 
   function relCard(S, sp, rid) {
@@ -403,6 +411,12 @@
     const S = spaces[sp];
     setPath(S, el.dataset.path, el.type === "checkbox" ? el.checked : el.value);
     save(sp);
+    // Exercise 2's "relationships in full" list repeats the feature names:
+    // keep it in step while they're typed, without re-rendering the inputs.
+    if (/^ex2\.byRow\.[^.]+\.feature$/.test(el.dataset.path)) {
+      const rl = app.querySelector('[data-rel-list="' + sp + '"]');
+      if (rl) rl.innerHTML = relListItems(S);
+    }
     if (el.dataset.path.indexOf("ex5.") === 0) {
       const pv = app.querySelector('[data-preview="' + sp + '"]');
       if (pv) pv.innerHTML = ex5Preview(S);

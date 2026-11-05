@@ -308,7 +308,10 @@
 
 /* 23. ACCORDION (collapsible CV sections) --------------------------------- */
 /* Built on native <details>/<summary> — no JS needed. */
-.accordion { margin-top: var(--space-3); }
+/* Sits close under the page head: no extra top margin, and the first
+   row's own top padding trimmed. */
+.accordion { margin-top: 0; }
+.accordion__item:first-child > .accordion__head { padding-top: var(--space-2); }
 .accordion__item { border-bottom: var(--hairline); }
 .accordion__head {
   list-style: none;
@@ -319,10 +322,13 @@
   gap: var(--space-3);
 }
 .accordion__head::-webkit-details-marker { display: none; }
+/* Same treatment as the homepage's "Recent Updates" heading: bold italic
+   on the accent highlight (the .text-highlight span inside). */
 .accordion__title {
   font-size: var(--text-lg);
   color: var(--color-text-strong);
   font-weight: var(--weight-bold);
+  font-style: italic;
   letter-spacing: var(--tracking-tight);
 }
 /* Plus/minus indicator */

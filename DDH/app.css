@@ -370,3 +370,15 @@ body.is-dnd, body.is-dnd * { cursor: grabbing !important; }
 @media (max-width: 768px) {
   #app .wrap { padding: 0 var(--gutter-mobile); }
 }
+
+/* With the site's star cursor active (.has-custom-cursor, set by main.js),
+   hide the browser's own pointer/grab/zoom cursors everywhere in the
+   clinic (dropdowns included), so only the star shows, as on the rest of
+   the site. Text boxes
+   keep their typing cursor, same as the site's contact form. Without the
+   star (touch, reduced motion, JS off) the rules above still apply. */
+.has-custom-cursor #app *:not(input):not(textarea),
+.has-custom-cursor body.is-dnd,
+.has-custom-cursor body.is-dnd *:not(input):not(textarea) {
+  cursor: none !important;
+}

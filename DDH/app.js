@@ -426,13 +426,6 @@
   }
 
   /* ----- page shells ------------------------------------------------------------ */
-  function header(sub) {
-    return '<header class="top"><div class="wrap">' +
-      '<p class="eyebrow">' + esc(sub) + "</p>" +
-      '<h1 class="title">Evaluation Clinic</h1>' +
-      '<p class="byline">Ayesha Mirza &amp; Ameemah Humayun · Awaaz-e-Sehat Researchers</p>' +
-      "</div></header>";
-  }
   function tabs(list) {
     return '<nav class="tabs" role="tablist"><div class="wrap tabs__row">' + list.map((t) =>
       '<button type="button" role="tab" class="tab' + (activeTab === t.id ? " is-active" : "") + '" aria-selected="' + (activeTab === t.id) + '" data-action="tab" data-id="' + t.id + '">' +
@@ -504,14 +497,15 @@
     const keep = a && a.dataset && a.dataset.path ? { space: a.dataset.space, path: a.dataset.path, s: a.selectionStart, e: a.selectionEnd } : null;
     const y = window.scrollY;
     if (activeTab !== "start" && !NUMS.includes(Number(activeTab))) activeTab = "start";
-    app.innerHTML = header("DDH") +
+    app.innerHTML =
       tabs([{ id: "start", label: "Instructions" }].concat(NUMS.map((n) => ({ id: String(n), label: "Exercise " + n })))) +
-      '<main id="main">' + (activeTab === "start" ? studentHead() : studentExercise(Number(activeTab))) + "</main>" + qrOverlay();
+      '<div class="clinic-main">' + (activeTab === "start" ? studentHead() : studentExercise(Number(activeTab))) + "</div>" + qrOverlay();
     if (keep) {
       const el = app.querySelector('[data-space="' + keep.space + '"][data-path="' + CSS.escape(keep.path) + '"]');
       if (el) { el.focus({ preventScroll: true }); try { el.setSelectionRange(keep.s, keep.e); } catch (e) {} }
     }
-    window.scrollTo(0, y);
+    // The site sets scroll-behavior: smooth; these moves must be instant.
+    window.scrollTo({ top: y, behavior: "instant" });
     if (picked) app.querySelectorAll('[data-drop="' + picked.type + '"][data-space="' + picked.space + '"]').forEach((z) => z.classList.add("is-armed"));
     updateSaveStatus();
   }
@@ -585,12 +579,10 @@
         // in an exercise, start the new one just under the tab bar; if the
         // tabs were still below you, stay where you are.
         {
-          // The tab bar is sticky, so measure where it sits in the page from
-          // the section above it, not from the bar itself.
-          const nav = app.querySelector(".tabs");
-          const above = nav && nav.previousElementSibling;
-          const navTop = above ? above.getBoundingClientRect().bottom + parseFloat(getComputedStyle(above).marginBottom) + window.scrollY : 0;
-          if (window.scrollY > navTop) window.scrollTo(0, navTop);
+          // The tab bar is sticky (just under the site's own sticky nav), so
+          // take its resting place from #app's top, which never sticks.
+          const navTop = app.getBoundingClientRect().top + window.scrollY - siteNavHeight();
+          if (window.scrollY > navTop) window.scrollTo({ top: navTop, behavior: "instant" });
         }
         break;
       case "add-row": {
@@ -712,7 +704,7 @@
       drag.ghost = drag.el.cloneNode(true);
       drag.ghost.classList.add("ghost");
       drag.ghost.style.width = r.width + "px";
-      document.body.appendChild(drag.ghost);
+      app.appendChild(drag.ghost);  // inside #app so it keeps the clinic styles
       drag.el.classList.add("is-dragging");
       document.body.classList.add("is-dnd");
       app.querySelectorAll('[data-drop="' + drag.el.dataset.drag + '"][data-space="' + drag.el.dataset.space + '"]').forEach((z) => z.classList.add("is-armed"));
@@ -728,8 +720,8 @@
     }
     // Scroll the page when dragging near its top or bottom edge.
     const edge = 60;
-    if (e.clientY < edge) window.scrollBy(0, -12);
-    else if (e.clientY > window.innerHeight - edge) window.scrollBy(0, 12);
+    if (e.clientY < edge) window.scrollBy({ top: -12, behavior: "instant" });
+    else if (e.clientY > window.innerHeight - edge) window.scrollBy({ top: 12, behavior: "instant" });
   }, { passive: false });
   const endDrag = (e) => {
     if (!drag || (e && e.pointerId !== drag.id)) return;
@@ -874,6 +866,16 @@
   }
 
   /* ----- start ------------------------------------------------------------------------ */
+  // The page sits under the site's sticky nav; keep the clinic's own sticky
+  // bars (tabs, Ex 4's test palette) just below it.
+  function siteNavHeight() {
+    const n = document.querySelector("body > .nav");
+    return n ? n.getBoundingClientRect().height : 0;
+  }
+  function syncSticky() { app.style.setProperty("--clinic-sticky", siteNavHeight() + "px"); }
+  syncSticky();
+  window.addEventListener("resize", syncSticky);
+  window.addEventListener("load", syncSticky);
   render();
   // Another tab of this page saved answers: pick them up instead of
   // overwriting them later with stale data.

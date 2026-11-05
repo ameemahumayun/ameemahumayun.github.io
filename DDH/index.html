@@ -1,24 +1,28 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex">
-  <title>DDH Evaluation Clinic</title>
-  <!-- Always the main site's dark theme (near-black with butter yellow):
-       no data-theme attribute, so tokens.css's base :root palette applies. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/tokens.css">
-  <link rel="stylesheet" href="/DDH/app.css">
-</head>
-<body>
-  <div id="app"></div>
-  <script src="/DDH/vendor/qrcode.js"></script>
-  <script src="/DDH/vendor/jspdf.umd.min.js"></script>
-  <script src="/DDH/vendor/jspdf.plugin.autotable.min.js"></script>
-  <script src="/DDH/content.js"></script>
-  <script src="/DDH/app.js"></script>
-</body>
-</html>
+---
+layout: default
+title: DDH Evaluation Clinic
+description: Evaluation Clinic activities for the Diploma in Digital Health — plan how to evaluate a health AI tool with FITT, ISO 9241-11 and Reinmund's care-pathway challenges.
+active: work
+noindex: true
+extra_css:
+  - /DDH/app.css
+extra_js:
+  - /DDH/vendor/qrcode.js
+  - /DDH/vendor/jspdf.umd.min.js
+  - /DDH/vendor/jspdf.plugin.autotable.min.js
+  - /DDH/content.js
+  - /DDH/app.js
+---
+
+<!-- The clinic is a regular site page: nav, footer and theme come from the
+     default layout; the activities themselves are rendered into #app by
+     /DDH/app.js (styles in /DDH/app.css, all scoped to #app). -->
+<header class="page-head">
+  <div class="page-head__inner">
+    <a href="{{ '/work/' | relative_url }}" class="back-link">&larr; All Projects</a>
+    <h1 class="page-head__title"><span class="serif text-highlight">DDH Evaluation Clinic</span></h1>
+    <p class="page-head__intro">Ayesha Mirza &amp; Ameemah Humayun · Awaaz-e-Sehat Researchers</p>
+  </div>
+</header>
+
+<div id="app" class="clinic"></div>

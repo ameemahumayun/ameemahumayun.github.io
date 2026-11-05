@@ -6,5 +6,9 @@
   <main class="page-main">{{ content }}</main>
   {% include footer.html %}
   <script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+  {%- comment -%} Per-page scripts: `extra_js: [paths]` in front matter, loaded in order. {%- endcomment -%}
+  {%- for js in page.extra_js %}
+  <script src="{{ js | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+  {%- endfor %}
 </body>
 </html>

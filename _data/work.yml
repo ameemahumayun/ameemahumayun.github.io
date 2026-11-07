@@ -40,7 +40,7 @@
 - meta: "ACM CHI 2026 · Health AI · Qualitative UX + LLM Evaluation"
   title: "Beyond Euphemisms"
   type: publication
-  desc: "A study of how LLMs interpret culturally specific, indirect, and euphemistic language used to discuss sexual, reproductive, and maternal health in Pakistan. Combining field observations, interviews, focus groups, and systematic evaluation of five LLMs, we developed a Domain–Approach framework for characterizing indirect communication and identified failure modes that conventional aggregate model-performance measures can obscure."
+  desc: "How do LLMs handle the indirect, euphemistic language women in Pakistan use to talk about sexual and reproductive health? Through 40 clinician–patient observations, 22 interviews and 5 focus groups, we built a Domain–Approach framework for indirect health language, then evaluated 5 LLMs on 71 culturally grounded Roman Urdu utterances with gynecologist validation. Models that scored well overall still failed in clinically consequential ways that aggregate metrics hide. As first author and project lead, I designed and ran the fieldwork, developed the framework, co-designed the evaluation, and presented the work live at CHI 2026. Supported by the Gates Foundation and the Patrick J. McGovern Foundation."
   links:
     - label: "View Publication"
       url: "https://doi.org/10.1145/3772318.3791315"
@@ -50,7 +50,7 @@
 - meta: "USENIX SOUPS 2026 · Privacy &amp; Security · Qualitative UX"
   title: "Sharing Digital Devices Is Normal and Cultural"
   type: publication
-  desc: "An examination of how privacy and security are negotiated when digital devices are routinely shared within South Asian immigrant families. Through qualitative research with 18 families, we studied how social expectations around helping, access, and family responsibility shape privacy risks, and developed frameworks translating participants' everyday sharing practices and feature requests into broader needs around autonomy, access control, and multi-user device design."
+  desc: "How do privacy and security work when digital devices are routinely shared within families? With the University of Waterloo, we interviewed 41 people across 18 South Asian immigrant families, including parent–child pairs, and found that device sharing is a culturally governed practice, shaped by family authority, trust and social norms, that creates privacy risks today's designs don't anticipate. As second author, I was one of two primary qualitative coders (about half the interviews), co-developed the codebook, helped frame the findings, and substantially drafted the findings and discussion, which turn participants' needs into design recommendations for multi-user access and privacy controls."
   links:
     - label: "View Publication"
       url: "https://www.usenix.org/conference/soups2026/presentation/shanza"
@@ -60,7 +60,7 @@
 - meta: "Nature Health · Health AI · Qualitative UX + LLM Evaluation"
   title: "Fetal Sex Disclosure &amp; AI Harm Cascades"
   type: publication
-  desc: "An investigation into how conversational AI can create safety risks when responding to requests for fetal sex information in contexts where disclosure may carry downstream gender-related harms. Drawing on interviews with OB/GYNs and radiologists, we developed a clinically grounded harm framework and used it to design a multi-turn adversarial evaluation of leading LLMs, testing how safety behavior changes under sustained conversational pressure and across language conditions."
+  desc: "Where revealing a baby's sex can lead to gender-related harm, what happens when people ask a chatbot? We interviewed 13 OB/GYNs and radiologists to set clinical norms, built a four-pathway harm framework and clinical reference standard, and used them to audit models from OpenAI, Anthropic and Google in English and Roman Urdu across single-turn, 6-turn and 18-turn adversarial conversations. Longer conversations surfaced failures single-turn tests miss, including hallucinated disclosure and over-refusal. As first author and project lead, I ran the interviews and analysis and designed and built the Python evaluation pipeline, with a 3-judge LLM panel and human adjudication. Supported by the Gates Foundation and Google."
   links:
     - label: "View Publication"
       pending: true
@@ -69,7 +69,7 @@
 - meta: "ACM CHI 2027 · Under Revision · Health AI · Qualitative HCI"
   title: "After Dismissal"
   type: publication
-  desc: "An interview study of what happens when women in Pakistan turn to generative AI after a clinical encounter that dismissed their concerns. Drawing on 26 semi-structured interviews, it traces how women use GenAI to build a second account of an unresolved health problem, weigh it against other information and their own bodily knowledge, and decide whether to bring it back to clinicians, manage where it came from, or act outside formal care, introducing <em>compensatory reallocation</em> to describe how healthcare work left unresolved by dismissal moves elsewhere without a matching transfer of authority. Supervised a team of undergraduate researchers and rewrote and reframed the paper."
+  desc: "What happens when women whose concerns are dismissed by a clinician turn to generative AI? Through 26 interviews with women in Pakistan, the paper traces how they used GenAI to build a second account of an unresolved health problem, weighed it against other information and their own bodily knowledge, and decided whether to bring it back to clinicians or act outside formal care. It introduces <em>compensatory reallocation</em>: healthcare work left unresolved by dismissal moves elsewhere without a matching transfer of authority. I supervised the undergraduate research team and rewrote and reframed the paper, now under revision for CHI 2027."
   links:
     - label: "View Publication"
       pending: true

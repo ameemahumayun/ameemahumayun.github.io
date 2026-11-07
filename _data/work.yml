@@ -1,21 +1,21 @@
 # ============================================================
-# WORK PROJECTS — data source for /work/
+# WORK PROJECTS — data source for /portfolio/
 # Each entry renders one .work-card on the Work page, in order.
-# To add/reorder/edit a project: edit THIS file, not work/index.html.
+# To add/reorder/edit a project: edit THIS file, not portfolio/index.html.
 #
 # Fields per entry:
 #   meta        (required) the small label line above the title
 #   title       (required) project name
 #   desc        (required) one-paragraph description
 #   type        (required) "publication" or "design" — powers the
-#               All / Publications / Design filter on /work/.
+#               All / Publications / Design filter on /portfolio/.
 #
 #   Then EITHER a list of links OR a status string (not both):
 #
 #   links:      list of buttons. Each link has:
 #               - label   (required) text shown
 #                 url     (for real links) destination. Use a site path like
-#                         "/work/safarnama/" for internal pages (passed
+#                         "/portfolio/safarnama/" for internal pages (passed
 #                         through relative_url), or a full https:// URL.
 #                 external  (optional) true -> opens in new tab w/ rel=noopener
 #                 muted     (optional) true -> adds work-card__link--muted
@@ -66,6 +66,15 @@
       pending: true
       suffix: "· soon"
 
+- meta: "ACM CHI 2027 · Under Revision · Health AI · Qualitative HCI"
+  title: "After Dismissal"
+  type: publication
+  desc: "An interview study of what happens when women in Pakistan turn to generative AI after a clinical encounter that dismissed their concerns. Drawing on 26 semi-structured interviews, it traces how women use GenAI to build a second account of an unresolved health problem, weigh it against other information and their own bodily knowledge, and decide whether to bring it back to clinicians, manage where it came from, or act outside formal care, introducing <em>compensatory reallocation</em> to describe how healthcare work left unresolved by dismissal moves elsewhere without a matching transfer of authority. Supervised a team of undergraduate researchers and rewrote and reframed the paper."
+  links:
+    - label: "View Publication"
+      pending: true
+      suffix: "· under revision"
+
 - meta: "Health AI Evaluation · Teaching Tool · Interactive Web App"
   title: "DDH Evaluation Clinic"
   type: design
@@ -82,7 +91,7 @@
   links:
     # Temporarily unavailable (prototype under work): inert button, and the
     # pages are excluded in _config.yml. To restore: put back
-    #   url: "/work/tba-maternal-health/"  and  primary: true
+    #   url: "/portfolio/tba-maternal-health/"  and  primary: true
     # here, and remove the two TBA lines from _config.yml's exclude list.
     - label: "View Prototype"
       pending: true
@@ -101,7 +110,7 @@
   desc: "A tourism app connecting travelers with local hosts, built with a five-person university team. Contributed across the full project — survey and interview research, usability testing, and product design — and led the product and UI design in Figma."
   links:
     - label: "View Case Study"
-      url: "/work/safarnama/"
+      url: "/portfolio/safarnama/"
       primary: true
 
 - meta: "Accessibility · UX Design · Interactive Prototype"
@@ -111,7 +120,7 @@
   desc: "An accessibility rating platform for public spaces, grounded in the lived experiences of people with disabilities. Built on 20+ interviews and a collaboration with PSRD."
   links:
     - label: "View Case Study"
-      url: "/work/rahnuma/"
+      url: "/portfolio/rahnuma/"
       primary: true
 
 - meta: "Booking Platform · UX Design · 2024"
@@ -121,5 +130,5 @@
   desc: "A booking-system prototype from the same 2024 cohort of introductory UX research and design projects as Safarnama and Rahnuma — user research, interaction design, and prototyping, using Figma and HTML/CSS."
   links:
     - label: "View Case Study"
-      url: "/work/turbotrack/"
+      url: "/portfolio/turbotrack/"
       primary: true

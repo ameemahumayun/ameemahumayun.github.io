@@ -50,7 +50,7 @@ ameemahumayun.github.io/
 ├── index.html               Homepage (hero--profile + recent-updates timeline)
 ├── card/index.html          UNLINKED PREVIEW — flip business-card homepage concept
 ├── 404.html
-├── work/
+├── portfolio/
 │   ├── index.html           Work listing (work-cards)
 │   └── beyond-euphemisms/index.html   Case study (layout: case-study)
 ├── studio/index.html        Artwork / creative work
@@ -172,12 +172,12 @@ submissions by email.
 ## Common tasks
 
 **Add a case study**
-1. Create `work/<slug>/index.html`.
+1. Create `portfolio/<slug>/index.html`.
 2. Front-matter: `layout: case-study`, `title:`, `active: work`, `nav_tag: Case Study`.
 3. Body: a `<header class="hero">`, then `<div class="layout-with-rail">` with a
    `.rail` (section list) + `.rail-content` wrapping your `<section>`s. Copy the
    existing case study as a template.
-4. Add a `.work-card` for it in `work/index.html`.
+4. Add a `.work-card` for it in `portfolio/index.html`.
 
 **Add a top-level page** (e.g. `/writing/`)
 1. Create `writing/index.html` with `layout: default` + `active: writing`.
@@ -228,7 +228,7 @@ you-while-editing thing.
 ## TODO
 - [ ] Drop the three CV PDFs in `/assets/cv/` (research, uiux, general)
 - [ ] Fill in Studio content (currently placeholder)
-- [ ] Real Paper link for the SOUPS study (currently `#`) in work/index.html
+- [ ] Real Paper link for the SOUPS study (currently `#`) in portfolio/index.html
 - [ ] Real LinkedIn/external links open in new tab (`target="_blank" rel="noopener"`)
 - [ ] Favicon + OG share image
 - [ ] Build out remaining case studies (shared-devices, fetal-sex-disclosure)

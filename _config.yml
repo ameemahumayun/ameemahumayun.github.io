@@ -17,7 +17,7 @@ exclude:
   - "*.zip"
   # TBA Helper is under work: keep its pages off the site for now
   # (see the TBA entry in _data/work.yml to restore).
-  - work/tba-maternal-health/
+  - portfolio/tba-maternal-health/
   - prototypes/tba-maternal-health/
 
 # Cleaner permalinks (folder/ instead of folder.html)
@@ -30,7 +30,7 @@ nav_links:
     url: /
     key: home
   - label: portfolio
-    url: /work/
+    url: /portfolio/
     key: work
   - label: cv
     url: /cv/

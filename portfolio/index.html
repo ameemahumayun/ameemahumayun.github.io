@@ -1,0 +1,55 @@
+---
+layout: default
+title: Portfolio
+description: Research and design work in human-centered AI, healthcare, and privacy.
+active: work
+---
+
+<!-- PAGE HEAD (compact) -->
+<header class="page-head">
+  <div class="page-head__inner">
+    <h1 class="page-head__title"><span class="serif text-highlight">Portfolio</span></h1>
+
+    <p class="page-head__intro">Selected research and design work.</p>
+  </div>
+</header>
+
+<!-- WORK LIST -->
+<!-- Cards are generated from _data/work.yml. To add/edit/reorder a project,
+     edit that file — not this loop. -->
+<section class="section">
+  <div class="container-wide">
+    <div class="work-filter" role="tablist" aria-label="Filter portfolio by type">
+      <button type="button" class="work-filter__btn is-active" data-filter="all">All</button>
+      <button type="button" class="work-filter__btn" data-filter="publication">Publications</button>
+      <button type="button" class="work-filter__btn" data-filter="design">Design</button>
+    </div>
+    <div class="work-list">
+      {%- assign archives_started = false -%}
+      {%- for project in site.data.work %}
+        {%- if project.archived and archives_started == false %}
+      <div class="eyebrow" data-type="design" style="margin-top:var(--space-2);">Archives</div>
+          {%- assign archives_started = true -%}
+        {%- endif %}
+      <article class="work-card" data-type="{{ project.type }}">
+        <div class="work-card__meta">{{ project.meta }}</div>
+        <h2 class="work-card__title">{{ project.title }}</h2>
+        <p class="work-card__desc">{{ project.desc }}</p>
+        <div class="work-card__links">
+          {%- if project.links %}
+            {%- for link in project.links %}
+              {%- if link.pending %}
+          <span class="work-card__link work-card__link--disabled">{{ link.label }}{% if link.suffix %} <span style="opacity:.6">{{ link.suffix }}</span>{% endif %}</span>
+              {%- else %}
+          <a class="work-card__link{% if link.muted %} work-card__link--muted{% endif %}{% if link.primary %} work-card__link--primary{% endif %}" href="{% if link.url contains '://' or link.url == '#' %}{{ link.url }}{% else %}{{ link.url | relative_url }}{% endif %}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}{% if link.suffix %} <span style="opacity:.6">{{ link.suffix }}</span>{% endif %}</a>
+              {%- endif %}
+            {%- endfor %}
+          {%- elsif project.status %}
+          <span class="work-card__status">{{ project.status }}</span>
+          {%- endif %}
+        </div>
+      </article>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
